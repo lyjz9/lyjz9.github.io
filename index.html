@@ -500,6 +500,23 @@
       pointer-events: none;
     }
 
+    .intro-wave-layer {
+      position: absolute;
+      inset: -18%;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 20% 72%, rgba(255, 128, 224, 0.3), transparent 38%),
+        radial-gradient(ellipse at 72% 28%, rgba(128, 224, 255, 0.24), transparent 34%),
+        linear-gradient(112deg, transparent 0 35%, rgba(255, 128, 224, 0.18) 45%, rgba(128, 224, 255, 0.12) 55%, transparent 66%);
+      filter: blur(22px) saturate(1.12);
+      mix-blend-mode: screen;
+      opacity: 0.42;
+      transform: translate3d(-2%, -1%, 0) scale(1.04) rotate(-1deg);
+      animation: introWaveFloat 9s ease-in-out infinite alternate;
+      will-change: transform, opacity;
+    }
+
     .intro-overlay.is-hidden {
       opacity: 0;
       visibility: hidden;
@@ -751,6 +768,22 @@
       }
     }
 
+    @keyframes introWaveFloat {
+      0% {
+        opacity: 0.32;
+        transform: translate3d(-2.5%, -1.6%, 0) scale(1.04) rotate(-1deg);
+      }
+
+      50% {
+        opacity: 0.52;
+      }
+
+      100% {
+        opacity: 0.44;
+        transform: translate3d(2.5%, 1.5%, 0) scale(1.08) rotate(1deg);
+      }
+    }
+
     @keyframes panelFloat {
       0% {
         translate: 0 -8px;
@@ -792,6 +825,7 @@
       .mirror-tile,
       .soft-panel-meter i,
       .intro-overlay::before,
+      .intro-wave-layer,
       .intro-panel,
       .intro-target,
       .intro-hint {
@@ -2403,6 +2437,7 @@
 
   <section id="intro-overlay" class="intro-overlay" aria-label="Interactive intro">
     <canvas id="intro-dither-canvas" class="intro-dither-canvas" aria-hidden="true"></canvas>
+    <div class="intro-wave-layer" aria-hidden="true"></div>
     <div class="intro-copy">
       <p class="intro-kicker">a small corner for my work</p>
       <h2 class="chrome">Jieyi Zeng</h2>
