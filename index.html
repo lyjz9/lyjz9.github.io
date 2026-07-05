@@ -460,7 +460,6 @@
       opacity: 0.6;
       filter: saturate(1.25) contrast(1.15) blur(1px);
       transform: scale(1.04);
-      animation: introDrift 14s ease-in-out infinite alternate;
     }
 
     .intro-overlay::after {
@@ -477,6 +476,7 @@
     }
 
     .intro-video {
+      display: none;
       position: absolute;
       inset: -6%;
       z-index: 0;
@@ -2402,9 +2402,6 @@
   <div id="click-burst-layer" class="click-burst-layer" aria-hidden="true"></div>
 
   <section id="intro-overlay" class="intro-overlay" aria-label="Interactive intro">
-    <video class="intro-video" muted autoplay loop playsinline preload="auto">
-      <source src="./intro-dither.webm" type="video/webm" />
-    </video>
     <canvas id="intro-dither-canvas" class="intro-dither-canvas" aria-hidden="true"></canvas>
     <div class="intro-copy">
       <p class="intro-kicker">a small corner for my work</p>
@@ -3477,8 +3474,8 @@
     const ditherCanvas = document.getElementById('intro-dither-canvas');
     const ditherSettings = {
       waveColor: [0.23137254901960785, 0.5098039215686274, 0.9647058823529412],
-      disableAnimation: false,
-      enableMouseInteraction: true,
+      disableAnimation: true,
+      enableMouseInteraction: false,
       mouseRadius: 0.2,
       colorNum: 9.7,
       waveAmplitude: 0.25,
