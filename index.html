@@ -263,8 +263,16 @@
       z-index: 2;
       pointer-events: none;
       overflow: hidden;
+      opacity: 0;
+      visibility: hidden;
       transform: translate3d(calc(var(--mx, 0) * 1px), calc(var(--my, 0) * 1px), 0);
-      transition: transform 220ms ease-out;
+      transition: transform 220ms ease-out, opacity 520ms ease, visibility 520ms ease;
+    }
+
+    body[data-loaded="true"]:not(.intro-active) .motion-field {
+      opacity: 1;
+      visibility: visible;
+      transition-delay: 260ms;
     }
 
     .signal-line {
@@ -3482,6 +3490,7 @@
     let ditherCtx = null;
     let ditherWidth = 0;
     let ditherHeight = 0;
+    let lastDitherTime = 0;
 
     const resizeDither = () => {
       if (!ditherCanvas) return;
@@ -3499,8 +3508,13 @@
 
     const drawDither = (time = 0) => {
       if (!ditherCanvas || !ditherCtx || introComplete) return;
+      if (!reducedMotion && time - lastDitherTime < 33) {
+        ditherFrame = window.requestAnimationFrame(drawDither);
+        return;
+      }
+      lastDitherTime = time;
       const ctx = ditherCtx;
-      const step = ditherWidth < 760 ? 6 : 5;
+      const step = ditherWidth < 760 ? 8 : 7;
       const t = reducedMotion || ditherSettings.disableAnimation ? 0 : time * 0.001 * ditherSettings.waveSpeed * 22;
       ctx.clearRect(0, 0, ditherWidth, ditherHeight);
 
