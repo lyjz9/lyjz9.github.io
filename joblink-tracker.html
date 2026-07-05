@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="JobLink Tracker project by Jieyi Zeng." />
+  <title>JobLink Tracker | Jieyi Zeng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./project-showcase.css" />
+</head>
+<body>
+  <nav class="showcase-nav">
+    <a href="./index.html#projects">Back to portfolio</a>
+    <a href="https://github.com/lyjz9/joblink-tracker/tree/local" target="_blank" rel="noopener">GitHub Repo</a>
+  </nav>
+
+  <main class="showcase-shell">
+    <section class="showcase-hero">
+      <div>
+        <p class="eyebrow">portfolio project / job search automation</p>
+        <h1 class="chrome-title" data-title="JobLink Tracker">JobLink Tracker</h1>
+        <p class="hero-copy">Built a local job-search helper that turns scattered posting links into Excel-ready tracker rows, with review flags when a site needs a second look.</p>
+        <div class="hero-actions">
+          <a class="chrome-cta" href="https://github.com/lyjz9/joblink-tracker/tree/local" target="_blank" rel="noopener">View GitHub Repo</a>
+          <a class="ghost-cta" href="./index.html#projects">Back to projects</a>
+        </div>
+      </div>
+      <div id="project-preview" class="hero-visual" aria-hidden="true">
+        <div class="disco-ball"></div>
+        <div class="hologram-preview">
+          <div class="preview-topbar">
+            <span class="preview-dot"></span>
+            <span class="preview-dot"></span>
+            <span class="preview-dot"></span>
+          </div>
+          <div class="preview-table">
+            <div class="preview-row" style="--cols: .42fr .58fr"><span></span><span></span></div>
+            <div class="preview-row" style="--cols: .55fr .45fr"><span></span><span></span></div>
+            <div class="preview-row" style="--cols: .35fr .65fr"><span></span><span></span></div>
+            <div class="preview-row" style="--cols: .5fr .5fr"><span></span><span></span></div>
+          </div>
+          <p class="preview-caption">Job links converted into tracker rows</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="showcase-grid story-cards">
+      <article class="story-card">
+        <span class="badge">01</span>
+        <h2>Goal</h2>
+        <p>Job details live across different boards and company pages, which makes manual tracking repetitive.</p>
+      </article>
+      <article class="story-card">
+        <span class="badge">02</span>
+        <h2>Build</h2>
+        <p>Created a local web app that accepts posting links, extracts key fields, normalizes labels, and writes rows into Excel.</p>
+      </article>
+      <article class="story-card">
+        <span class="badge">03</span>
+        <h2>Result</h2>
+        <p>Added review flags so uncertain results are easy to check instead of silently trusting every scrape.</p>
+      </article>
+    </section>
+
+    <section class="project-info-stack">
+      <section id="build-notes" class="build-notes-panel">
+        <p class="eyebrow">build notes</p>
+        <h2>Choices and small problems</h2>
+        <ul class="checklist">
+          <li>Kept the original job link attached so every extracted row can be checked later.</li>
+          <li>Added review flags because scraping can be blocked, incomplete, or weird across different job boards.</li>
+          <li>Wrote rows into the tracker without replacing the workbook, so existing notes stay intact.</li>
+          <li>Built it as a local workflow first because job sites change often and need hands-on testing.</li>
+        </ul>
+      </section>
+
+      <section class="visual-panel" aria-label="JobLink visual notes">
+        <p class="eyebrow">visual notes</p>
+        <h2>Tracker row sketch</h2>
+        <p>A small preview of the workflow: job links become structured rows, with flags when the scraped details need a second look.</p>
+        <div class="visual-grid">
+          <div class="visual-chart" aria-hidden="true">
+            <div class="tracker-rows">
+              <div class="tracker-row" style="--cols: .36fr .24fr .2fr .2fr"><span></span><span></span><span></span><span></span></div>
+              <div class="tracker-row" style="--cols: .28fr .3fr .18fr .24fr"><span></span><span></span><span></span><span></span></div>
+              <div class="tracker-row" style="--cols: .42fr .2fr .18fr .2fr"><span></span><span></span><span></span><span></span></div>
+              <div class="tracker-row" style="--cols: .24fr .34fr .22fr .2fr"><span></span><span></span><span></span><span></span></div>
+            </div>
+          </div>
+          <div class="visual-side">
+            <div class="visual-stat"><span>Input</span><strong>Posting link and source page</strong></div>
+            <div class="visual-stat"><span>Clean</span><strong>Title, company, location, salary</strong></div>
+            <div class="visual-stat"><span>Review</span><strong>Flags when scraping is uncertain</strong></div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="showcase-footer">
+    <span>Jieyi Zeng / JobLink Tracker</span>
+    <span>Python / Automation / Excel workflow</span>
+  </footer>
+</body>
+</html>

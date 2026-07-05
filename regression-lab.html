@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Regression Lab in R portfolio project by Jieyi Zeng." />
+  <title>Regression Lab in R | Jieyi Zeng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./project-showcase.css" />
+</head>
+<body>
+  <nav class="showcase-nav">
+    <a href="./index.html#projects">Back to portfolio</a>
+    <a href="https://github.com/lyjz9/regression-lab" target="_blank" rel="noopener">GitHub Repo</a>
+  </nav>
+
+  <main class="showcase-shell">
+    <section class="showcase-hero">
+      <div>
+        <p class="eyebrow">portfolio project / reproducible regression</p>
+        <h1 class="chrome-title" data-title="Regression Lab in R">Regression Lab in R</h1>
+        <p class="hero-copy">Built reproducible R case studies for data cleaning, imputation, transformation testing, and regression modeling using synthetic educational datasets.</p>
+        <div class="hero-actions">
+          <a class="chrome-cta" href="https://github.com/lyjz9/regression-lab" target="_blank" rel="noopener">View GitHub Repo</a>
+          <a class="ghost-cta" href="./index.html#projects">Back to projects</a>
+        </div>
+      </div>
+      <div id="project-preview" class="hero-visual" aria-hidden="true">
+        <div class="disco-ball"></div>
+        <div class="hologram-preview">
+          <div class="preview-topbar">
+            <span class="preview-dot"></span>
+            <span class="preview-dot"></span>
+            <span class="preview-dot"></span>
+          </div>
+          <div class="preview-table">
+            <div class="preview-row" style="--cols: .3fr .7fr"><span></span><span></span></div>
+            <div class="preview-row" style="--cols: .48fr .52fr"><span></span><span></span></div>
+            <div class="preview-row" style="--cols: .62fr .38fr"><span></span><span></span></div>
+            <div class="preview-row" style="--cols: .4fr .6fr"><span></span><span></span></div>
+          </div>
+          <p class="preview-caption">Model summaries and diagnostic outputs</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="showcase-grid story-cards">
+      <article class="story-card">
+        <span class="badge">01</span>
+        <h2>Goal</h2>
+        <p>Turn two college regression case studies into a cleaner R project that is easy to run, review, and explain.</p>
+      </article>
+      <article class="story-card">
+        <span class="badge">02</span>
+        <h2>Build</h2>
+        <p>Organized scripts, raw data paths, missing-data handling, transformations, model outputs, and plots into a reproducible workflow.</p>
+      </article>
+      <article class="story-card">
+        <span class="badge">03</span>
+        <h2>Result</h2>
+        <p>Turned the class work into a clear project archive with scripts, outputs, and notes that make the modeling steps easy to follow.</p>
+      </article>
+    </section>
+
+    <section class="project-info-stack">
+      <section id="build-notes" class="build-notes-panel">
+        <p class="eyebrow">build notes</p>
+        <h2>Choices and small problems</h2>
+        <ul class="checklist">
+          <li>Kept the class data synthetic and labeled clearly so it does not read like real medical or genetic research.</li>
+          <li>Used MICE for missing values instead of throwing away useful rows too quickly.</li>
+          <li>Kept the selected transformations from the original work, then made the outputs easier to rerun and inspect.</li>
+          <li>Saved summaries, ANOVA tables, coefficients, and plots as separate project outputs.</li>
+        </ul>
+      </section>
+
+      <section class="visual-panel" aria-label="Regression visual notes">
+        <p class="eyebrow">visual notes</p>
+        <h2>Actual regression graphs</h2>
+        <p>These graphs were generated from the uploaded regression data files in the project folder.</p>
+        <div class="graph-viewer" data-graph-viewer>
+          <figure class="graph-stage">
+            <img data-graph-image src="./assets/project-visuals/regression-partA-actual.svg" alt="Scatterplot of Project 1 Part A IV and DV values with a fitted regression line" />
+            <figcaption class="graph-caption" data-graph-caption>Part A: IV/DV scatterplot with fitted regression trend.</figcaption>
+          </figure>
+          <div class="graph-controls" aria-label="Choose regression graph">
+            <div class="graph-console-head">
+              <div>
+                <div class="graph-control-label">Graph selector</div>
+                <div class="graph-active-readout" data-graph-readout>Now viewing: Part A regression</div>
+              </div>
+              <span class="graph-count">02 figs</span>
+            </div>
+            <div class="graph-signal-strip" aria-hidden="true">
+              <span></span>
+              <span></span>
+            </div>
+            <button class="graph-option is-active" type="button" aria-pressed="true" data-graph-label="Part A regression" data-graph-src="./assets/project-visuals/regression-partA-actual.svg" data-graph-alt="Scatterplot of Project 1 Part A IV and DV values with a fitted regression line" data-graph-caption="Part A: IV/DV scatterplot with fitted regression trend.">
+              <span class="graph-option-kicker">Figure 01</span>
+              <strong>Part A regression</strong>
+              <span class="graph-option-note">Scatter + fitted line</span>
+              <span class="graph-mini-bars" aria-hidden="true"><i style="--h: 62%"></i><i style="--h: 46%"></i><i style="--h: 74%"></i><i style="--h: 52%"></i></span>
+            </button>
+            <button class="graph-option" type="button" aria-pressed="false" data-graph-label="Part B transform" data-graph-src="./assets/project-visuals/regression-partB-actual.svg" data-graph-alt="Transformed regression plot for Project 1 Part B using y squared and one over x" data-graph-caption="Part B: transformed model using y^2 and 1/x.">
+              <span class="graph-option-kicker">Figure 02</span>
+              <strong>Part B transform</strong>
+              <span class="graph-option-note">Transformed model check</span>
+              <span class="graph-mini-bars" aria-hidden="true"><i style="--h: 38%"></i><i style="--h: 68%"></i><i style="--h: 48%"></i><i style="--h: 76%"></i></span>
+            </button>
+            <div class="graph-control-footer">
+              <span></span>
+              <small>Synthetic regression visuals</small>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="showcase-footer">
+    <span>Jieyi Zeng / Regression Lab in R</span>
+    <span>R / Regression / Model diagnostics</span>
+  </footer>
+  <script src="./project-showcase.js"></script>
+</body>
+</html>

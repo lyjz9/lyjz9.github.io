@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="620" viewBox="0 0 980 620" role="img" aria-label="Average Claims by Age Group">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="0.58" stop-color="#f6faff"/><stop offset="1" stop-color="#eef5ff"/></linearGradient>
+    <linearGradient id="line" x1="0" x2="1"><stop offset="0" stop-color="#80ffe0"/><stop offset="1" stop-color="#a98bff"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <style>
+    .title{font:700 29px 'Space Mono', Consolas, monospace;fill:#18213a;letter-spacing:.5px}.sub{font:14px 'Space Mono', Consolas, monospace;fill:#5d6d83}.axis{stroke:#4d6178;stroke-width:1.2}.grid{stroke:#d9e5f4;stroke-width:1}.tick{font:12px 'Space Mono', Consolas, monospace;fill:#66758a}.label{font:13px 'Space Mono', Consolas, monospace;fill:#4f6077}.bar{fill:url(#line);filter:url(#glow)}.dot{fill:#80ffe0;filter:url(#glow)}.fit{stroke:url(#line);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;fill:none;filter:url(#glow)}.note{font:12px 'Space Mono', Consolas, monospace;fill:#5d6d83}.value{font:700 13px 'Space Mono', Consolas, monospace;fill:#18213a}
+  </style>
+  <rect width="980" height="620" rx="28" fill="url(#bg)"/>
+  <circle cx="835" cy="80" r="150" fill="#80ffe0" opacity="0.18"/>
+  <circle cx="120" cy="540" r="180" fill="#a98bff" opacity="0.12"/>
+  <text x="86" y="46" class="title">Average Claims by Age Group</text>
+  <text x="86" y="72" class="sub">Mean current claim count by age group</text>
+  <rect x="86" y="92" width="848" height="442" rx="18" fill="#fbfdff" stroke="#d7e2f1"/>
+  <line x1="128" y1="480.00" x2="888" y2="480.00" class="grid"/>
+  <text x="110" y="484.00" class="tick" text-anchor="end">0.000</text>
+  <line x1="128" y1="390.00" x2="888" y2="390.00" class="grid"/>
+  <text x="110" y="394.00" class="tick" text-anchor="end">0.047</text>
+  <line x1="128" y1="300.00" x2="888" y2="300.00" class="grid"/>
+  <text x="110" y="304.00" class="tick" text-anchor="end">0.095</text>
+  <line x1="128" y1="210.00" x2="888" y2="210.00" class="grid"/>
+  <text x="110" y="214.00" class="tick" text-anchor="end">0.142</text>
+  <line x1="128" y1="120.00" x2="888" y2="120.00" class="grid"/>
+  <text x="110" y="124.00" class="tick" text-anchor="end">0.189</text>
+  <line x1="128" y1="480" x2="888" y2="480" class="axis"/>
+  <line x1="128" y1="120" x2="128" y2="480" class="axis"/>
+  <rect class="bar" x="173.60" y="174.92" width="98.80" height="305.08" rx="16" opacity="0.82"/>
+  <circle class="dot" cx="223.00" cy="166.92" r="4"/>
+  <text x="223.00" y="514" class="tick" text-anchor="middle">16-25</text>
+  <text x="223.00" y="154.92" class="value" text-anchor="middle">0.160</text>
+  <rect class="bar" x="363.60" y="324.71" width="98.80" height="155.29" rx="16" opacity="0.82"/>
+  <circle class="dot" cx="413.00" cy="316.71" r="4"/>
+  <text x="413.00" y="514" class="tick" text-anchor="middle">26-40</text>
+  <text x="413.00" y="304.71" class="value" text-anchor="middle">0.082</text>
+  <rect class="bar" x="553.60" y="313.13" width="98.80" height="166.87" rx="16" opacity="0.82"/>
+  <circle class="dot" cx="603.00" cy="305.13" r="4"/>
+  <text x="603.00" y="514" class="tick" text-anchor="middle">41-60</text>
+  <text x="603.00" y="293.13" class="value" text-anchor="middle">0.088</text>
+  <rect class="bar" x="743.60" y="281.22" width="98.80" height="198.78" rx="16" opacity="0.82"/>
+  <circle class="dot" cx="793.00" cy="273.22" r="4"/>
+  <text x="793.00" y="514" class="tick" text-anchor="middle">60+</text>
+  <text x="793.00" y="261.22" class="value" text-anchor="middle">0.105</text>
+  <path d="M223.00 174.92 C298.00 150.92 338.00 314.71 413.00 324.71 S563.00 303.13 603.00 313.13 S743.00 273.22 793.00 281.22" class="fit" opacity="0.42"/>
+  <text x="128" y="548" class="label">Age group</text>
+  <text x="72" y="316" class="label" transform="rotate(-90 72 316)">Average claims</text>
+</svg>

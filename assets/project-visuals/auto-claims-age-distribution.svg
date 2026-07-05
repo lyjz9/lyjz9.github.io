@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="620" viewBox="0 0 980 620" role="img" aria-label="Age Distribution">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="0.58" stop-color="#f6faff"/><stop offset="1" stop-color="#eef5ff"/></linearGradient>
+    <linearGradient id="line" x1="0" x2="1"><stop offset="0" stop-color="#80e0ff"/><stop offset="1" stop-color="#a98bff"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <style>
+    .title{font:700 29px 'Space Mono', Consolas, monospace;fill:#18213a;letter-spacing:.5px}.sub{font:14px 'Space Mono', Consolas, monospace;fill:#5d6d83}.axis{stroke:#4d6178;stroke-width:1.2}.grid{stroke:#d9e5f4;stroke-width:1}.tick{font:12px 'Space Mono', Consolas, monospace;fill:#66758a}.label{font:13px 'Space Mono', Consolas, monospace;fill:#4f6077}.bar{fill:url(#line);filter:url(#glow)}.dot{fill:#80e0ff;filter:url(#glow)}.fit{stroke:url(#line);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;fill:none;filter:url(#glow)}.note{font:12px 'Space Mono', Consolas, monospace;fill:#5d6d83}.value{font:700 13px 'Space Mono', Consolas, monospace;fill:#18213a}
+  </style>
+  <rect width="980" height="620" rx="28" fill="url(#bg)"/>
+  <circle cx="835" cy="80" r="150" fill="#80e0ff" opacity="0.18"/>
+  <circle cx="120" cy="540" r="180" fill="#a98bff" opacity="0.12"/>
+  <text x="86" y="46" class="title">Age Distribution</text>
+  <text x="86" y="72" class="sub">Synthetic driver-age distribution from the auto-claims dataset</text>
+  <rect x="86" y="92" width="848" height="442" rx="18" fill="#fbfdff" stroke="#d7e2f1"/>
+  <line x1="128" y1="480.00" x2="888" y2="480.00" class="grid"/>
+  <text x="110" y="484.00" class="tick" text-anchor="end">0</text>
+  <line x1="128" y1="390.00" x2="888" y2="390.00" class="grid"/>
+  <text x="110" y="394.00" class="tick" text-anchor="end">456</text>
+  <line x1="128" y1="300.00" x2="888" y2="300.00" class="grid"/>
+  <text x="110" y="304.00" class="tick" text-anchor="end">911</text>
+  <line x1="128" y1="210.00" x2="888" y2="210.00" class="grid"/>
+  <text x="110" y="214.00" class="tick" text-anchor="end">1367</text>
+  <line x1="128" y1="120.00" x2="888" y2="120.00" class="grid"/>
+  <text x="110" y="124.00" class="tick" text-anchor="end">1822</text>
+  <line x1="128" y1="480" x2="888" y2="480" class="axis"/>
+  <line x1="128" y1="120" x2="128" y2="480" class="axis"/>
+  <rect class="bar" x="143.20" y="183.29" width="78.17" height="296.71" rx="14" opacity="0.78"/>
+  <text x="182.29" y="514" class="tick" text-anchor="middle">16-26</text>
+  <rect class="bar" x="251.77" y="189.41" width="78.17" height="290.59" rx="14" opacity="0.78"/>
+  <text x="290.86" y="514" class="tick" text-anchor="middle">26-36</text>
+  <rect class="bar" x="360.34" y="169.66" width="78.17" height="310.34" rx="14" opacity="0.78"/>
+  <text x="399.43" y="514" class="tick" text-anchor="middle">36-46</text>
+  <rect class="bar" x="468.91" y="182.89" width="78.17" height="297.11" rx="14" opacity="0.78"/>
+  <text x="508.00" y="514" class="tick" text-anchor="middle">46-56</text>
+  <rect class="bar" x="577.49" y="178.15" width="78.17" height="301.85" rx="14" opacity="0.78"/>
+  <text x="616.57" y="514" class="tick" text-anchor="middle">56-66</text>
+  <rect class="bar" x="686.06" y="190.40" width="78.17" height="289.60" rx="14" opacity="0.78"/>
+  <text x="725.14" y="514" class="tick" text-anchor="middle">66-76</text>
+  <rect class="bar" x="794.63" y="355.94" width="78.17" height="124.06" rx="14" opacity="0.78"/>
+  <text x="833.71" y="514" class="tick" text-anchor="middle">76-86</text>
+  <path d="M182.29 183.29 C290.86 161.41 399.43 145.66 508.00 182.89 S725.14 172.40 833.71 355.94" class="fit" opacity="0.46"/>
+  <text x="128" y="548" class="label">Driver age bins</text>
+  <text x="72" y="316" class="label" transform="rotate(-90 72 316)">Driver count</text>
+</svg>

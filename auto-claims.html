@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Auto Claims Frequency Modeling project by Jieyi Zeng." />
+  <title>Auto Claims Frequency Modeling | Jieyi Zeng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./project-showcase.css" />
+</head>
+<body>
+  <nav class="showcase-nav">
+    <a href="./index.html#projects">Back to portfolio</a>
+    <a href="https://github.com/lyjz9/auto-claims-frequency-modeling" target="_blank" rel="noopener">GitHub Repo</a>
+  </nav>
+
+  <main class="showcase-shell">
+    <section class="showcase-hero">
+      <div>
+        <p class="eyebrow">portfolio project / statistical modeling</p>
+        <h1 class="chrome-title" data-title="Auto Claims Frequency Modeling">Auto Claims Frequency Modeling</h1>
+        <p class="hero-copy">Modeled synthetic auto insurance claim frequency by age group using a reproducible Python pipeline, statistical testing, and count-data regression.</p>
+        <div class="hero-actions">
+          <a class="chrome-cta" href="https://github.com/lyjz9/auto-claims-frequency-modeling" target="_blank" rel="noopener">View GitHub Repo</a>
+          <a class="ghost-cta" href="./index.html#projects">Back to projects</a>
+        </div>
+      </div>
+      <div id="project-preview" class="hero-visual" aria-hidden="true">
+        <div class="disco-ball"></div>
+        <div class="hologram-preview">
+          <div class="preview-topbar">
+            <span class="preview-dot"></span>
+            <span class="preview-dot"></span>
+            <span class="preview-dot"></span>
+          </div>
+          <div class="preview-table">
+            <div class="preview-row" style="--cols: .45fr .55fr"><span></span><span></span></div>
+            <div class="preview-row" style="--cols: .32fr .68fr"><span></span><span></span></div>
+            <div class="preview-row" style="--cols: .58fr .42fr"><span></span><span></span></div>
+            <div class="preview-row" style="--cols: .38fr .62fr"><span></span><span></span></div>
+          </div>
+          <p class="preview-caption">Synthetic claim frequency model output</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="showcase-grid story-cards">
+      <article class="story-card">
+        <span class="badge">01</span>
+        <h2>Goal</h2>
+        <p>Driver age may relate to claim frequency, but claim counts need a model that respects count-data behavior.</p>
+      </article>
+      <article class="story-card">
+        <span class="badge">02</span>
+        <h2>Build</h2>
+        <p>Created a Python workflow that generates synthetic data, engineers features, compares age groups, and fits Poisson and Negative Binomial models.</p>
+      </article>
+      <article class="story-card">
+        <span class="badge">03</span>
+        <h2>Result</h2>
+        <p>Saved refreshed figures, summary tables, model output, and a public-ready README for a clean portfolio repo.</p>
+      </article>
+    </section>
+
+    <section class="project-info-stack">
+      <section id="build-notes" class="build-notes-panel">
+        <p class="eyebrow">build notes</p>
+        <h2>Choices and small problems</h2>
+        <ul class="checklist">
+          <li>Used synthetic claim data so the modeling flow can be shared without real insurance records.</li>
+          <li>Compared Poisson and Negative Binomial models because claim counts can be overdispersed.</li>
+          <li>Kept the age-group finding readable while noting that age alone is not enough for real pricing.</li>
+          <li>Saved model tables and figures so the project can be checked without rerunning everything first.</li>
+        </ul>
+      </section>
+
+      <section class="visual-panel" aria-label="Auto claims visual notes">
+        <p class="eyebrow">visual notes</p>
+        <h2>Actual claim graphs</h2>
+        <p>These figures come from the auto-claims project output files.</p>
+        <div class="graph-viewer" data-graph-viewer>
+          <figure class="graph-stage">
+            <img data-graph-image src="./assets/project-visuals/auto-claims-rate.svg" alt="Bar chart showing current claim rate by age group" />
+            <figcaption class="graph-caption" data-graph-caption>Current claim rate by age group.</figcaption>
+          </figure>
+          <div class="graph-controls" aria-label="Choose auto claims graph">
+            <div class="graph-console-head">
+              <div>
+                <div class="graph-control-label">Graph selector</div>
+                <div class="graph-active-readout" data-graph-readout>Now viewing: Claim rate</div>
+              </div>
+              <span class="graph-count">03 figs</span>
+            </div>
+            <div class="graph-signal-strip" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <button class="graph-option is-active" type="button" aria-pressed="true" data-graph-label="Claim rate" data-graph-src="./assets/project-visuals/auto-claims-rate.svg" data-graph-alt="Bar chart showing current claim rate by age group" data-graph-caption="Current claim rate by age group.">
+              <span class="graph-option-kicker">Figure 01</span>
+              <strong>Claim rate</strong>
+              <span class="graph-option-note">Rate by age group</span>
+              <span class="graph-mini-bars" aria-hidden="true"><i style="--h: 68%"></i><i style="--h: 46%"></i><i style="--h: 58%"></i><i style="--h: 38%"></i></span>
+            </button>
+            <button class="graph-option" type="button" aria-pressed="false" data-graph-label="Average claims" data-graph-src="./assets/project-visuals/auto-claims-average.svg" data-graph-alt="Bar chart showing average claims by age group" data-graph-caption="Average claims by age group.">
+              <span class="graph-option-kicker">Figure 02</span>
+              <strong>Average claims</strong>
+              <span class="graph-option-note">Mean count by group</span>
+              <span class="graph-mini-bars" aria-hidden="true"><i style="--h: 42%"></i><i style="--h: 72%"></i><i style="--h: 54%"></i><i style="--h: 48%"></i></span>
+            </button>
+            <button class="graph-option" type="button" aria-pressed="false" data-graph-label="Age distribution" data-graph-src="./assets/project-visuals/auto-claims-age-distribution.svg" data-graph-alt="Histogram showing the age distribution in the auto claims dataset" data-graph-caption="Age distribution in the synthetic claims dataset.">
+              <span class="graph-option-kicker">Figure 03</span>
+              <strong>Age distribution</strong>
+              <span class="graph-option-note">Age spread view</span>
+              <span class="graph-mini-bars" aria-hidden="true"><i style="--h: 30%"></i><i style="--h: 62%"></i><i style="--h: 78%"></i><i style="--h: 36%"></i></span>
+            </button>
+            <div class="graph-control-footer">
+              <span></span>
+              <small>Synthetic claims visuals</small>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="showcase-footer">
+    <span>Jieyi Zeng / Auto Claims Frequency Modeling</span>
+    <span>Python / Count models / Portfolio project</span>
+  </footer>
+  <script src="./project-showcase.js"></script>
+</body>
+</html>
