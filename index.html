@@ -454,11 +454,11 @@
       inset: -12%;
       z-index: 0;
       background:
-        linear-gradient(90deg, rgba(8, 9, 26, 0.62), rgba(8, 9, 26, 0.14), rgba(8, 9, 26, 0.68)),
-        linear-gradient(180deg, rgba(6, 8, 28, 0.08), rgba(6, 8, 28, 0.16)),
-        url("./intro-dither.png") center / cover no-repeat;
-      opacity: 0.6;
-      filter: saturate(1.25) contrast(1.15) blur(1px);
+        radial-gradient(ellipse at 26% 70%, rgba(128, 224, 255, 0.16), transparent 42%),
+        radial-gradient(ellipse at 74% 24%, rgba(255, 128, 224, 0.16), transparent 34%),
+        linear-gradient(90deg, rgba(8, 9, 26, 0.64), rgba(8, 9, 26, 0.14), rgba(8, 9, 26, 0.72));
+      opacity: 0.72;
+      filter: saturate(1.18) contrast(1.08);
       transform: scale(1.04);
     }
 
@@ -495,26 +495,9 @@
       z-index: 1;
       width: 100%;
       height: 100%;
-      opacity: 0.66;
+      opacity: 0.9;
       mix-blend-mode: screen;
       pointer-events: none;
-    }
-
-    .intro-wave-layer {
-      position: absolute;
-      inset: -18%;
-      z-index: 2;
-      pointer-events: none;
-      background:
-        radial-gradient(ellipse at 20% 72%, rgba(255, 128, 224, 0.3), transparent 38%),
-        radial-gradient(ellipse at 72% 28%, rgba(128, 224, 255, 0.24), transparent 34%),
-        linear-gradient(112deg, transparent 0 35%, rgba(255, 128, 224, 0.18) 45%, rgba(128, 224, 255, 0.12) 55%, transparent 66%);
-      filter: blur(22px) saturate(1.12);
-      mix-blend-mode: screen;
-      opacity: 0.42;
-      transform: translate3d(-2%, -1%, 0) scale(1.04) rotate(-1deg);
-      animation: introWaveFloat 9s ease-in-out infinite alternate;
-      will-change: transform, opacity;
     }
 
     .intro-overlay.is-hidden {
@@ -768,22 +751,6 @@
       }
     }
 
-    @keyframes introWaveFloat {
-      0% {
-        opacity: 0.32;
-        transform: translate3d(-2.5%, -1.6%, 0) scale(1.04) rotate(-1deg);
-      }
-
-      50% {
-        opacity: 0.52;
-      }
-
-      100% {
-        opacity: 0.44;
-        transform: translate3d(2.5%, 1.5%, 0) scale(1.08) rotate(1deg);
-      }
-    }
-
     @keyframes panelFloat {
       0% {
         translate: 0 -8px;
@@ -825,7 +792,6 @@
       .mirror-tile,
       .soft-panel-meter i,
       .intro-overlay::before,
-      .intro-wave-layer,
       .intro-panel,
       .intro-target,
       .intro-hint {
@@ -2437,7 +2403,6 @@
 
   <section id="intro-overlay" class="intro-overlay" aria-label="Interactive intro">
     <canvas id="intro-dither-canvas" class="intro-dither-canvas" aria-hidden="true"></canvas>
-    <div class="intro-wave-layer" aria-hidden="true"></div>
     <div class="intro-copy">
       <p class="intro-kicker">a small corner for my work</p>
       <h2 class="chrome">Jieyi Zeng</h2>
@@ -3508,98 +3473,271 @@
 
     const ditherCanvas = document.getElementById('intro-dither-canvas');
     const ditherSettings = {
-      waveColor: [0.23137254901960785, 0.5098039215686274, 0.9647058823529412],
-      disableAnimation: true,
-      enableMouseInteraction: false,
-      mouseRadius: 0.2,
-      colorNum: 9.7,
+      waveColor: [0.4745098039215686, 0.12549019607843137, 0.12549019607843137],
+      disableAnimation: reducedMotion,
+      enableMouseInteraction: !reducedMotion,
+      mouseRadius: 0.1,
+      colorNum: 6,
+      pixelSize: 2,
       waveAmplitude: 0.25,
-      waveFrequency: 5.7,
-      waveSpeed: 0.05,
+      waveFrequency: 2.3,
+      waveSpeed: 0.04,
     };
-    const ditherMouse = { x: 0.5, y: 0.5, active: false };
+    const ditherMouse = { x: 0, y: 0, active: false };
     let ditherFrame = 0;
-    let ditherCtx = null;
-    let ditherWidth = 0;
-    let ditherHeight = 0;
-    let lastDitherTime = 0;
+    let ditherGl = null;
+    let ditherProgram = null;
+    let ditherPositionBuffer = null;
+    let ditherUniforms = null;
+
+    const createDitherShader = (gl, type, source) => {
+      const shader = gl.createShader(type);
+      gl.shaderSource(shader, source);
+      gl.compileShader(shader);
+      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        console.warn(gl.getShaderInfoLog(shader));
+        gl.deleteShader(shader);
+        return null;
+      }
+      return shader;
+    };
+
+    const initializeDitherBackground = () => {
+      if (!ditherCanvas) return false;
+      ditherGl = ditherCanvas.getContext('webgl', {
+        alpha: true,
+        antialias: false,
+        depth: false,
+        stencil: false,
+        preserveDrawingBuffer: false,
+        powerPreference: 'high-performance',
+      });
+      if (!ditherGl) {
+        ditherCanvas.style.opacity = '0';
+        return false;
+      }
+
+      const vertexSource = `
+        attribute vec2 position;
+        void main() {
+          gl_Position = vec4(position, 0.0, 1.0);
+        }
+      `;
+
+      const fragmentSource = `
+        precision highp float;
+        uniform vec2 resolution;
+        uniform float time;
+        uniform float waveSpeed;
+        uniform float waveFrequency;
+        uniform float waveAmplitude;
+        uniform vec3 waveColor;
+        uniform vec2 mousePos;
+        uniform float enableMouseInteraction;
+        uniform float mouseRadius;
+        uniform float colorNum;
+        uniform float pixelSize;
+        uniform sampler2D bayerMap;
+
+        vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+        vec4 permute(vec4 x) { return mod289(((x * 34.0) + 1.0) * x); }
+        vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+        vec2 fade(vec2 t) { return t * t * t * (t * (t * 6.0 - 15.0) + 10.0); }
+
+        float cnoise(vec2 p) {
+          vec4 pi = floor(p.xyxy) + vec4(0.0, 0.0, 1.0, 1.0);
+          vec4 pf = fract(p.xyxy) - vec4(0.0, 0.0, 1.0, 1.0);
+          pi = mod289(pi);
+          vec4 ix = pi.xzxz;
+          vec4 iy = pi.yyww;
+          vec4 fx = pf.xzxz;
+          vec4 fy = pf.yyww;
+          vec4 i = permute(permute(ix) + iy);
+          vec4 gx = fract(i * (1.0 / 41.0)) * 2.0 - 1.0;
+          vec4 gy = abs(gx) - 0.5;
+          vec4 tx = floor(gx + 0.5);
+          gx = gx - tx;
+          vec2 g00 = vec2(gx.x, gy.x);
+          vec2 g10 = vec2(gx.y, gy.y);
+          vec2 g01 = vec2(gx.z, gy.z);
+          vec2 g11 = vec2(gx.w, gy.w);
+          vec4 norm = taylorInvSqrt(vec4(dot(g00, g00), dot(g01, g01), dot(g10, g10), dot(g11, g11)));
+          g00 *= norm.x;
+          g01 *= norm.y;
+          g10 *= norm.z;
+          g11 *= norm.w;
+          float n00 = dot(g00, vec2(fx.x, fy.x));
+          float n10 = dot(g10, vec2(fx.y, fy.y));
+          float n01 = dot(g01, vec2(fx.z, fy.z));
+          float n11 = dot(g11, vec2(fx.w, fy.w));
+          vec2 fadeXY = fade(pf.xy);
+          vec2 nX = mix(vec2(n00, n01), vec2(n10, n11), fadeXY.x);
+          return 2.3 * mix(nX.x, nX.y, fadeXY.y);
+        }
+
+        float fbm(vec2 p) {
+          float value = 0.0;
+          float amp = 1.0;
+          float freq = waveFrequency;
+          for (int i = 0; i < 4; i++) {
+            value += amp * abs(cnoise(p));
+            p *= freq;
+            amp *= waveAmplitude;
+          }
+          return value;
+        }
+
+        float pattern(vec2 p) {
+          vec2 p2 = p - time * waveSpeed;
+          return fbm(p + fbm(p2));
+        }
+
+        vec3 ditherColor(vec2 fragCoord, vec3 color) {
+          vec2 scaledCoord = floor(fragCoord / pixelSize);
+          vec2 bayerUv = (mod(scaledCoord, 8.0) + 0.5) / 8.0;
+          float threshold = texture2D(bayerMap, bayerUv).r - 0.25;
+          float steps = max(colorNum - 1.0, 1.0);
+          color += threshold / steps;
+          color = clamp(color - 0.2, 0.0, 1.0);
+          return floor(color * steps + 0.5) / steps;
+        }
+
+        void main() {
+          vec2 uv = gl_FragCoord.xy / resolution.xy;
+          uv -= 0.5;
+          uv.x *= resolution.x / resolution.y;
+
+          float f = pattern(uv);
+          if (enableMouseInteraction > 0.5) {
+            vec2 mouseNdc = (mousePos / resolution - 0.5) * vec2(1.0, -1.0);
+            mouseNdc.x *= resolution.x / resolution.y;
+            float dist = length(uv - mouseNdc);
+            float effect = 1.0 - smoothstep(0.0, mouseRadius, dist);
+            f -= 0.5 * effect;
+          }
+
+          vec3 color = mix(vec3(0.0), waveColor, f);
+          color = ditherColor(gl_FragCoord.xy, color);
+          gl_FragColor = vec4(color, 0.92);
+        }
+      `;
+
+      const vertexShader = createDitherShader(ditherGl, ditherGl.VERTEX_SHADER, vertexSource);
+      const fragmentShader = createDitherShader(ditherGl, ditherGl.FRAGMENT_SHADER, fragmentSource);
+      if (!vertexShader || !fragmentShader) return false;
+
+      ditherProgram = ditherGl.createProgram();
+      ditherGl.attachShader(ditherProgram, vertexShader);
+      ditherGl.attachShader(ditherProgram, fragmentShader);
+      ditherGl.linkProgram(ditherProgram);
+      ditherGl.deleteShader(vertexShader);
+      ditherGl.deleteShader(fragmentShader);
+      if (!ditherGl.getProgramParameter(ditherProgram, ditherGl.LINK_STATUS)) {
+        console.warn(ditherGl.getProgramInfoLog(ditherProgram));
+        ditherCanvas.style.opacity = '0';
+        return false;
+      }
+
+      ditherPositionBuffer = ditherGl.createBuffer();
+      ditherGl.bindBuffer(ditherGl.ARRAY_BUFFER, ditherPositionBuffer);
+      ditherGl.bufferData(
+        ditherGl.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
+        ditherGl.STATIC_DRAW
+      );
+
+      const positionLocation = ditherGl.getAttribLocation(ditherProgram, 'position');
+      ditherGl.enableVertexAttribArray(positionLocation);
+      ditherGl.vertexAttribPointer(positionLocation, 2, ditherGl.FLOAT, false, 0, 0);
+
+      const bayerValues = [
+        0, 48, 12, 60, 3, 51, 15, 63,
+        32, 16, 44, 28, 35, 19, 47, 31,
+        8, 56, 4, 52, 11, 59, 7, 55,
+        40, 24, 36, 20, 43, 27, 39, 23,
+        2, 50, 14, 62, 1, 49, 13, 61,
+        34, 18, 46, 30, 33, 17, 45, 29,
+        10, 58, 6, 54, 9, 57, 5, 53,
+        42, 26, 38, 22, 41, 25, 37, 21,
+      ];
+      const bayerPixels = new Uint8Array(bayerValues.flatMap((value) => {
+        const channel = Math.round((value / 64) * 255);
+        return [channel, channel, channel, 255];
+      }));
+      const bayerTexture = ditherGl.createTexture();
+      ditherGl.activeTexture(ditherGl.TEXTURE0);
+      ditherGl.bindTexture(ditherGl.TEXTURE_2D, bayerTexture);
+      ditherGl.texParameteri(ditherGl.TEXTURE_2D, ditherGl.TEXTURE_MIN_FILTER, ditherGl.NEAREST);
+      ditherGl.texParameteri(ditherGl.TEXTURE_2D, ditherGl.TEXTURE_MAG_FILTER, ditherGl.NEAREST);
+      ditherGl.texParameteri(ditherGl.TEXTURE_2D, ditherGl.TEXTURE_WRAP_S, ditherGl.CLAMP_TO_EDGE);
+      ditherGl.texParameteri(ditherGl.TEXTURE_2D, ditherGl.TEXTURE_WRAP_T, ditherGl.CLAMP_TO_EDGE);
+      ditherGl.texImage2D(ditherGl.TEXTURE_2D, 0, ditherGl.RGBA, 8, 8, 0, ditherGl.RGBA, ditherGl.UNSIGNED_BYTE, bayerPixels);
+
+      ditherUniforms = {
+        resolution: ditherGl.getUniformLocation(ditherProgram, 'resolution'),
+        time: ditherGl.getUniformLocation(ditherProgram, 'time'),
+        waveSpeed: ditherGl.getUniformLocation(ditherProgram, 'waveSpeed'),
+        waveFrequency: ditherGl.getUniformLocation(ditherProgram, 'waveFrequency'),
+        waveAmplitude: ditherGl.getUniformLocation(ditherProgram, 'waveAmplitude'),
+        waveColor: ditherGl.getUniformLocation(ditherProgram, 'waveColor'),
+        mousePos: ditherGl.getUniformLocation(ditherProgram, 'mousePos'),
+        enableMouseInteraction: ditherGl.getUniformLocation(ditherProgram, 'enableMouseInteraction'),
+        mouseRadius: ditherGl.getUniformLocation(ditherProgram, 'mouseRadius'),
+        colorNum: ditherGl.getUniformLocation(ditherProgram, 'colorNum'),
+        pixelSize: ditherGl.getUniformLocation(ditherProgram, 'pixelSize'),
+        bayerMap: ditherGl.getUniformLocation(ditherProgram, 'bayerMap'),
+      };
+
+      ditherGl.useProgram(ditherProgram);
+      ditherGl.uniform1i(ditherUniforms.bayerMap, 0);
+      return true;
+    };
 
     const resizeDither = () => {
-      if (!ditherCanvas) return;
+      if (!ditherCanvas || !ditherGl) return;
       const rect = ditherCanvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      ditherWidth = Math.max(1, Math.floor(rect.width));
-      ditherHeight = Math.max(1, Math.floor(rect.height));
-      ditherCanvas.width = Math.floor(ditherWidth * dpr);
-      ditherCanvas.height = Math.floor(ditherHeight * dpr);
-      ditherCanvas.style.width = `${ditherWidth}px`;
-      ditherCanvas.style.height = `${ditherHeight}px`;
-      ditherCtx = ditherCanvas.getContext('2d');
-      if (ditherCtx) ditherCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const dpr = 1;
+      const width = Math.max(1, Math.floor(rect.width * dpr));
+      const height = Math.max(1, Math.floor(rect.height * dpr));
+      if (ditherCanvas.width !== width || ditherCanvas.height !== height) {
+        ditherCanvas.width = width;
+        ditherCanvas.height = height;
+      }
+      ditherGl.viewport(0, 0, width, height);
     };
 
     const drawDither = (time = 0) => {
-      if (!ditherCanvas || !ditherCtx || introComplete) return;
-      if (!reducedMotion && time - lastDitherTime < 33) {
+      if (!ditherCanvas || !ditherGl || !ditherProgram || introComplete) return;
+      resizeDither();
+      const elapsed = ditherSettings.disableAnimation ? 0 : time * 0.001;
+      ditherGl.useProgram(ditherProgram);
+      ditherGl.uniform2f(ditherUniforms.resolution, ditherCanvas.width, ditherCanvas.height);
+      ditherGl.uniform1f(ditherUniforms.time, elapsed);
+      ditherGl.uniform1f(ditherUniforms.waveSpeed, ditherSettings.waveSpeed);
+      ditherGl.uniform1f(ditherUniforms.waveFrequency, ditherSettings.waveFrequency);
+      ditherGl.uniform1f(ditherUniforms.waveAmplitude, ditherSettings.waveAmplitude);
+      ditherGl.uniform3fv(ditherUniforms.waveColor, ditherSettings.waveColor);
+      ditherGl.uniform2f(ditherUniforms.mousePos, ditherMouse.x, ditherMouse.y);
+      ditherGl.uniform1f(ditherUniforms.enableMouseInteraction, ditherSettings.enableMouseInteraction && ditherMouse.active ? 1 : 0);
+      ditherGl.uniform1f(ditherUniforms.mouseRadius, ditherSettings.mouseRadius);
+      ditherGl.uniform1f(ditherUniforms.colorNum, ditherSettings.colorNum);
+      ditherGl.uniform1f(ditherUniforms.pixelSize, ditherSettings.pixelSize);
+      ditherGl.drawArrays(ditherGl.TRIANGLES, 0, 6);
+
+      if (!ditherSettings.disableAnimation) {
         ditherFrame = window.requestAnimationFrame(drawDither);
-        return;
       }
-      lastDitherTime = time;
-      const ctx = ditherCtx;
-      const step = ditherWidth < 760 ? 8 : 7;
-      const t = reducedMotion || ditherSettings.disableAnimation ? 0 : time * 0.001 * ditherSettings.waveSpeed * 22;
-      ctx.clearRect(0, 0, ditherWidth, ditherHeight);
-
-      for (let y = 0; y < ditherHeight; y += step) {
-        for (let x = 0; x < ditherWidth; x += step) {
-          const nx = x / ditherWidth;
-          const ny = y / ditherHeight;
-          const waveA = Math.sin((nx * ditherSettings.waveFrequency + t) * Math.PI * 2);
-          const waveB = Math.cos((ny * ditherSettings.waveFrequency * 0.72 - t * 0.84) * Math.PI * 2);
-          const curve = Math.sin(((nx - ny) * ditherSettings.waveFrequency * 0.55 + t * 0.62) * Math.PI * 2);
-          const centerGlow = 1 - Math.min(1, Math.hypot(nx - 0.52, ny - 0.48) * 1.4);
-          const mouseDistance = Math.hypot(nx - ditherMouse.x, ny - ditherMouse.y);
-          const mouseGlow = ditherSettings.enableMouseInteraction && ditherMouse.active
-            ? Math.max(0, 1 - mouseDistance / ditherSettings.mouseRadius)
-            : 0;
-          let value = 0.34
-            + waveA * ditherSettings.waveAmplitude
-            + waveB * ditherSettings.waveAmplitude * 0.62
-            + curve * 0.14
-            + centerGlow * 0.28
-            + mouseGlow * 0.58;
-          value = Math.max(0, Math.min(1, value));
-          const threshold = ((x / step + y / step) % 4) * 0.045;
-          if (value < 0.22 + threshold) continue;
-          const q = Math.floor(value * ditherSettings.colorNum) / ditherSettings.colorNum;
-          const base = ditherSettings.waveColor.map((channel) => Math.round(channel * 255));
-          const pink = [255, 128, 224];
-          const cyan = [128, 224, 255];
-          const glowMix = Math.max(mouseGlow, centerGlow * 0.55);
-          const accent = q > 0.68 ? pink : cyan;
-          const r = Math.round((base[0] * (1 - glowMix) + accent[0] * glowMix) * q);
-          const g = Math.round((base[1] * (1 - glowMix) + accent[1] * glowMix) * q);
-          const b = Math.round((base[2] * (1 - glowMix) + accent[2] * glowMix) * q);
-          ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-          ctx.beginPath();
-          ctx.arc(x, y, Math.max(1.1, step * (0.2 + q * 0.22)), 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      if (!reducedMotion && !ditherSettings.disableAnimation) ditherFrame = window.requestAnimationFrame(drawDither);
     };
 
-    if (ditherCanvas) {
+    if (initializeDitherBackground()) {
       resizeDither();
       drawDither();
-      window.addEventListener('resize', () => {
-        resizeDither();
-        drawDither();
-      });
+      window.addEventListener('resize', resizeDither, { passive: true });
       window.addEventListener('pointermove', (event) => {
-        ditherMouse.x = event.clientX / window.innerWidth;
-        ditherMouse.y = event.clientY / window.innerHeight;
+        if (!ditherCanvas || !ditherSettings.enableMouseInteraction) return;
+        const rect = ditherCanvas.getBoundingClientRect();
+        ditherMouse.x = event.clientX - rect.left;
+        ditherMouse.y = event.clientY - rect.top;
         ditherMouse.active = true;
       }, { passive: true });
       window.addEventListener('pointerleave', () => {
