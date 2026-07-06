@@ -1,0 +1,19 @@
+{
+  "name": "jieyi-portfolio-dither",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:dither": "vite build --config vite.dither.config.mjs"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.0.0",
+    "@react-three/postprocessing": "^3.0.0",
+    "postprocessing": "^6.36.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "three": "^0.178.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}
