@@ -458,8 +458,8 @@
       z-index: 1;
       pointer-events: none;
       background:
-        linear-gradient(90deg, rgba(3, 2, 10, 0.28), rgba(3, 2, 10, 0.08) 44%, rgba(3, 2, 10, 0.12)),
-        radial-gradient(circle at 50% 52%, transparent 0 56%, rgba(0, 0, 0, 0.18) 100%);
+        linear-gradient(90deg, rgba(3, 2, 10, 0.14), rgba(3, 2, 10, 0.03) 44%, rgba(3, 2, 10, 0.06)),
+        radial-gradient(circle at 50% 52%, transparent 0 62%, rgba(0, 0, 0, 0.08) 100%);
       mix-blend-mode: normal;
     }
 
@@ -803,6 +803,15 @@
     body.intro-active .masthead {
       z-index: 80;
       pointer-events: none;
+    }
+
+    body.intro-active .masthead nav,
+    body.intro-active #feedback-chip {
+      display: none;
+    }
+
+    body.intro-active .masthead > a {
+      pointer-events: auto;
     }
 
     .masthead nav {
