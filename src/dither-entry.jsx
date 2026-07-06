@@ -1,3 +1,4 @@
+import React from 'react';
 import { createRoot } from 'react-dom/client';
 import Dither from './Dither.jsx';
 
@@ -13,6 +14,7 @@ if (mount) {
       enableMouseInteraction
       mouseRadius={0.1}
       colorNum={5.2}
+      pixelSize={2}
       waveAmplitude={0.33}
       waveFrequency={2.4}
       waveSpeed={0.04}

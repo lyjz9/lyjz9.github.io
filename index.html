@@ -439,36 +439,27 @@
       position: fixed;
       inset: 0;
       z-index: 70;
+      min-height: 100svh;
       overflow: hidden;
       isolation: isolate;
       color: rgba(255, 255, 255, 0.92);
-      background:
-        radial-gradient(circle at 72% 24%, rgba(255, 128, 224, 0.2), transparent 34%),
-        radial-gradient(circle at 25% 72%, rgba(128, 224, 255, 0.26), transparent 38%),
-        linear-gradient(135deg, rgba(3, 4, 18, 0.96), rgba(24, 20, 62, 0.92) 48%, rgba(48, 16, 66, 0.94));
+      background: #03020a;
       transition: opacity 0.9s ease, visibility 0.9s ease;
     }
 
     .intro-overlay::before {
-      content: "";
-      position: absolute;
-      inset: -12%;
-      z-index: 0;
-      background: transparent;
-      opacity: 0;
-      filter: none;
-      transform: scale(1.04);
+      display: none;
     }
 
     .intro-overlay::after {
       content: "";
       position: absolute;
       inset: 0;
-      z-index: 2;
+      z-index: 1;
       pointer-events: none;
       background:
-        linear-gradient(180deg, rgba(7, 9, 28, 0.06), rgba(7, 9, 28, 0.02) 44%, rgba(7, 9, 28, 0.08)),
-        radial-gradient(circle at 50% 50%, transparent 0 42%, rgba(0, 0, 0, 0.24) 94%);
+        linear-gradient(90deg, rgba(3, 2, 10, 0.28), rgba(3, 2, 10, 0.08) 44%, rgba(3, 2, 10, 0.12)),
+        radial-gradient(circle at 50% 52%, transparent 0 56%, rgba(0, 0, 0, 0.18) 100%);
       mix-blend-mode: normal;
     }
 
@@ -489,7 +480,7 @@
     .intro-dither-root {
       position: absolute;
       inset: 0;
-      z-index: 1;
+      z-index: 0;
       width: 100%;
       height: 100%;
       opacity: 1;
@@ -507,8 +498,9 @@
       position: absolute;
       left: clamp(22px, 6vw, 86px);
       top: clamp(74px, 13vh, 132px);
-      z-index: 4;
+      z-index: 3;
       width: min(660px, calc(100vw - 44px));
+      text-shadow: 0 0 24px rgba(0, 0, 0, 0.34);
       transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
     }
 
@@ -570,7 +562,7 @@
       position: absolute;
       left: 50%;
       bottom: clamp(28px, 8vh, 72px);
-      z-index: 4;
+      z-index: 3;
       width: min(90vw, 520px);
       transform: translateX(-50%);
       color: rgba(235, 245, 255, 0.72);
@@ -587,7 +579,7 @@
       position: absolute;
       left: 50%;
       top: min(74vh, calc(100vh - 92px));
-      z-index: 5;
+      z-index: 4;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -806,6 +798,11 @@
       font-size: 12px;
       letter-spacing: 0;
       text-transform: uppercase;
+    }
+
+    body.intro-active .masthead {
+      z-index: 80;
+      pointer-events: none;
     }
 
     .masthead nav {
