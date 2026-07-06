@@ -2,20 +2,19 @@ import { createRoot } from 'react-dom/client';
 import Dither from './Dither.jsx';
 
 const mount = document.getElementById('intro-dither-root');
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 if (mount) {
   const root = createRoot(mount);
 
   root.render(
     <Dither
-      waveColor={[0.4745098039215686, 0.12549019607843137, 0.12549019607843137]}
-      disableAnimation={reducedMotion ? true : false}
-      enableMouseInteraction={!reducedMotion}
+      waveColor={[0.403921568627451, 0.17254901960784313, 0.5294117647058824]}
+      disableAnimation={false}
+      enableMouseInteraction
       mouseRadius={0.1}
-      colorNum={6}
-      waveAmplitude={0.25}
-      waveFrequency={2.3}
+      colorNum={5.2}
+      waveAmplitude={0.33}
+      waveFrequency={2.4}
       waveSpeed={0.04}
     />
   );

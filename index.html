@@ -585,102 +585,76 @@
 
     .intro-panel {
       position: absolute;
-      left: var(--panel-x, 72vw);
-      top: var(--panel-y, 74vh);
+      left: 50%;
+      top: min(74vh, calc(100vh - 92px));
       z-index: 5;
-      width: min(48vw, 560px);
-      height: min(31vw, 340px);
-      min-width: 240px;
-      min-height: 170px;
-      border: 1px solid rgba(220, 245, 255, 0.38);
-      border-radius: 28px;
-      cursor: grab;
-      touch-action: none;
-      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: auto;
+      min-width: 190px;
+      min-height: 54px;
+      padding: 16px 24px;
+      border: 1px solid rgba(220, 245, 255, 0.44);
+      border-radius: 999px;
+      cursor: pointer;
+      touch-action: manipulation;
       background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(128, 224, 255, 0.08) 42%, rgba(255, 128, 224, 0.12)),
-        rgba(18, 24, 66, 0.26);
+        linear-gradient(110deg, rgba(255, 255, 255, 0.14), rgba(128, 224, 255, 0.08), rgba(255, 128, 224, 0.12)),
+        rgba(8, 10, 24, 0.54);
       box-shadow:
-        0 32px 100px rgba(8, 12, 35, 0.54),
-        0 0 46px rgba(128, 224, 255, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5),
-        inset 0 -1px 0 rgba(255, 128, 224, 0.16);
-      backdrop-filter: blur(26px) saturate(1.5);
-      transform: translate(-50%, -50%) rotate(var(--panel-rot, -9deg)) scale(var(--panel-scale, 1));
+        0 16px 54px rgba(8, 12, 35, 0.42),
+        0 0 34px rgba(128, 224, 255, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.42);
+      color: rgba(255, 255, 255, 0.94);
+      font: 700 12px/1 "Space Mono", ui-monospace, monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transform: translate(-50%, -50%);
       transform-origin: center;
-      transition:
-        left 620ms cubic-bezier(0.16, 1, 0.3, 1),
-        top 620ms cubic-bezier(0.16, 1, 0.3, 1),
-        width 1.9s cubic-bezier(0.16, 1, 0.3, 1),
-        height 1.9s cubic-bezier(0.16, 1, 0.3, 1),
-        border-radius 1.9s cubic-bezier(0.16, 1, 0.3, 1),
-        box-shadow 700ms ease,
-        transform 620ms cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.9s ease;
-      animation: panelFloat 5s ease-in-out infinite alternate;
+      transition: opacity 0.55s ease, transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+      animation: enterButtonPulse 2.4s ease-in-out infinite;
     }
 
     .intro-panel::before {
       content: "";
       position: absolute;
-      inset: -22%;
-      background:
-        linear-gradient(110deg, transparent 0 28%, rgba(128, 224, 255, 0.46) 40%, rgba(255, 128, 224, 0.28) 49%, transparent 66%),
-        radial-gradient(circle at 76% 70%, rgba(255, 180, 245, 0.32), transparent 34%),
-        radial-gradient(circle at 22% 24%, rgba(128, 255, 224, 0.24), transparent 30%);
-      filter: blur(18px);
-      opacity: 0.9;
-      transform: translate3d(calc(var(--drag-x, 0) * -0.18px), calc(var(--drag-y, 0) * -0.15px), 0);
+      inset: 3px;
+      border-radius: inherit;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      pointer-events: none;
     }
 
     .intro-panel::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 32%, rgba(128, 224, 255, 0.08)),
-        url("./intro-dither.png") center / cover no-repeat;
-      opacity: 0.32;
-      mix-blend-mode: screen;
-      transform: translate3d(calc(var(--drag-x, 0) * 0.09px), calc(var(--drag-y, 0) * 0.08px), 0) scale(1.05);
+      content: ">";
+      color: rgba(128, 255, 224, 0.9);
+      font-size: 13px;
     }
 
-    .intro-panel.is-dragging {
-      cursor: grabbing;
-      --panel-scale: 1.025;
-      transition:
-        box-shadow 180ms ease,
-        transform 90ms ease;
+    .intro-panel:hover,
+    .intro-panel:focus-visible {
+      border-color: rgba(128, 255, 224, 0.72);
       box-shadow:
-        0 42px 120px rgba(8, 12, 35, 0.6),
-        0 0 70px rgba(128, 224, 255, 0.34),
-        0 0 86px rgba(255, 128, 224, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.62);
-      animation-play-state: paused;
+        0 18px 58px rgba(8, 12, 35, 0.48),
+        0 0 46px rgba(128, 224, 255, 0.28),
+        0 0 42px rgba(255, 128, 224, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+      outline: none;
+      transform: translate(-50%, -50%) scale(1.035);
     }
 
     .intro-panel.is-snapped {
-      left: 50vw;
-      top: 50vh;
-      --panel-rot: 0deg;
-      --panel-scale: 1.04;
       cursor: default;
-      box-shadow:
-        0 0 86px rgba(128, 224, 255, 0.42),
-        0 0 140px rgba(255, 128, 224, 0.28),
-        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.92);
       animation: none;
+      pointer-events: none;
     }
 
     .intro-overlay.is-entering .intro-panel {
-      width: 150vw;
-      height: 150vh;
-      border-radius: 0;
-      --panel-scale: 1;
-      box-shadow:
-        0 0 120px rgba(128, 224, 255, 0.5),
-        0 0 180px rgba(255, 128, 224, 0.3),
-        inset 0 0 180px rgba(128, 224, 255, 0.14);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.9);
     }
 
     .intro-overlay.is-entering .intro-copy,
@@ -691,51 +665,9 @@
       pointer-events: none;
     }
 
-    .panel-chrome {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      display: grid;
-      align-content: space-between;
-      gap: 18px;
-      padding: clamp(20px, 3vw, 38px);
-      font-family: "Space Mono", ui-monospace, monospace;
-      color: rgba(255, 255, 255, 0.76);
-      pointer-events: none;
-    }
-
-    .panel-chrome span {
-      width: min(60%, 360px);
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.78), rgba(128, 224, 255, 0.55), transparent);
-    }
-
-    .panel-chrome small {
-      font-size: 11px;
-      text-transform: uppercase;
-    }
-
-    .panel-copy {
-      display: grid;
-      gap: 10px;
-      max-width: 360px;
-      align-self: start;
-    }
-
-    .panel-copy strong {
-      color: rgba(255, 255, 255, 0.94);
-      font-family: Audiowide, ui-sans-serif, system-ui, sans-serif;
-      font-size: clamp(18px, 2.1vw, 28px);
-      font-weight: 400;
-      line-height: 1.15;
-      text-transform: uppercase;
-    }
-
-    .panel-copy em {
-      color: rgba(235, 245, 255, 0.68);
-      font-size: clamp(11px, 1vw, 13px);
-      font-style: normal;
-      line-height: 1.55;
+    .intro-panel-text {
+      position: relative;
+      z-index: 1;
     }
 
     @keyframes introDrift {
@@ -755,6 +687,24 @@
 
       100% {
         translate: 0 10px;
+      }
+    }
+
+    @keyframes enterButtonPulse {
+      0%,
+      100% {
+        box-shadow:
+          0 16px 54px rgba(8, 12, 35, 0.42),
+          0 0 28px rgba(128, 224, 255, 0.16),
+          inset 0 1px 0 rgba(255, 255, 255, 0.42);
+      }
+
+      50% {
+        box-shadow:
+          0 18px 58px rgba(8, 12, 35, 0.48),
+          0 0 42px rgba(128, 224, 255, 0.26),
+          0 0 34px rgba(255, 128, 224, 0.14),
+          inset 0 1px 0 rgba(255, 255, 255, 0.48);
       }
     }
 
@@ -2365,10 +2315,13 @@
       }
 
       .intro-panel {
-        width: 72vw;
-        height: 38vh;
-        left: var(--panel-x, 60vw);
-        top: var(--panel-y, 76vh);
+        left: 50%;
+        top: min(78vh, calc(100vh - 82px));
+        width: auto;
+        height: auto;
+        min-width: 168px;
+        min-height: 52px;
+        padding: 15px 22px;
       }
 
       .soft-panel {
@@ -2381,10 +2334,6 @@
       .soft-panel-readout,
       .soft-panel-meter {
         display: none;
-      }
-
-      .panel-chrome {
-        grid-template-columns: 1fr;
       }
 
       .intro-target {
@@ -2406,21 +2355,10 @@
       <p class="intro-role">Data analyst, automation builder, and AI-curious problem solver</p>
       <p class="intro-body">I like building tools and workflows that make scattered information easier to understand and actually use.</p>
     </div>
-    <div class="intro-target" aria-hidden="true"></div>
-    <div id="intro-panel" class="intro-panel" role="button" tabindex="0" aria-label="Drag the glass panel into the center to enter">
-      <div class="panel-chrome">
-        <div class="panel-copy">
-          <small>entry card</small>
-          <strong>Move this into the center.</strong>
-          <em>This opens the rest of the site, like sliding a glass screen into place.</em>
-        </div>
-        <div class="panel-footer">
-          <span></span>
-          <small>drag to enter</small>
-        </div>
-      </div>
-    </div>
-    <p class="intro-hint">Drag the glass panel to the center when you're ready</p>
+    <button id="intro-panel" class="intro-panel" type="button" aria-label="Enter the portfolio">
+      <span class="intro-panel-text">Enter site</span>
+    </button>
+    <p class="intro-hint">Click enter when you're ready</p>
   </section>
 
   <div id="loading">
@@ -3465,26 +3403,9 @@
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const initialHash = window.location.hash;
     let introComplete = false;
-    let isDraggingIntro = false;
-    let introOffsetX = 0;
-    let introOffsetY = 0;
 
     const stopIntroBackground = () => {
       window.dispatchEvent(new CustomEvent('portfolio:intro-complete'));
-    };
-
-    const setIntroPanelPosition = (x, y) => {
-      if (!introPanel) return;
-      introPanel.style.setProperty('--panel-x', `${x}px`);
-      introPanel.style.setProperty('--panel-y', `${y}px`);
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-      const dx = x - centerX;
-      const dy = y - centerY;
-      introPanel.style.setProperty('--drag-x', dx.toFixed(2));
-      introPanel.style.setProperty('--drag-y', dy.toFixed(2));
-      const rotation = Math.max(-14, Math.min(14, dx / 32));
-      introPanel.style.setProperty('--panel-rot', `${rotation.toFixed(2)}deg`);
     };
 
     const replayLandingIntro = () => {
@@ -3522,14 +3443,11 @@
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       };
       resetToStart();
-      introPanel.classList.remove('is-dragging');
       introPanel.classList.add('is-snapped');
       introOverlay.classList.add('is-entering');
-      introPanel.style.removeProperty('--drag-x');
-      introPanel.style.removeProperty('--drag-y');
       stopIntroBackground();
 
-      const hideDelay = reducedMotion ? 80 : 2050;
+      const hideDelay = reducedMotion ? 80 : 760;
       window.setTimeout(() => {
         introOverlay.classList.add('is-hidden');
         document.body.classList.remove('intro-active');
@@ -3541,18 +3459,6 @@
       }, hideDelay);
     };
 
-    const snapIntroIfClose = (x, y) => {
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-      const distance = Math.hypot(x - centerX, y - centerY);
-      const threshold = Math.min(window.innerWidth, window.innerHeight) * 0.14;
-      if (distance <= threshold) {
-        finishIntro();
-        return true;
-      }
-      return false;
-    };
-
     const scrollToInitialHash = () => {
       if (!initialHash) return;
       const target = document.getElementById(initialHash.slice(1));
@@ -3562,42 +3468,7 @@
     };
 
     if (introPanel && introOverlay) {
-      const rect = introPanel.getBoundingClientRect();
-      setIntroPanelPosition(rect.left + rect.width / 2, rect.top + rect.height / 2);
-
-      introPanel.addEventListener('pointerdown', (event) => {
-        if (introComplete) return;
-        isDraggingIntro = true;
-        introPanel.classList.add('is-dragging');
-        const panelRect = introPanel.getBoundingClientRect();
-        introOffsetX = event.clientX - (panelRect.left + panelRect.width / 2);
-        introOffsetY = event.clientY - (panelRect.top + panelRect.height / 2);
-        introPanel.setPointerCapture(event.pointerId);
-      });
-
-      introPanel.addEventListener('pointermove', (event) => {
-        if (!isDraggingIntro || introComplete) return;
-        const x = event.clientX - introOffsetX;
-        const y = event.clientY - introOffsetY;
-        setIntroPanelPosition(x, y);
-      });
-
-      introPanel.addEventListener('pointerup', (event) => {
-        if (!isDraggingIntro || introComplete) return;
-        isDraggingIntro = false;
-        introPanel.classList.remove('is-dragging');
-        const x = event.clientX - introOffsetX;
-        const y = event.clientY - introOffsetY;
-        if (!snapIntroIfClose(x, y)) {
-          setIntroPanelPosition(x, y);
-        }
-      });
-
-      introPanel.addEventListener('pointercancel', () => {
-        if (introComplete) return;
-        isDraggingIntro = false;
-        introPanel.classList.remove('is-dragging');
-      });
+      introPanel.addEventListener('click', finishIntro);
 
       introPanel.addEventListener('keydown', (event) => {
         if (event.key === 'Enter' || event.key === ' ') {
