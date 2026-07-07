@@ -452,15 +452,7 @@
     }
 
     .intro-overlay::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-      background:
-        linear-gradient(90deg, rgba(3, 2, 10, 0.14), rgba(3, 2, 10, 0.03) 44%, rgba(3, 2, 10, 0.06)),
-        radial-gradient(circle at 50% 52%, transparent 0 62%, rgba(0, 0, 0, 0.08) 100%);
-      mix-blend-mode: normal;
+      display: none;
     }
 
     .intro-video {
@@ -3451,7 +3443,6 @@
       resetToStart();
       introPanel.classList.add('is-snapped');
       introOverlay.classList.add('is-entering');
-      stopIntroBackground();
 
       const hideDelay = reducedMotion ? 80 : 760;
       window.setTimeout(() => {
@@ -3460,6 +3451,7 @@
         resetToStart();
         replayLandingIntro();
         window.setTimeout(() => {
+          stopIntroBackground();
           introOverlay.remove();
         }, 950);
       }, hideDelay);
