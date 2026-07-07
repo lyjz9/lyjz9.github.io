@@ -178,7 +178,7 @@ function DitheredWaves({
 }) {
   const mesh = useRef(null);
   const mouseRef = useRef(new THREE.Vector2());
-  const { viewport, size, gl } = useThree();
+  const { viewport, size, gl, invalidate } = useThree();
 
   const waveUniformsRef = useRef({
     time: new THREE.Uniform(0),
@@ -202,13 +202,24 @@ function DitheredWaves({
     }
   }, [size, gl]);
 
-  const prevColor = useRef([...waveColor]);
-  useFrame(({ clock }) => {
-    const u = waveUniformsRef.current;
+  useEffect(() => {
+    if (disableAnimation) return undefined;
 
-    if (!disableAnimation) {
-      u.time.value = clock.getElapsedTime();
-    }
+    const startedAt = window.performance.now();
+    let frameId = 0;
+    const tick = () => {
+      waveUniformsRef.current.time.value = (window.performance.now() - startedAt) / 1000;
+      invalidate();
+      frameId = window.requestAnimationFrame(tick);
+    };
+
+    frameId = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frameId);
+  }, [disableAnimation, invalidate]);
+
+  const prevColor = useRef([...waveColor]);
+  useFrame(() => {
+    const u = waveUniformsRef.current;
 
     if (u.waveSpeed.value !== waveSpeed) u.waveSpeed.value = waveSpeed;
     if (u.waveFrequency.value !== waveFrequency) u.waveFrequency.value = waveFrequency;

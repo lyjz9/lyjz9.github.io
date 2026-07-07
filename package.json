@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "build:dither": "vite build --config vite.dither.config.mjs",
-    "build": "npm run build:dither && node scripts/build-site.mjs"
+    "build": "npm run build:dither && node scripts/build-site.mjs",
+    "verify:build": "node scripts/verify-build.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "^9.0.0",

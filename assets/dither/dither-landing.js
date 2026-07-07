@@ -52248,7 +52248,7 @@ function Vz({
   enableMouseInteraction: h,
   mouseRadius: m
 }) {
-  const g = Mt.useRef(null), _ = Mt.useRef(new Ce()), { viewport: x, size: b, gl: M } = HS(), A = Mt.useRef({
+  const g = Mt.useRef(null), _ = Mt.useRef(new Ce()), { viewport: x, size: b, gl: M, invalidate: A } = HS(), R = Mt.useRef({
     time: new Bn(0),
     resolution: new Bn(new Ce(0, 0)),
     waveSpeed: new Bn(s),
@@ -52260,30 +52260,38 @@ function Vz({
     mouseRadius: new Bn(m)
   });
   Mt.useEffect(() => {
-    const E = M.getPixelRatio(), D = Math.floor(b.width * E), N = Math.floor(b.height * E), L = A.current.resolution.value;
-    (L.x !== D || L.y !== N) && L.set(D, N);
-  }, [b, M]);
-  const R = Mt.useRef([...i]);
-  jT(({ clock: E }) => {
-    const D = A.current;
-    f || (D.time.value = E.getElapsedTime()), D.waveSpeed.value !== s && (D.waveSpeed.value = s), D.waveFrequency.value !== e && (D.waveFrequency.value = e), D.waveAmplitude.value !== t && (D.waveAmplitude.value = t), R.current.every((N, L) => N === i[L]) || (D.waveColor.value.set(...i), R.current = [...i]), D.enableMouseInteraction.value = h ? 1 : 0, D.mouseRadius.value = m, h && D.mousePos.value.copy(_.current);
+    const D = M.getPixelRatio(), N = Math.floor(b.width * D), L = Math.floor(b.height * D), V = R.current.resolution.value;
+    (V.x !== N || V.y !== L) && V.set(N, L);
+  }, [b, M]), Mt.useEffect(() => {
+    if (f) return;
+    const D = window.performance.now();
+    let N = 0;
+    const L = () => {
+      R.current.time.value = (window.performance.now() - D) / 1e3, A(), N = window.requestAnimationFrame(L);
+    };
+    return N = window.requestAnimationFrame(L), () => window.cancelAnimationFrame(N);
+  }, [f, A]);
+  const w = Mt.useRef([...i]);
+  jT(() => {
+    const D = R.current;
+    D.waveSpeed.value !== s && (D.waveSpeed.value = s), D.waveFrequency.value !== e && (D.waveFrequency.value = e), D.waveAmplitude.value !== t && (D.waveAmplitude.value = t), w.current.every((N, L) => N === i[L]) || (D.waveColor.value.set(...i), w.current = [...i]), D.enableMouseInteraction.value = h ? 1 : 0, D.mouseRadius.value = m, h && D.mousePos.value.copy(_.current);
   });
-  const w = (E) => {
+  const E = (D) => {
     if (!h) return;
-    const D = M.domElement.getBoundingClientRect(), N = M.getPixelRatio();
-    _.current.set((E.clientX - D.left) * N, (E.clientY - D.top) * N);
+    const N = M.domElement.getBoundingClientRect(), L = M.getPixelRatio();
+    _.current.set((D.clientX - N.left) * L, (D.clientY - N.top) * L);
   };
   return /* @__PURE__ */ Ss.createElement(Ss.Fragment, null, /* @__PURE__ */ Ss.createElement("mesh", { ref: g, scale: [x.width, x.height, 1] }, /* @__PURE__ */ Ss.createElement("planeGeometry", { args: [1, 1] }), /* @__PURE__ */ Ss.createElement(
     "shaderMaterial",
     {
       vertexShader: Pz,
       fragmentShader: Bz,
-      uniforms: A.current
+      uniforms: R.current
     }
   )), /* @__PURE__ */ Ss.createElement(Iz, null, /* @__PURE__ */ Ss.createElement(oA, { colorNum: r, pixelSize: u })), /* @__PURE__ */ Ss.createElement(
     "mesh",
     {
-      onPointerMove: w,
+      onPointerMove: E,
       position: [0, 0, 0.01],
       scale: [x.width, x.height, 1],
       visible: !1

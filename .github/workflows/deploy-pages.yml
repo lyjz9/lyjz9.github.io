@@ -35,6 +35,9 @@ jobs:
       - name: Build site
         run: npm run build
 
+      - name: Verify Dither bundle
+        run: npm run verify:build
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
