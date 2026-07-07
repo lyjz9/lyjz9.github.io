@@ -30,8 +30,12 @@ if (!distHtml.includes(ditherScriptTag)) {
   fail('dist/index.html does not load ./assets/dither/dither-landing.js.');
 }
 
-if (!distHtml.includes('id="site-dither-root"')) {
-  fail('dist/index.html is missing the persistent #site-dither-root background mount.');
+if (!distHtml.includes('id="intro-dither-root"')) {
+  fail('dist/index.html is missing the intro #intro-dither-root mount.');
+}
+
+if (distHtml.includes('id="site-dither-root"')) {
+  fail('dist/index.html should not mount Dither into the global site background.');
 }
 
 const ditherBundlePath = join(root, 'dist/assets/dither/dither-landing.js');
@@ -45,12 +49,16 @@ if (!ditherBundle.includes('frameloop:"always"') && !ditherBundle.includes('fram
   fail('Dither bundle does not include frameloop="always".');
 }
 
-if (!ditherBundle.includes('getElapsedTime')) {
-  fail('Dither bundle does not include the useFrame time update path.');
+if (!ditherBundle.includes('requestAnimationFrame')) {
+  fail('Dither bundle does not include an animation frame loop.');
 }
 
-if (!ditherBundle.includes('site-dither-root')) {
-  fail('Dither bundle does not mount the persistent site background root.');
+if (!ditherBundle.includes('performance.now')) {
+  fail('Dither bundle does not include a continuously updated time source.');
+}
+
+if (ditherBundle.includes('site-dither-root')) {
+  fail('Dither bundle should only mount into the intro overlay.');
 }
 
 console.log(`Verified Dither bundle: ${ditherBundleStats.size} bytes.`);
