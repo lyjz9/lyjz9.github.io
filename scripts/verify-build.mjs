@@ -30,6 +30,10 @@ if (!distHtml.includes(ditherScriptTag)) {
   fail('dist/index.html does not load ./assets/dither/dither-landing.js.');
 }
 
+if (!distHtml.includes('id="site-dither-root"')) {
+  fail('dist/index.html is missing the persistent #site-dither-root background mount.');
+}
+
 const ditherBundlePath = join(root, 'dist/assets/dither/dither-landing.js');
 const ditherBundleStats = await stat(ditherBundlePath);
 if (ditherBundleStats.size < minBundleBytes) {
@@ -43,6 +47,10 @@ if (!ditherBundle.includes('frameloop:"always"') && !ditherBundle.includes('fram
 
 if (!ditherBundle.includes('getElapsedTime')) {
   fail('Dither bundle does not include the useFrame time update path.');
+}
+
+if (!ditherBundle.includes('site-dither-root')) {
+  fail('Dither bundle does not mount the persistent site background root.');
 }
 
 console.log(`Verified Dither bundle: ${ditherBundleStats.size} bytes.`);
