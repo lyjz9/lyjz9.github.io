@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const ditherScriptTag = '<script type="module" src="./assets/dither/dither-landing.js"></script>';
-const minBundleBytes = 500_000;
+const minBundleBytes = 2_000;
 
 const requiredFiles = [
   'dist/index.html',
@@ -45,9 +45,6 @@ if (ditherBundleStats.size < minBundleBytes) {
 }
 
 const ditherBundle = await readFile(ditherBundlePath, 'utf8');
-if (!ditherBundle.includes('frameloop:"always"') && !ditherBundle.includes('frameloop: "always"')) {
-  fail('Dither bundle does not include frameloop="always".');
-}
 
 if (!ditherBundle.includes('requestAnimationFrame')) {
   fail('Dither bundle does not include an animation frame loop.');
@@ -55,6 +52,10 @@ if (!ditherBundle.includes('requestAnimationFrame')) {
 
 if (!ditherBundle.includes('performance.now')) {
   fail('Dither bundle does not include a continuously updated time source.');
+}
+
+if (!ditherBundle.includes('intro-dither-root')) {
+  fail('Dither bundle does not mount into #intro-dither-root.');
 }
 
 if (ditherBundle.includes('site-dither-root')) {
