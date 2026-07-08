@@ -151,12 +151,62 @@ const startFallback = (root) => {
   root.classList.add('has-grainient-fallback');
 };
 
+const installExitCleanup = (cleanup) => {
+  let cleaned = false;
+
+  const runCleanup = () => {
+    if (cleaned) return;
+    cleaned = true;
+    cleanup();
+    window.removeEventListener('pagehide', runCleanup);
+    window.removeEventListener('beforeunload', runCleanup);
+    document.removeEventListener('pointerdown', handlePotentialExit, true);
+    document.removeEventListener('click', handlePotentialExit, true);
+  };
+
+  const isSameTabProjectExit = (event) => {
+    const link = event.target?.closest?.('a[href]');
+    if (!link) return false;
+    const target = link.getAttribute('target');
+    if (target && target !== '_self') return false;
+
+    try {
+      const nextUrl = new URL(link.href, window.location.href);
+      const currentUrl = new URL(window.location.href);
+      return nextUrl.href !== currentUrl.href;
+    } catch {
+      return false;
+    }
+  };
+
+  function handlePotentialExit(event) {
+    if (isSameTabProjectExit(event)) {
+      runCleanup();
+    }
+  }
+
+  window.addEventListener('pagehide', runCleanup);
+  window.addEventListener('beforeunload', runCleanup);
+  document.addEventListener('pointerdown', handlePotentialExit, true);
+  document.addEventListener('click', handlePotentialExit, true);
+  window.cleanupProjectGrainient = runCleanup;
+
+  return runCleanup;
+};
+
 const mountGrainient = () => {
   const root = document.querySelector('#grainient-bg, .grainient-bg');
   if (!root) return;
 
   root.innerHTML = '';
   root.classList.add('is-loading');
+
+  const removeRoot = () => {
+    root.style.display = 'none';
+    root.getBoundingClientRect();
+    root.replaceChildren();
+    root.remove();
+  };
 
   let renderer;
   let frameId = 0;
@@ -170,6 +220,7 @@ const mountGrainient = () => {
   } catch (error) {
     console.warn('Grainient WebGL background fell back to CSS animation.', error);
     startFallback(root);
+    installExitCleanup(removeRoot);
     return;
   }
 
@@ -227,12 +278,16 @@ const mountGrainient = () => {
   const cleanup = () => {
     window.cancelAnimationFrame(frameId);
     window.removeEventListener('resize', resize);
-    gl.getExtension('WEBGL_lose_context')?.loseContext();
-    gl.canvas.remove();
+    try {
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
+    } catch {
+      // The renderer may already be gone during page-cache transitions.
+    }
+    removeRoot();
   };
 
   window.addEventListener('resize', resize);
-  window.addEventListener('pagehide', cleanup, { once: true });
+  installExitCleanup(cleanup);
   resize();
   animate(performance.now());
 };
