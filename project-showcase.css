@@ -17,7 +17,7 @@
 
 html {
   min-height: 100%;
-  background: #080b24;
+  background: #9e5d9c;
   scroll-behavior: smooth;
 }
 
@@ -26,13 +26,56 @@ body {
   margin: 0;
   overflow-x: hidden;
   color: var(--ink);
-  background:
-    radial-gradient(circle at -4% -12%, rgba(255, 128, 224, 0.36), transparent 32%),
-    radial-gradient(circle at 100% 0%, rgba(128, 224, 255, 0.32), transparent 30%),
-    radial-gradient(circle at 50% 82%, rgba(169, 139, 255, 0.28), transparent 34%),
-    linear-gradient(135deg, #111843 0%, #28164a 48%, #42164c 100%);
+  background: transparent;
   font-family: Audiowide, ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0;
+  isolation: isolate;
+}
+
+.grainient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, rgba(158, 93, 156, 0.95), rgba(39, 119, 255, 0.92), rgba(168, 155, 181, 0.9));
+}
+
+.grainient-bg::before {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  background:
+    radial-gradient(ellipse at 18% 26%, rgba(158, 93, 156, 0.86), transparent 38%),
+    radial-gradient(ellipse at 72% 18%, rgba(39, 119, 255, 0.9), transparent 42%),
+    radial-gradient(ellipse at 52% 74%, rgba(168, 155, 181, 0.8), transparent 46%);
+  filter: saturate(1.14) contrast(1.18);
+  animation: grainientFallback 10s ease-in-out infinite alternate;
+}
+
+.grainient-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.14;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.75) 0.65px, transparent 0.65px);
+  background-size: 2px 2px;
+  mix-blend-mode: overlay;
+}
+
+.grainient-bg.has-webgl-grainient::before {
+  opacity: 0;
+}
+
+.grainient-bg canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 body::before,
@@ -40,7 +83,7 @@ body::after {
   content: "";
   position: fixed;
   pointer-events: none;
-  z-index: 0;
+  z-index: 1;
 }
 
 body::before {
@@ -87,7 +130,7 @@ li {
 .showcase-shell,
 .showcase-footer {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: min(1296px, calc(100% - 32px));
   margin-inline: auto;
 }
@@ -1135,6 +1178,20 @@ li {
   65% {
     left: 110%;
     opacity: 0;
+  }
+}
+
+@keyframes grainientFallback {
+  0% {
+    transform: translate3d(-3%, -2%, 0) rotate(0deg) scale(1.04);
+  }
+
+  50% {
+    transform: translate3d(2%, 3%, 0) rotate(9deg) scale(1.12);
+  }
+
+  100% {
+    transform: translate3d(4%, -1%, 0) rotate(-6deg) scale(1.08);
   }
 }
 

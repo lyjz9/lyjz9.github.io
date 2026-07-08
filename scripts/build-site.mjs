@@ -17,6 +17,7 @@ const excluded = new Set([
   'package-lock.json',
   'pnpm-lock.yaml',
   'vite.dither.config.mjs',
+  'vite.grainient.config.mjs',
 ]);
 
 await rm(dist, { recursive: true, force: true });

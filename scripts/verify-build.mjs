@@ -4,12 +4,20 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const ditherScriptTag = '<script type="module" src="./assets/dither/dither-landing.js"></script>';
+const grainientScriptTag = '<script type="module" src="./assets/grainient/grainient-projects.js"></script>';
 const minBundleBytes = 2_000;
+const projectPages = [
+  'regression-lab.html',
+  'auto-claims.html',
+  'joblink-tracker.html',
+];
 
 const requiredFiles = [
   'dist/index.html',
   'dist/assets/dither/dither-landing.js',
   'dist/assets/dither/dither-landing.css',
+  'dist/assets/grainient/grainient-projects.js',
+  ...projectPages.map((page) => `dist/${page}`),
 ];
 
 const fail = (message) => {
@@ -63,3 +71,31 @@ if (ditherBundle.includes('site-dither-root')) {
 }
 
 console.log(`Verified Dither bundle: ${ditherBundleStats.size} bytes.`);
+
+const grainientBundlePath = join(root, 'dist/assets/grainient/grainient-projects.js');
+const grainientBundleStats = await stat(grainientBundlePath);
+if (grainientBundleStats.size < minBundleBytes) {
+  fail(`dist/assets/grainient/grainient-projects.js is too small (${grainientBundleStats.size} bytes).`);
+}
+
+const grainientBundle = await readFile(grainientBundlePath, 'utf8');
+if (!grainientBundle.includes('requestAnimationFrame')) {
+  fail('Grainient bundle does not include an animation frame loop.');
+}
+
+if (!grainientBundle.includes('grainient-bg')) {
+  fail('Grainient bundle does not mount into the project page background.');
+}
+
+for (const page of projectPages) {
+  const pageHtml = await readFile(join(root, 'dist', page), 'utf8');
+  if (!pageHtml.includes('id="grainient-bg"')) {
+    fail(`dist/${page} is missing the #grainient-bg mount.`);
+  }
+
+  if (!pageHtml.includes(grainientScriptTag)) {
+    fail(`dist/${page} does not load ./assets/grainient/grainient-projects.js.`);
+  }
+}
+
+console.log(`Verified Grainient project background bundle: ${grainientBundleStats.size} bytes.`);

@@ -35,7 +35,7 @@ jobs:
       - name: Build site
         run: npm run build
 
-      - name: Verify Dither bundle
+      - name: Verify built bundles
         run: npm run verify:build
 
       - name: Upload Pages artifact
