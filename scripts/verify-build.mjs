@@ -34,6 +34,14 @@ for (const file of requiredFiles) {
 }
 
 const distHtml = await readFile(join(root, 'dist/index.html'), 'utf8');
+if (!distHtml.includes('class="portfolio-page"')) {
+  fail('dist/index.html is missing the route-specific portfolio page class.');
+}
+
+if (!distHtml.includes('restorePortfolioBackground')) {
+  fail('dist/index.html is missing the portfolio background restore hook.');
+}
+
 if (!distHtml.includes(ditherScriptTag)) {
   fail('dist/index.html does not load ./assets/dither/dither-landing.js.');
 }
@@ -87,8 +95,16 @@ if (!grainientBundle.includes('grainient-bg')) {
   fail('Grainient bundle does not mount into the project page background.');
 }
 
+if (!grainientBundle.includes('pageshow') || !grainientBundle.includes('pagehide')) {
+  fail('Grainient bundle is missing back-forward cache lifecycle handling.');
+}
+
 for (const page of projectPages) {
   const pageHtml = await readFile(join(root, 'dist', page), 'utf8');
+  if (!pageHtml.includes('class="project-page"')) {
+    fail(`dist/${page} is missing the route-specific project page class.`);
+  }
+
   if (!pageHtml.includes('id="grainient-bg"')) {
     fail(`dist/${page} is missing the #grainient-bg mount.`);
   }

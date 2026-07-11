@@ -15,13 +15,13 @@
   box-sizing: border-box;
 }
 
-html {
+html.project-page {
   min-height: 100%;
   background: #9e5d9c;
   scroll-behavior: smooth;
 }
 
-body {
+body.project-page {
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
@@ -78,15 +78,15 @@ body {
   height: 100%;
 }
 
-body::before,
-body::after {
+body.project-page::before,
+body.project-page::after {
   content: "";
   position: fixed;
   pointer-events: none;
   z-index: 1;
 }
 
-body::before {
+body.project-page::before {
   left: -10vw;
   right: -10vw;
   bottom: -10vh;
@@ -101,7 +101,7 @@ body::before {
   filter: blur(0.1px);
 }
 
-body::after {
+body.project-page::after {
   inset: 0;
   background:
     radial-gradient(circle at 7% 10%, rgba(255, 255, 255, 0.75) 0 2px, transparent 3px),

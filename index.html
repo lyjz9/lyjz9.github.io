@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="portfolio-page">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -2341,7 +2341,7 @@
     }
   </style>
 </head>
-<body class="intro-active">
+<body class="portfolio-page intro-active">
   <div id="page-progress" class="page-progress" aria-hidden="true"></div>
   <div id="pointer-scan" class="pointer-scan" aria-hidden="true"></div>
   <div id="click-burst-layer" class="click-burst-layer" aria-hidden="true"></div>
@@ -2846,6 +2846,40 @@
       window.setTimeout(primeVideoFrame, 520);
     };
 
+    const restorePortfolioBackground = () => {
+      document.documentElement.classList.add('portfolio-page');
+      document.body.classList.add('portfolio-page');
+
+      // Project backgrounds are route-owned. Remove a stale mount defensively if
+      // a browser extension or page-cache restoration ever carries one across.
+      document.querySelectorAll('#grainient-bg, .grainient-bg').forEach((element) => element.remove());
+
+      const videoBackground = document.getElementById('video-bg');
+      if (videoBackground) {
+        videoBackground.hidden = false;
+        videoBackground.style.removeProperty('display');
+        videoBackground.style.removeProperty('opacity');
+        videoBackground.style.removeProperty('visibility');
+      }
+
+      if (video) {
+        video.hidden = false;
+        video.style.removeProperty('display');
+        video.style.removeProperty('opacity');
+        video.style.removeProperty('visibility');
+        if (video.readyState < 1) video.load();
+      }
+
+      handleLoaded();
+      wakeVideo();
+      wakeSoftPanelVideo();
+      window.requestAnimationFrame(() => {
+        syncVideoToScroll();
+        updateSoftPanelMotion();
+        window.ScrollTrigger?.refresh?.();
+      });
+    };
+
     const handleLoaded = () => {
       if (!isLoaded) {
         isLoaded = true;
@@ -2884,6 +2918,11 @@
     wakeSoftPanelVideo();
     updateSoftPanelMotion();
     setTimeout(handleLoaded, 3000);
+
+    window.addEventListener('pageshow', restorePortfolioBackground);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') restorePortfolioBackground();
+    });
 
     window.addEventListener('scroll', syncVideoToScroll, { passive: true });
 

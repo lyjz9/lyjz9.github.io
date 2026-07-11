@@ -160,35 +160,10 @@ const installExitCleanup = (cleanup) => {
     cleanup();
     window.removeEventListener('pagehide', runCleanup);
     window.removeEventListener('beforeunload', runCleanup);
-    document.removeEventListener('pointerdown', handlePotentialExit, true);
-    document.removeEventListener('click', handlePotentialExit, true);
   };
-
-  const isSameTabProjectExit = (event) => {
-    const link = event.target?.closest?.('a[href]');
-    if (!link) return false;
-    const target = link.getAttribute('target');
-    if (target && target !== '_self') return false;
-
-    try {
-      const nextUrl = new URL(link.href, window.location.href);
-      const currentUrl = new URL(window.location.href);
-      return nextUrl.href !== currentUrl.href;
-    } catch {
-      return false;
-    }
-  };
-
-  function handlePotentialExit(event) {
-    if (isSameTabProjectExit(event)) {
-      runCleanup();
-    }
-  }
 
   window.addEventListener('pagehide', runCleanup);
   window.addEventListener('beforeunload', runCleanup);
-  document.addEventListener('pointerdown', handlePotentialExit, true);
-  document.addEventListener('click', handlePotentialExit, true);
   window.cleanupProjectGrainient = runCleanup;
 
   return runCleanup;
@@ -297,3 +272,16 @@ if (document.readyState === 'loading') {
 } else {
   mountGrainient();
 }
+
+// A project page restored from the back-forward cache needs a fresh WebGL context
+// because pagehide deliberately releases the previous one.
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted && !document.querySelector('#grainient-bg, .grainient-bg')) {
+    const root = document.createElement('div');
+    root.id = 'grainient-bg';
+    root.className = 'grainient-bg';
+    root.setAttribute('aria-hidden', 'true');
+    document.body.prepend(root);
+    mountGrainient();
+  }
+});

@@ -2,7 +2,7 @@ function B(e) {
   let t = e[0], i = e[1], s = e[2];
   return Math.sqrt(t * t + i * i + s * s);
 }
-function G(e, t) {
+function W(e, t) {
   return e[0] = t[0], e[1] = t[1], e[2] = t[2], e;
 }
 function xt(e, t, i, s) {
@@ -11,7 +11,7 @@ function xt(e, t, i, s) {
 function k(e, t, i) {
   return e[0] = t[0] + i[0], e[1] = t[1] + i[1], e[2] = t[2] + i[2], e;
 }
-function X(e, t, i) {
+function Y(e, t, i) {
   return e[0] = t[0] - i[0], e[1] = t[1] - i[1], e[2] = t[2] - i[2], e;
 }
 function mt(e, t, i) {
@@ -23,36 +23,36 @@ function yt(e, t, i) {
 function $(e, t, i) {
   return e[0] = t[0] * i, e[1] = t[1] * i, e[2] = t[2] * i, e;
 }
-function wt(e, t) {
+function Mt(e, t) {
   let i = t[0] - e[0], s = t[1] - e[1], r = t[2] - e[2];
   return Math.sqrt(i * i + s * s + r * r);
 }
-function Mt(e, t) {
+function wt(e, t) {
   let i = t[0] - e[0], s = t[1] - e[1], r = t[2] - e[2];
   return i * i + s * s + r * r;
 }
-function Y(e) {
+function Z(e) {
   let t = e[0], i = e[1], s = e[2];
   return t * t + i * i + s * s;
 }
-function Et(e, t) {
+function _t(e, t) {
   return e[0] = -t[0], e[1] = -t[1], e[2] = -t[2], e;
 }
-function _t(e, t) {
+function At(e, t) {
   return e[0] = 1 / t[0], e[1] = 1 / t[1], e[2] = 1 / t[2], e;
 }
-function W(e, t) {
+function U(e, t) {
   let i = t[0], s = t[1], r = t[2], n = i * i + s * s + r * r;
   return n > 0 && (n = 1 / Math.sqrt(n)), e[0] = t[0] * n, e[1] = t[1] * n, e[2] = t[2] * n, e;
 }
 function ot(e, t) {
   return e[0] * t[0] + e[1] * t[1] + e[2] * t[2];
 }
-function Z(e, t, i) {
+function j(e, t, i) {
   let s = t[0], r = t[1], n = t[2], h = i[0], l = i[1], a = i[2];
   return e[0] = r * a - n * l, e[1] = n * h - s * a, e[2] = s * l - r * h, e;
 }
-function At(e, t, i, s) {
+function Et(e, t, i, s) {
   let r = t[0], n = t[1], h = t[2];
   return e[0] = r + s * (i[0] - r), e[1] = n + s * (i[1] - n), e[2] = h + s * (i[2] - h), e;
 }
@@ -80,7 +80,7 @@ function Ft(e, t, i) {
 const zt = /* @__PURE__ */ (function() {
   const e = [0, 0, 0], t = [0, 0, 0];
   return function(i, s) {
-    G(e, i), G(t, s), W(e, e), W(t, t);
+    W(e, i), W(t, s), U(e, e), U(t, t);
     let r = ot(e, t);
     return r > 1 ? 0 : r < -1 ? Math.PI : Math.acos(r);
   };
@@ -114,13 +114,13 @@ class T extends Array {
     return t.length ? this.copy(t) : (xt(this, t, i, s), this);
   }
   copy(t) {
-    return G(this, t), this;
+    return W(this, t), this;
   }
   add(t, i) {
     return i ? k(this, t, i) : k(this, this, t), this;
   }
   sub(t, i) {
-    return i ? X(this, t, i) : X(this, this, t), this;
+    return i ? Y(this, t, i) : Y(this, this, t), this;
   }
   multiply(t) {
     return t.length ? mt(this, this, t) : $(this, this, t), this;
@@ -129,32 +129,32 @@ class T extends Array {
     return t.length ? yt(this, this, t) : $(this, this, 1 / t), this;
   }
   inverse(t = this) {
-    return _t(this, t), this;
+    return At(this, t), this;
   }
   // Can't use 'length' as Array.prototype uses it
   len() {
     return B(this);
   }
   distance(t) {
-    return t ? wt(this, t) : B(this);
+    return t ? Mt(this, t) : B(this);
   }
   squaredLen() {
-    return Y(this);
+    return Z(this);
   }
   squaredDistance(t) {
-    return t ? Mt(this, t) : Y(this);
+    return t ? wt(this, t) : Z(this);
   }
   negate(t = this) {
-    return Et(this, t), this;
+    return _t(this, t), this;
   }
   cross(t, i) {
-    return i ? Z(this, t, i) : Z(this, this, t), this;
+    return i ? j(this, t, i) : j(this, this, t), this;
   }
   scale(t) {
     return $(this, this, t), this;
   }
   normalize() {
-    return W(this, this), this;
+    return U(this, this), this;
   }
   dot(t) {
     return ot(this, t);
@@ -178,7 +178,7 @@ class T extends Array {
     return zt(this, t);
   }
   lerp(t, i) {
-    return At(this, this, t, i), this;
+    return Et(this, this, t, i), this;
   }
   smoothLerp(t, i, s) {
     return bt(this, this, t, i, s), this;
@@ -197,8 +197,8 @@ class T extends Array {
     return this[0] = t[0] * i + t[4] * s + t[8] * r, this[1] = t[1] * i + t[5] * s + t[9] * r, this[2] = t[2] * i + t[6] * s + t[10] * r, this.normalize();
   }
 }
-const j = /* @__PURE__ */ new T();
-let Rt = 1, Tt = 1, Q = !1;
+const Q = /* @__PURE__ */ new T();
+let Rt = 1, Tt = 1, H = !1;
 class Ot {
   constructor(t, i = {}) {
     t.canvas || console.error("gl not passed as first argument to Geometry"), this.gl = t, this.attributes = i, this.id = Rt++, this.VAOs = {}, this.drawRange = { start: 0, count: 0 }, this.instancedCount = 0, this.gl.renderer.bindVertexArray(null), this.gl.renderer.currentGeometry = null, this.glState = this.gl.renderer.state;
@@ -265,8 +265,8 @@ class Ot {
   getPosition() {
     const t = this.attributes.position;
     if (t.data) return t;
-    if (!Q)
-      return console.warn("No position buffer data found to compute bounds"), Q = !0;
+    if (!H)
+      return console.warn("No position buffer data found to compute bounds"), H = !0;
   }
   computeBoundingBox(t) {
     t || (t = this.getPosition());
@@ -292,7 +292,7 @@ class Ot {
     this.bounds || this.computeBoundingBox(t);
     let r = 0;
     for (let n = 0, h = i.length; n < h; n += s)
-      j.fromArray(i, n), r = Math.max(r, this.bounds.center.squaredDistance(j));
+      Q.fromArray(i, n), r = Math.max(r, this.bounds.center.squaredDistance(Q));
     this.bounds.radius = Math.sqrt(r);
   }
   remove() {
@@ -303,7 +303,7 @@ class Ot {
   }
 }
 let Bt = 1;
-const H = {};
+const K = {};
 class qt {
   constructor(t, {
     vertex: i,
@@ -321,9 +321,9 @@ class qt {
   setShaders({ vertex: t, fragment: i }) {
     if (t && (this.gl.shaderSource(this.vertexShader, t), this.gl.compileShader(this.vertexShader), this.gl.getShaderInfoLog(this.vertexShader) !== "" && console.warn(`${this.gl.getShaderInfoLog(this.vertexShader)}
 Vertex Shader
-${K(t)}`)), i && (this.gl.shaderSource(this.fragmentShader, i), this.gl.compileShader(this.fragmentShader), this.gl.getShaderInfoLog(this.fragmentShader) !== "" && console.warn(`${this.gl.getShaderInfoLog(this.fragmentShader)}
+${J(t)}`)), i && (this.gl.shaderSource(this.fragmentShader, i), this.gl.compileShader(this.fragmentShader), this.gl.getShaderInfoLog(this.fragmentShader) !== "" && console.warn(`${this.gl.getShaderInfoLog(this.fragmentShader)}
 Fragment Shader
-${K(i)}`)), this.gl.linkProgram(this.program), !this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS))
+${J(i)}`)), this.gl.linkProgram(this.program), !this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS))
       return console.warn(this.gl.getProgramInfoLog(this.program));
     this.uniformLocations = /* @__PURE__ */ new Map();
     let s = this.gl.getProgramParameter(this.program, this.gl.ACTIVE_UNIFORMS);
@@ -372,9 +372,9 @@ ${K(i)}`)), this.gl.linkProgram(this.program), !this.gl.getProgramParameter(this
         }
       }
       if (!h)
-        return J(`Active uniform ${n.name} has not been supplied`);
+        return tt(`Active uniform ${n.name} has not been supplied`);
       if (h && h.value === void 0)
-        return J(`${n.name} uniform is missing a value parameter`);
+        return tt(`${n.name} uniform is missing a value parameter`);
       if (h.value.texture)
         return i = i + 1, h.value.update(i), I(this.gl, n.type, r, i);
       if (h.value.length && h.value[0].texture) {
@@ -455,7 +455,7 @@ function I(e, t, i, s) {
       return e.uniformMatrix4fv(i, !1, s);
   }
 }
-function K(e) {
+function J(e) {
   let t = e.split(`
 `);
   for (let i = 0; i < t.length; i++)
@@ -467,8 +467,8 @@ function $t(e) {
   const t = e.length, i = e[0].length;
   if (i === void 0) return e;
   const s = t * i;
-  let r = H[s];
-  r || (H[s] = r = new Float32Array(s));
+  let r = K[s];
+  r || (K[s] = r = new Float32Array(s));
   for (let n = 0; n < t; n++) r.set(e[n], n * i);
   return r;
 }
@@ -483,7 +483,7 @@ function Nt(e, t) {
     e[i] = t[i];
 }
 let N = 0;
-function J(e) {
+function tt(e) {
   N > 100 || (console.warn(e), N++, N > 100 && console.warn("More than 100 program warnings - stopping logs."));
 }
 const D = /* @__PURE__ */ new T();
@@ -591,28 +591,28 @@ class Pt {
     });
   }
 }
-function Ut(e, t) {
+function Gt(e, t) {
   return e[0] = t[0], e[1] = t[1], e[2] = t[2], e[3] = t[3], e;
 }
-function Gt(e, t, i, s, r) {
+function Wt(e, t, i, s, r) {
   return e[0] = t, e[1] = i, e[2] = s, e[3] = r, e;
 }
-function Wt(e, t) {
+function Ut(e, t) {
   let i = t[0], s = t[1], r = t[2], n = t[3], h = i * i + s * s + r * r + n * n;
   return h > 0 && (h = 1 / Math.sqrt(h)), e[0] = i * h, e[1] = s * h, e[2] = r * h, e[3] = n * h, e;
 }
 function Vt(e, t) {
   return e[0] * t[0] + e[1] * t[1] + e[2] * t[2] + e[3] * t[3];
 }
-function kt(e) {
+function Xt(e) {
   return e[0] = 0, e[1] = 0, e[2] = 0, e[3] = 1, e;
 }
-function Xt(e, t, i) {
+function kt(e, t, i) {
   i = i * 0.5;
   let s = Math.sin(i);
   return e[0] = s * t[0], e[1] = s * t[1], e[2] = s * t[2], e[3] = Math.cos(i), e;
 }
-function tt(e, t, i) {
+function et(e, t, i) {
   let s = t[0], r = t[1], n = t[2], h = t[3], l = i[0], a = i[1], c = i[2], f = i[3];
   return e[0] = s * f + h * l + r * c - n * a, e[1] = r * f + h * a + n * l - s * c, e[2] = n * f + h * c + s * a - r * l, e[3] = h * f - s * l - r * a - n * c, e;
 }
@@ -658,7 +658,7 @@ function te(e, t, i = "YXZ") {
   let s = Math.sin(t[0] * 0.5), r = Math.cos(t[0] * 0.5), n = Math.sin(t[1] * 0.5), h = Math.cos(t[1] * 0.5), l = Math.sin(t[2] * 0.5), a = Math.cos(t[2] * 0.5);
   return i === "XYZ" ? (e[0] = s * h * a + r * n * l, e[1] = r * n * a - s * h * l, e[2] = r * h * l + s * n * a, e[3] = r * h * a - s * n * l) : i === "YXZ" ? (e[0] = s * h * a + r * n * l, e[1] = r * n * a - s * h * l, e[2] = r * h * l - s * n * a, e[3] = r * h * a + s * n * l) : i === "ZXY" ? (e[0] = s * h * a - r * n * l, e[1] = r * n * a + s * h * l, e[2] = r * h * l + s * n * a, e[3] = r * h * a - s * n * l) : i === "ZYX" ? (e[0] = s * h * a - r * n * l, e[1] = r * n * a + s * h * l, e[2] = r * h * l - s * n * a, e[3] = r * h * a + s * n * l) : i === "YZX" ? (e[0] = s * h * a + r * n * l, e[1] = r * n * a + s * h * l, e[2] = r * h * l - s * n * a, e[3] = r * h * a - s * n * l) : i === "XZY" && (e[0] = s * h * a - r * n * l, e[1] = r * n * a - s * h * l, e[2] = r * h * l + s * n * a, e[3] = r * h * a + s * n * l), e;
 }
-const ee = Ut, ie = Gt, se = Vt, re = Wt;
+const ee = Gt, ie = Wt, se = Vt, re = Ut;
 class ne extends Array {
   constructor(t = 0, i = 0, s = 0, r = 1) {
     super(t, i, s, r), this.onChange = () => {
@@ -696,7 +696,7 @@ class ne extends Array {
     this._target[3] = t, this.onChange();
   }
   identity() {
-    return kt(this._target), this.onChange(), this;
+    return Xt(this._target), this.onChange(), this;
   }
   set(t, i, s, r) {
     return t.length ? this.copy(t) : (ie(this._target, t, i, s, r), this.onChange(), this);
@@ -723,7 +723,7 @@ class ne extends Array {
     return re(this._target, t), this.onChange(), this;
   }
   multiply(t, i) {
-    return i ? tt(this._target, t, i) : tt(this._target, this._target, t), this.onChange(), this;
+    return i ? et(this._target, t, i) : et(this._target, this._target, t), this.onChange(), this;
   }
   dot(t) {
     return se(this._target, t);
@@ -735,7 +735,7 @@ class ne extends Array {
     return te(this._target, t, t.order), i || this.onChange(), this;
   }
   fromAxisAngle(t, i) {
-    return Xt(this._target, t, i), this.onChange(), this;
+    return kt(this._target, t, i), this.onChange(), this;
   }
   slerp(t, i) {
     return Qt(this._target, this._target, t, i), this.onChange(), this;
@@ -758,16 +758,16 @@ function ce(e) {
   return e[0] = 1, e[1] = 0, e[2] = 0, e[3] = 0, e[4] = 0, e[5] = 1, e[6] = 0, e[7] = 0, e[8] = 0, e[9] = 0, e[10] = 1, e[11] = 0, e[12] = 0, e[13] = 0, e[14] = 0, e[15] = 1, e;
 }
 function fe(e, t) {
-  let i = t[0], s = t[1], r = t[2], n = t[3], h = t[4], l = t[5], a = t[6], c = t[7], f = t[8], o = t[9], d = t[10], u = t[11], g = t[12], p = t[13], x = t[14], m = t[15], A = i * l - s * h, w = i * a - r * h, y = i * c - n * h, E = s * a - r * l, M = s * c - n * l, b = r * c - n * a, F = f * p - o * g, z = f * x - d * g, S = f * m - u * g, L = o * x - d * p, C = o * m - u * p, R = d * m - u * x, _ = A * R - w * C + y * L + E * S - M * z + b * F;
-  return _ ? (_ = 1 / _, e[0] = (l * R - a * C + c * L) * _, e[1] = (r * C - s * R - n * L) * _, e[2] = (p * b - x * M + m * E) * _, e[3] = (d * M - o * b - u * E) * _, e[4] = (a * S - h * R - c * z) * _, e[5] = (i * R - r * S + n * z) * _, e[6] = (x * y - g * b - m * w) * _, e[7] = (f * b - d * y + u * w) * _, e[8] = (h * C - l * S + c * F) * _, e[9] = (s * S - i * C - n * F) * _, e[10] = (g * M - p * y + m * A) * _, e[11] = (o * y - f * M - u * A) * _, e[12] = (l * z - h * L - a * F) * _, e[13] = (i * L - s * z + r * F) * _, e[14] = (p * w - g * E - x * A) * _, e[15] = (f * E - o * w + d * A) * _, e) : null;
+  let i = t[0], s = t[1], r = t[2], n = t[3], h = t[4], l = t[5], a = t[6], c = t[7], f = t[8], o = t[9], d = t[10], u = t[11], g = t[12], p = t[13], x = t[14], m = t[15], E = i * l - s * h, M = i * a - r * h, y = i * c - n * h, _ = s * a - r * l, w = s * c - n * l, b = r * c - n * a, F = f * p - o * g, z = f * x - d * g, S = f * m - u * g, L = o * x - d * p, C = o * m - u * p, R = d * m - u * x, A = E * R - M * C + y * L + _ * S - w * z + b * F;
+  return A ? (A = 1 / A, e[0] = (l * R - a * C + c * L) * A, e[1] = (r * C - s * R - n * L) * A, e[2] = (p * b - x * w + m * _) * A, e[3] = (d * w - o * b - u * _) * A, e[4] = (a * S - h * R - c * z) * A, e[5] = (i * R - r * S + n * z) * A, e[6] = (x * y - g * b - m * M) * A, e[7] = (f * b - d * y + u * M) * A, e[8] = (h * C - l * S + c * F) * A, e[9] = (s * S - i * C - n * F) * A, e[10] = (g * w - p * y + m * E) * A, e[11] = (o * y - f * w - u * E) * A, e[12] = (l * z - h * L - a * F) * A, e[13] = (i * L - s * z + r * F) * A, e[14] = (p * M - g * _ - x * E) * A, e[15] = (f * _ - o * M + d * E) * A, e) : null;
 }
 function ut(e) {
-  let t = e[0], i = e[1], s = e[2], r = e[3], n = e[4], h = e[5], l = e[6], a = e[7], c = e[8], f = e[9], o = e[10], d = e[11], u = e[12], g = e[13], p = e[14], x = e[15], m = t * h - i * n, A = t * l - s * n, w = t * a - r * n, y = i * l - s * h, E = i * a - r * h, M = s * a - r * l, b = c * g - f * u, F = c * p - o * u, z = c * x - d * u, S = f * p - o * g, L = f * x - d * g, C = o * x - d * p;
-  return m * C - A * L + w * S + y * z - E * F + M * b;
+  let t = e[0], i = e[1], s = e[2], r = e[3], n = e[4], h = e[5], l = e[6], a = e[7], c = e[8], f = e[9], o = e[10], d = e[11], u = e[12], g = e[13], p = e[14], x = e[15], m = t * h - i * n, E = t * l - s * n, M = t * a - r * n, y = i * l - s * h, _ = i * a - r * h, w = s * a - r * l, b = c * g - f * u, F = c * p - o * u, z = c * x - d * u, S = f * p - o * g, L = f * x - d * g, C = o * x - d * p;
+  return m * C - E * L + M * S + y * z - _ * F + w * b;
 }
-function et(e, t, i) {
-  let s = t[0], r = t[1], n = t[2], h = t[3], l = t[4], a = t[5], c = t[6], f = t[7], o = t[8], d = t[9], u = t[10], g = t[11], p = t[12], x = t[13], m = t[14], A = t[15], w = i[0], y = i[1], E = i[2], M = i[3];
-  return e[0] = w * s + y * l + E * o + M * p, e[1] = w * r + y * a + E * d + M * x, e[2] = w * n + y * c + E * u + M * m, e[3] = w * h + y * f + E * g + M * A, w = i[4], y = i[5], E = i[6], M = i[7], e[4] = w * s + y * l + E * o + M * p, e[5] = w * r + y * a + E * d + M * x, e[6] = w * n + y * c + E * u + M * m, e[7] = w * h + y * f + E * g + M * A, w = i[8], y = i[9], E = i[10], M = i[11], e[8] = w * s + y * l + E * o + M * p, e[9] = w * r + y * a + E * d + M * x, e[10] = w * n + y * c + E * u + M * m, e[11] = w * h + y * f + E * g + M * A, w = i[12], y = i[13], E = i[14], M = i[15], e[12] = w * s + y * l + E * o + M * p, e[13] = w * r + y * a + E * d + M * x, e[14] = w * n + y * c + E * u + M * m, e[15] = w * h + y * f + E * g + M * A, e;
+function it(e, t, i) {
+  let s = t[0], r = t[1], n = t[2], h = t[3], l = t[4], a = t[5], c = t[6], f = t[7], o = t[8], d = t[9], u = t[10], g = t[11], p = t[12], x = t[13], m = t[14], E = t[15], M = i[0], y = i[1], _ = i[2], w = i[3];
+  return e[0] = M * s + y * l + _ * o + w * p, e[1] = M * r + y * a + _ * d + w * x, e[2] = M * n + y * c + _ * u + w * m, e[3] = M * h + y * f + _ * g + w * E, M = i[4], y = i[5], _ = i[6], w = i[7], e[4] = M * s + y * l + _ * o + w * p, e[5] = M * r + y * a + _ * d + w * x, e[6] = M * n + y * c + _ * u + w * m, e[7] = M * h + y * f + _ * g + w * E, M = i[8], y = i[9], _ = i[10], w = i[11], e[8] = M * s + y * l + _ * o + w * p, e[9] = M * r + y * a + _ * d + w * x, e[10] = M * n + y * c + _ * u + w * m, e[11] = M * h + y * f + _ * g + w * E, M = i[12], y = i[13], _ = i[14], w = i[15], e[12] = M * s + y * l + _ * o + w * p, e[13] = M * r + y * a + _ * d + w * x, e[14] = M * n + y * c + _ * u + w * m, e[15] = M * h + y * f + _ * g + w * E, e;
 }
 function de(e, t, i) {
   let s = i[0], r = i[1], n = i[2], h, l, a, c, f, o, d, u, g, p, x, m;
@@ -778,8 +778,8 @@ function oe(e, t, i) {
   return e[0] = t[0] * s, e[1] = t[1] * s, e[2] = t[2] * s, e[3] = t[3] * s, e[4] = t[4] * r, e[5] = t[5] * r, e[6] = t[6] * r, e[7] = t[7] * r, e[8] = t[8] * n, e[9] = t[9] * n, e[10] = t[10] * n, e[11] = t[11] * n, e[12] = t[12], e[13] = t[13], e[14] = t[14], e[15] = t[15], e;
 }
 function ue(e, t, i, s) {
-  let r = s[0], n = s[1], h = s[2], l = Math.hypot(r, n, h), a, c, f, o, d, u, g, p, x, m, A, w, y, E, M, b, F, z, S, L, C, R, _, O;
-  return Math.abs(l) < he ? null : (l = 1 / l, r *= l, n *= l, h *= l, a = Math.sin(i), c = Math.cos(i), f = 1 - c, o = t[0], d = t[1], u = t[2], g = t[3], p = t[4], x = t[5], m = t[6], A = t[7], w = t[8], y = t[9], E = t[10], M = t[11], b = r * r * f + c, F = n * r * f + h * a, z = h * r * f - n * a, S = r * n * f - h * a, L = n * n * f + c, C = h * n * f + r * a, R = r * h * f + n * a, _ = n * h * f - r * a, O = h * h * f + c, e[0] = o * b + p * F + w * z, e[1] = d * b + x * F + y * z, e[2] = u * b + m * F + E * z, e[3] = g * b + A * F + M * z, e[4] = o * S + p * L + w * C, e[5] = d * S + x * L + y * C, e[6] = u * S + m * L + E * C, e[7] = g * S + A * L + M * C, e[8] = o * R + p * _ + w * O, e[9] = d * R + x * _ + y * O, e[10] = u * R + m * _ + E * O, e[11] = g * R + A * _ + M * O, t !== e && (e[12] = t[12], e[13] = t[13], e[14] = t[14], e[15] = t[15]), e);
+  let r = s[0], n = s[1], h = s[2], l = Math.hypot(r, n, h), a, c, f, o, d, u, g, p, x, m, E, M, y, _, w, b, F, z, S, L, C, R, A, O;
+  return Math.abs(l) < he ? null : (l = 1 / l, r *= l, n *= l, h *= l, a = Math.sin(i), c = Math.cos(i), f = 1 - c, o = t[0], d = t[1], u = t[2], g = t[3], p = t[4], x = t[5], m = t[6], E = t[7], M = t[8], y = t[9], _ = t[10], w = t[11], b = r * r * f + c, F = n * r * f + h * a, z = h * r * f - n * a, S = r * n * f - h * a, L = n * n * f + c, C = h * n * f + r * a, R = r * h * f + n * a, A = n * h * f - r * a, O = h * h * f + c, e[0] = o * b + p * F + M * z, e[1] = d * b + x * F + y * z, e[2] = u * b + m * F + _ * z, e[3] = g * b + E * F + w * z, e[4] = o * S + p * L + M * C, e[5] = d * S + x * L + y * C, e[6] = u * S + m * L + _ * C, e[7] = g * S + E * L + w * C, e[8] = o * R + p * A + M * O, e[9] = d * R + x * A + y * O, e[10] = u * R + m * A + _ * O, e[11] = g * R + E * A + w * O, t !== e && (e[12] = t[12], e[13] = t[13], e[14] = t[14], e[15] = t[15]), e);
 }
 function ge(e, t) {
   return e[0] = t[12], e[1] = t[13], e[2] = t[14], e;
@@ -810,34 +810,34 @@ function xe(e, t, i, s) {
   a[0] *= c, a[1] *= c, a[2] *= c, a[4] *= f, a[5] *= f, a[6] *= f, a[8] *= o, a[9] *= o, a[10] *= o, pt(t, a), s[0] = r, s[1] = n, s[2] = h;
 }
 function me(e, t, i, s) {
-  const r = e, n = t[0], h = t[1], l = t[2], a = t[3], c = n + n, f = h + h, o = l + l, d = n * c, u = n * f, g = n * o, p = h * f, x = h * o, m = l * o, A = a * c, w = a * f, y = a * o, E = s[0], M = s[1], b = s[2];
-  return r[0] = (1 - (p + m)) * E, r[1] = (u + y) * E, r[2] = (g - w) * E, r[3] = 0, r[4] = (u - y) * M, r[5] = (1 - (d + m)) * M, r[6] = (x + A) * M, r[7] = 0, r[8] = (g + w) * b, r[9] = (x - A) * b, r[10] = (1 - (d + p)) * b, r[11] = 0, r[12] = i[0], r[13] = i[1], r[14] = i[2], r[15] = 1, r;
+  const r = e, n = t[0], h = t[1], l = t[2], a = t[3], c = n + n, f = h + h, o = l + l, d = n * c, u = n * f, g = n * o, p = h * f, x = h * o, m = l * o, E = a * c, M = a * f, y = a * o, _ = s[0], w = s[1], b = s[2];
+  return r[0] = (1 - (p + m)) * _, r[1] = (u + y) * _, r[2] = (g - M) * _, r[3] = 0, r[4] = (u - y) * w, r[5] = (1 - (d + m)) * w, r[6] = (x + E) * w, r[7] = 0, r[8] = (g + M) * b, r[9] = (x - E) * b, r[10] = (1 - (d + p)) * b, r[11] = 0, r[12] = i[0], r[13] = i[1], r[14] = i[2], r[15] = 1, r;
 }
 function ye(e, t) {
   let i = t[0], s = t[1], r = t[2], n = t[3], h = i + i, l = s + s, a = r + r, c = i * h, f = s * h, o = s * l, d = r * h, u = r * l, g = r * a, p = n * h, x = n * l, m = n * a;
   return e[0] = 1 - o - g, e[1] = f + m, e[2] = d - x, e[3] = 0, e[4] = f - m, e[5] = 1 - c - g, e[6] = u + p, e[7] = 0, e[8] = d + x, e[9] = u - p, e[10] = 1 - c - o, e[11] = 0, e[12] = 0, e[13] = 0, e[14] = 0, e[15] = 1, e;
 }
-function we(e, t, i, s, r) {
+function Me(e, t, i, s, r) {
   let n = 1 / Math.tan(t / 2), h = 1 / (s - r);
   return e[0] = n / i, e[1] = 0, e[2] = 0, e[3] = 0, e[4] = 0, e[5] = n, e[6] = 0, e[7] = 0, e[8] = 0, e[9] = 0, e[10] = (r + s) * h, e[11] = -1, e[12] = 0, e[13] = 0, e[14] = 2 * r * s * h, e[15] = 0, e;
 }
-function Me(e, t, i, s, r, n, h) {
+function we(e, t, i, s, r, n, h) {
   let l = 1 / (t - i), a = 1 / (s - r), c = 1 / (n - h);
   return e[0] = -2 * l, e[1] = 0, e[2] = 0, e[3] = 0, e[4] = 0, e[5] = -2 * a, e[6] = 0, e[7] = 0, e[8] = 0, e[9] = 0, e[10] = 2 * c, e[11] = 0, e[12] = (t + i) * l, e[13] = (r + s) * a, e[14] = (h + n) * c, e[15] = 1, e;
 }
-function Ee(e, t, i, s) {
+function _e(e, t, i, s) {
   let r = t[0], n = t[1], h = t[2], l = s[0], a = s[1], c = s[2], f = r - i[0], o = n - i[1], d = h - i[2], u = f * f + o * o + d * d;
   u === 0 ? d = 1 : (u = 1 / Math.sqrt(u), f *= u, o *= u, d *= u);
   let g = a * d - c * o, p = c * f - l * d, x = l * o - a * f;
   return u = g * g + p * p + x * x, u === 0 && (c ? l += 1e-6 : a ? c += 1e-6 : a += 1e-6, g = a * d - c * o, p = c * f - l * d, x = l * o - a * f, u = g * g + p * p + x * x), u = 1 / Math.sqrt(u), g *= u, p *= u, x *= u, e[0] = g, e[1] = p, e[2] = x, e[3] = 0, e[4] = o * x - d * p, e[5] = d * g - f * x, e[6] = f * p - o * g, e[7] = 0, e[8] = f, e[9] = o, e[10] = d, e[11] = 0, e[12] = r, e[13] = n, e[14] = h, e[15] = 1, e;
 }
-function it(e, t, i) {
+function st(e, t, i) {
   return e[0] = t[0] + i[0], e[1] = t[1] + i[1], e[2] = t[2] + i[2], e[3] = t[3] + i[3], e[4] = t[4] + i[4], e[5] = t[5] + i[5], e[6] = t[6] + i[6], e[7] = t[7] + i[7], e[8] = t[8] + i[8], e[9] = t[9] + i[9], e[10] = t[10] + i[10], e[11] = t[11] + i[11], e[12] = t[12] + i[12], e[13] = t[13] + i[13], e[14] = t[14] + i[14], e[15] = t[15] + i[15], e;
 }
-function st(e, t, i) {
+function rt(e, t, i) {
   return e[0] = t[0] - i[0], e[1] = t[1] - i[1], e[2] = t[2] - i[2], e[3] = t[3] - i[3], e[4] = t[4] - i[4], e[5] = t[5] - i[5], e[6] = t[6] - i[6], e[7] = t[7] - i[7], e[8] = t[8] - i[8], e[9] = t[9] - i[9], e[10] = t[10] - i[10], e[11] = t[11] - i[11], e[12] = t[12] - i[12], e[13] = t[13] - i[13], e[14] = t[14] - i[14], e[15] = t[15] - i[15], e;
 }
-function _e(e, t, i) {
+function Ae(e, t, i) {
   return e[0] = t[0] * i, e[1] = t[1] * i, e[2] = t[2] * i, e[3] = t[3] * i, e[4] = t[4] * i, e[5] = t[5] * i, e[6] = t[6] * i, e[7] = t[7] * i, e[8] = t[8] * i, e[9] = t[9] * i, e[10] = t[10] * i, e[11] = t[11] * i, e[12] = t[12] * i, e[13] = t[13] * i, e[14] = t[14] * i, e[15] = t[15] * i, e;
 }
 class q extends Array {
@@ -881,13 +881,13 @@ class q extends Array {
     return oe(this, i, typeof t == "number" ? [t, t, t] : t), this;
   }
   add(t, i) {
-    return i ? it(this, t, i) : it(this, this, t), this;
-  }
-  sub(t, i) {
     return i ? st(this, t, i) : st(this, this, t), this;
   }
+  sub(t, i) {
+    return i ? rt(this, t, i) : rt(this, this, t), this;
+  }
   multiply(t, i) {
-    return t.length ? i ? et(this, t, i) : et(this, this, t) : _e(this, this, t), this;
+    return t.length ? i ? it(this, t, i) : it(this, this, t) : Ae(this, this, t), this;
   }
   identity() {
     return ce(this), this;
@@ -896,10 +896,10 @@ class q extends Array {
     return le(this, t), this;
   }
   fromPerspective({ fov: t, aspect: i, near: s, far: r } = {}) {
-    return we(this, t, i, s, r), this;
+    return Me(this, t, i, s, r), this;
   }
   fromOrthogonal({ left: t, right: i, bottom: s, top: r, near: n, far: h }) {
-    return Me(this, t, i, s, r, n, h), this;
+    return we(this, t, i, s, r, n, h), this;
   }
   fromQuaternion(t) {
     return ye(this, t), this;
@@ -929,7 +929,7 @@ class q extends Array {
     return pe(this);
   }
   lookAt(t, i, s) {
-    return Ee(this, t, i, s), this;
+    return _e(this, t, i, s), this;
   }
   determinant() {
     return ut(this);
@@ -941,10 +941,10 @@ class q extends Array {
     return t[i] = this[0], t[i + 1] = this[1], t[i + 2] = this[2], t[i + 3] = this[3], t[i + 4] = this[4], t[i + 5] = this[5], t[i + 6] = this[6], t[i + 7] = this[7], t[i + 8] = this[8], t[i + 9] = this[9], t[i + 10] = this[10], t[i + 11] = this[11], t[i + 12] = this[12], t[i + 13] = this[13], t[i + 14] = this[14], t[i + 15] = this[15], t;
   }
 }
-function Ae(e, t, i = "YXZ") {
+function Ee(e, t, i = "YXZ") {
   return i === "XYZ" ? (e[1] = Math.asin(Math.min(Math.max(t[8], -1), 1)), Math.abs(t[8]) < 0.99999 ? (e[0] = Math.atan2(-t[9], t[10]), e[2] = Math.atan2(-t[4], t[0])) : (e[0] = Math.atan2(t[6], t[5]), e[2] = 0)) : i === "YXZ" ? (e[0] = Math.asin(-Math.min(Math.max(t[9], -1), 1)), Math.abs(t[9]) < 0.99999 ? (e[1] = Math.atan2(t[8], t[10]), e[2] = Math.atan2(t[1], t[5])) : (e[1] = Math.atan2(-t[2], t[0]), e[2] = 0)) : i === "ZXY" ? (e[0] = Math.asin(Math.min(Math.max(t[6], -1), 1)), Math.abs(t[6]) < 0.99999 ? (e[1] = Math.atan2(-t[2], t[10]), e[2] = Math.atan2(-t[4], t[5])) : (e[1] = 0, e[2] = Math.atan2(t[1], t[0]))) : i === "ZYX" ? (e[1] = Math.asin(-Math.min(Math.max(t[2], -1), 1)), Math.abs(t[2]) < 0.99999 ? (e[0] = Math.atan2(t[6], t[10]), e[2] = Math.atan2(t[1], t[0])) : (e[0] = 0, e[2] = Math.atan2(-t[4], t[5]))) : i === "YZX" ? (e[2] = Math.asin(Math.min(Math.max(t[1], -1), 1)), Math.abs(t[1]) < 0.99999 ? (e[0] = Math.atan2(-t[9], t[5]), e[1] = Math.atan2(-t[2], t[0])) : (e[0] = 0, e[1] = Math.atan2(t[8], t[10]))) : i === "XZY" && (e[2] = Math.asin(-Math.min(Math.max(t[4], -1), 1)), Math.abs(t[4]) < 0.99999 ? (e[0] = Math.atan2(t[6], t[5]), e[1] = Math.atan2(t[8], t[0])) : (e[0] = Math.atan2(-t[9], t[10]), e[1] = 0)), e;
 }
-const rt = /* @__PURE__ */ new q();
+const nt = /* @__PURE__ */ new q();
 class be extends Array {
   constructor(t = 0, i = t, s = t, r = "YXZ") {
     super(t, i, s), this.order = r, this.onChange = () => {
@@ -985,10 +985,10 @@ class be extends Array {
     return this._target.order = t, this.onChange(), this;
   }
   fromRotationMatrix(t, i = this.order) {
-    return Ae(this._target, t, i), this.onChange(), this;
+    return Ee(this._target, t, i), this.onChange(), this;
   }
   fromQuaternion(t, i = this.order, s) {
-    return rt.fromQuaternion(t), this._target.fromRotationMatrix(rt, i), s || this.onChange(), this;
+    return nt.fromQuaternion(t), this._target.fromRotationMatrix(nt, i), s || this.onChange(), this;
   }
   fromArray(t, i = 0) {
     return this._target[0] = t[i], this._target[1] = t[i + 1], this._target[2] = t[i + 2], this;
@@ -1050,9 +1050,9 @@ function Re(e, t) {
   let i = t[0], s = t[1], r = t[2], n = t[3], h = t[4], l = t[5], a = t[6], c = t[7], f = t[8], o = f * h - l * c, d = -f * n + l * a, u = c * n - h * a, g = i * o + s * d + r * u;
   return g ? (g = 1 / g, e[0] = o * g, e[1] = (-f * s + r * c) * g, e[2] = (l * s - r * h) * g, e[3] = d * g, e[4] = (f * i - r * a) * g, e[5] = (-l * i + r * n) * g, e[6] = u * g, e[7] = (-c * i + s * a) * g, e[8] = (h * i - s * n) * g, e) : null;
 }
-function nt(e, t, i) {
-  let s = t[0], r = t[1], n = t[2], h = t[3], l = t[4], a = t[5], c = t[6], f = t[7], o = t[8], d = i[0], u = i[1], g = i[2], p = i[3], x = i[4], m = i[5], A = i[6], w = i[7], y = i[8];
-  return e[0] = d * s + u * h + g * c, e[1] = d * r + u * l + g * f, e[2] = d * n + u * a + g * o, e[3] = p * s + x * h + m * c, e[4] = p * r + x * l + m * f, e[5] = p * n + x * a + m * o, e[6] = A * s + w * h + y * c, e[7] = A * r + w * l + y * f, e[8] = A * n + w * a + y * o, e;
+function ht(e, t, i) {
+  let s = t[0], r = t[1], n = t[2], h = t[3], l = t[4], a = t[5], c = t[6], f = t[7], o = t[8], d = i[0], u = i[1], g = i[2], p = i[3], x = i[4], m = i[5], E = i[6], M = i[7], y = i[8];
+  return e[0] = d * s + u * h + g * c, e[1] = d * r + u * l + g * f, e[2] = d * n + u * a + g * o, e[3] = p * s + x * h + m * c, e[4] = p * r + x * l + m * f, e[5] = p * n + x * a + m * o, e[6] = E * s + M * h + y * c, e[7] = E * r + M * l + y * f, e[8] = E * n + M * a + y * o, e;
 }
 function Te(e, t, i) {
   let s = t[0], r = t[1], n = t[2], h = t[3], l = t[4], a = t[5], c = t[6], f = t[7], o = t[8], d = i[0], u = i[1];
@@ -1067,8 +1067,8 @@ function Be(e, t, i) {
   return e[0] = s * t[0], e[1] = s * t[1], e[2] = s * t[2], e[3] = r * t[3], e[4] = r * t[4], e[5] = r * t[5], e[6] = t[6], e[7] = t[7], e[8] = t[8], e;
 }
 function qe(e, t) {
-  let i = t[0], s = t[1], r = t[2], n = t[3], h = t[4], l = t[5], a = t[6], c = t[7], f = t[8], o = t[9], d = t[10], u = t[11], g = t[12], p = t[13], x = t[14], m = t[15], A = i * l - s * h, w = i * a - r * h, y = i * c - n * h, E = s * a - r * l, M = s * c - n * l, b = r * c - n * a, F = f * p - o * g, z = f * x - d * g, S = f * m - u * g, L = o * x - d * p, C = o * m - u * p, R = d * m - u * x, _ = A * R - w * C + y * L + E * S - M * z + b * F;
-  return _ ? (_ = 1 / _, e[0] = (l * R - a * C + c * L) * _, e[1] = (a * S - h * R - c * z) * _, e[2] = (h * C - l * S + c * F) * _, e[3] = (r * C - s * R - n * L) * _, e[4] = (i * R - r * S + n * z) * _, e[5] = (s * S - i * C - n * F) * _, e[6] = (p * b - x * M + m * E) * _, e[7] = (x * y - g * b - m * w) * _, e[8] = (g * M - p * y + m * A) * _, e) : null;
+  let i = t[0], s = t[1], r = t[2], n = t[3], h = t[4], l = t[5], a = t[6], c = t[7], f = t[8], o = t[9], d = t[10], u = t[11], g = t[12], p = t[13], x = t[14], m = t[15], E = i * l - s * h, M = i * a - r * h, y = i * c - n * h, _ = s * a - r * l, w = s * c - n * l, b = r * c - n * a, F = f * p - o * g, z = f * x - d * g, S = f * m - u * g, L = o * x - d * p, C = o * m - u * p, R = d * m - u * x, A = E * R - M * C + y * L + _ * S - w * z + b * F;
+  return A ? (A = 1 / A, e[0] = (l * R - a * C + c * L) * A, e[1] = (a * S - h * R - c * z) * A, e[2] = (h * C - l * S + c * F) * A, e[3] = (r * C - s * R - n * L) * A, e[4] = (i * R - r * S + n * z) * A, e[5] = (s * S - i * C - n * F) * A, e[6] = (p * b - x * w + m * _) * A, e[7] = (x * y - g * b - m * M) * A, e[8] = (g * w - p * y + m * E) * A, e) : null;
 }
 class $e extends Array {
   constructor(t = 1, i = 0, s = 0, r = 0, n = 1, h = 0, l = 0, a = 0, c = 1) {
@@ -1087,7 +1087,7 @@ class $e extends Array {
     return Be(this, i, t), this;
   }
   multiply(t, i) {
-    return i ? nt(this, t, i) : nt(this, this, t), this;
+    return i ? ht(this, t, i) : ht(this, this, t), this;
   }
   identity() {
     return Le(this), this;
@@ -1141,22 +1141,22 @@ function De(e, t) {
 function Pe(e, t, i) {
   return e[0] = t, e[1] = i, e;
 }
-function ht(e, t, i) {
+function lt(e, t, i) {
   return e[0] = t[0] + i[0], e[1] = t[1] + i[1], e;
 }
-function lt(e, t, i) {
+function at(e, t, i) {
   return e[0] = t[0] - i[0], e[1] = t[1] - i[1], e;
 }
-function Ue(e, t, i) {
+function Ge(e, t, i) {
   return e[0] = t[0] * i[0], e[1] = t[1] * i[1], e;
 }
-function Ge(e, t, i) {
+function We(e, t, i) {
   return e[0] = t[0] / i[0], e[1] = t[1] / i[1], e;
 }
 function P(e, t, i) {
   return e[0] = t[0] * i, e[1] = t[1] * i, e;
 }
-function We(e, t) {
+function Ue(e, t) {
   var i = t[0] - e[0], s = t[1] - e[1];
   return Math.sqrt(i * i + s * s);
 }
@@ -1164,15 +1164,15 @@ function Ve(e, t) {
   var i = t[0] - e[0], s = t[1] - e[1];
   return i * i + s * s;
 }
-function at(e) {
+function ct(e) {
   var t = e[0], i = e[1];
   return Math.sqrt(t * t + i * i);
 }
-function ke(e) {
+function Xe(e) {
   var t = e[0], i = e[1];
   return t * t + i * i;
 }
-function Xe(e, t) {
+function ke(e, t) {
   return e[0] = -t[0], e[1] = -t[1], e;
 }
 function Ye(e, t) {
@@ -1185,7 +1185,7 @@ function Ze(e, t) {
 function je(e, t) {
   return e[0] * t[0] + e[1] * t[1];
 }
-function ct(e, t) {
+function ft(e, t) {
   return e[0] * t[1] - e[1] * t[0];
 }
 function Qe(e, t, i, s) {
@@ -1208,7 +1208,7 @@ function Je(e, t, i) {
 function ti(e, t) {
   return e[0] === t[0] && e[1] === t[1];
 }
-class V extends Array {
+class X extends Array {
   constructor(t = 0, i = t) {
     return super(t, i), this;
   }
@@ -1231,38 +1231,38 @@ class V extends Array {
     return De(this, t), this;
   }
   add(t, i) {
-    return i ? ht(this, t, i) : ht(this, this, t), this;
-  }
-  sub(t, i) {
     return i ? lt(this, t, i) : lt(this, this, t), this;
   }
+  sub(t, i) {
+    return i ? at(this, t, i) : at(this, this, t), this;
+  }
   multiply(t) {
-    return t.length ? Ue(this, this, t) : P(this, this, t), this;
+    return t.length ? Ge(this, this, t) : P(this, this, t), this;
   }
   divide(t) {
-    return t.length ? Ge(this, this, t) : P(this, this, 1 / t), this;
+    return t.length ? We(this, this, t) : P(this, this, 1 / t), this;
   }
   inverse(t = this) {
     return Ye(this, t), this;
   }
   // Can't use 'length' as Array.prototype uses it
   len() {
-    return at(this);
+    return ct(this);
   }
   distance(t) {
-    return t ? We(this, t) : at(this);
+    return t ? Ue(this, t) : ct(this);
   }
   squaredLen() {
     return this.squaredDistance();
   }
   squaredDistance(t) {
-    return t ? Ve(this, t) : ke(this);
+    return t ? Ve(this, t) : Xe(this);
   }
   negate(t = this) {
-    return Xe(this, t), this;
+    return ke(this, t), this;
   }
   cross(t, i) {
-    return i ? ct(t, i) : ct(this, t);
+    return i ? ft(t, i) : ft(this, t);
   }
   scale(t) {
     return P(this, this, t), this;
@@ -1289,7 +1289,7 @@ class V extends Array {
     return He(this, this, t, i, s), this;
   }
   clone() {
-    return new V(this[0], this[1]);
+    return new X(this[0], this[1]);
   }
   fromArray(t, i = 0) {
     return this[0] = t[i], this[1] = t[i + 1], this;
@@ -1436,7 +1436,7 @@ void main() {
 
   gl_FragColor = vec4(adjustColor(color), 1.0);
 }
-`, U = (e) => {
+`, G = (e) => {
   const t = e.replace("#", ""), i = Number.parseInt(t, 16);
   return [
     (i >> 16 & 255) / 255,
@@ -1445,27 +1445,13 @@ void main() {
   ];
 }, ri = (e) => {
   e.classList.add("has-grainient-fallback");
-}, ft = (e) => {
+}, dt = (e) => {
   let t = !1;
   const i = () => {
-    t || (t = !0, e(), window.removeEventListener("pagehide", i), window.removeEventListener("beforeunload", i), document.removeEventListener("pointerdown", r, !0), document.removeEventListener("click", r, !0));
-  }, s = (n) => {
-    const h = n.target?.closest?.("a[href]");
-    if (!h) return !1;
-    const l = h.getAttribute("target");
-    if (l && l !== "_self") return !1;
-    try {
-      const a = new URL(h.href, window.location.href), c = new URL(window.location.href);
-      return a.href !== c.href;
-    } catch {
-      return !1;
-    }
+    t || (t = !0, e(), window.removeEventListener("pagehide", i), window.removeEventListener("beforeunload", i));
   };
-  function r(n) {
-    s(n) && i();
-  }
-  return window.addEventListener("pagehide", i), window.addEventListener("beforeunload", i), document.addEventListener("pointerdown", r, !0), document.addEventListener("click", r, !0), window.cleanupProjectGrainient = i, i;
-}, dt = () => {
+  return window.addEventListener("pagehide", i), window.addEventListener("beforeunload", i), window.cleanupProjectGrainient = i, i;
+}, V = () => {
   const e = document.querySelector("#grainient-bg, .grainient-bg");
   if (!e) return;
   e.innerHTML = "", e.classList.add("is-loading");
@@ -1480,17 +1466,17 @@ void main() {
       dpr: Math.min(window.devicePixelRatio || 1, 1.5)
     });
   } catch (d) {
-    console.warn("Grainient WebGL background fell back to CSS animation.", d), ri(e), ft(t);
+    console.warn("Grainient WebGL background fell back to CSS animation.", d), ri(e), dt(t);
     return;
   }
   const { gl: r } = i;
   r.canvas.setAttribute("aria-hidden", "true"), r.clearColor(0.62, 0.36, 0.61, 1), e.appendChild(r.canvas), e.classList.remove("is-loading"), e.classList.add("has-webgl-grainient");
   const n = {
-    uResolution: { value: new V(1, 1) },
+    uResolution: { value: new X(1, 1) },
     uTime: { value: 0 },
-    uColor1: { value: U(v.color1) },
-    uColor2: { value: U(v.color2) },
-    uColor3: { value: U(v.color3) },
+    uColor1: { value: G(v.color1) },
+    uColor2: { value: G(v.color2) },
+    uColor3: { value: G(v.color3) },
     uTimeSpeed: { value: v.timeSpeed },
     uColorBalance: { value: v.colorBalance },
     uWarpStrength: { value: v.warpStrength },
@@ -1523,6 +1509,12 @@ void main() {
     }
     t();
   };
-  window.addEventListener("resize", c), ft(o), c(), f(performance.now());
+  window.addEventListener("resize", c), dt(o), c(), f(performance.now());
 };
-document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", dt, { once: !0 }) : dt();
+document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", V, { once: !0 }) : V();
+window.addEventListener("pageshow", (e) => {
+  if (e.persisted && !document.querySelector("#grainient-bg, .grainient-bg")) {
+    const t = document.createElement("div");
+    t.id = "grainient-bg", t.className = "grainient-bg", t.setAttribute("aria-hidden", "true"), document.body.prepend(t), V();
+  }
+});
