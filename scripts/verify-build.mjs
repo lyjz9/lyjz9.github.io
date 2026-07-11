@@ -14,6 +14,7 @@ const projectPages = [
 
 const requiredFiles = [
   'dist/index.html',
+  'dist/hero-disc-poster.jpg',
   'dist/assets/dither/dither-landing.js',
   'dist/assets/dither/dither-landing.css',
   'dist/assets/grainient/grainient-projects.js',
@@ -40,6 +41,14 @@ if (!distHtml.includes('class="portfolio-page"')) {
 
 if (!distHtml.includes('restorePortfolioBackground')) {
   fail('dist/index.html is missing the portfolio background restore hook.');
+}
+
+if (!distHtml.includes('hero-disc-poster.jpg')) {
+  fail('dist/index.html is missing the disc background fallback image.');
+}
+
+if (distHtml.includes('poster="./cinematic-base.jpg"')) {
+  fail('dist/index.html still uses the gray geometric image as a video poster.');
 }
 
 if (!distHtml.includes(ditherScriptTag)) {
