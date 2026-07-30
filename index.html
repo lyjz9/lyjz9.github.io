@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html lang="zh-CN" class="portfolio-page">
+<html lang="en" class="portfolio-page">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" href="./hero-disc-poster.jpg" as="image" type="image/jpeg" fetchpriority="high" />
   <link rel="preload" href="./hero.mp4" as="video" type="video/mp4" />
+  <link rel="modulepreload" href="./assets/dither/dither-landing.js?v=animated13" />
   <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./assets/dither/dither-landing.css" />
   <script src="https://cdn.tailwindcss.com"></script>
@@ -57,6 +58,11 @@
     }
 
     body.intro-active {
+      overflow: hidden;
+      overflow: clip;
+    }
+
+    body.feedback-open {
       overflow: hidden;
     }
 
@@ -442,20 +448,38 @@
       position: fixed;
       inset: 0;
       z-index: 70;
-      min-height: 100svh;
       overflow: hidden;
+      overflow: clip;
       isolation: isolate;
       color: rgba(255, 255, 255, 0.92);
-      background: #03020a;
+      background:
+        radial-gradient(circle at 72% 24%, rgba(255, 128, 224, 0.2), transparent 34%),
+        radial-gradient(circle at 25% 72%, rgba(128, 224, 255, 0.26), transparent 38%),
+        linear-gradient(135deg, rgba(3, 4, 18, 0.96), rgba(24, 20, 62, 0.92) 48%, rgba(48, 16, 66, 0.94));
       transition: opacity 0.9s ease, visibility 0.9s ease;
     }
 
     .intro-overlay::before {
-      display: none;
+      content: "";
+      position: absolute;
+      inset: -12%;
+      z-index: 0;
+      background: transparent;
+      opacity: 0;
+      filter: none;
+      transform: scale(1.04);
     }
 
     .intro-overlay::after {
-      display: none;
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(7, 9, 28, 0.06), rgba(7, 9, 28, 0.02) 44%, rgba(7, 9, 28, 0.08)),
+        radial-gradient(circle at 50% 50%, transparent 0 42%, rgba(0, 0, 0, 0.24) 94%);
+      mix-blend-mode: normal;
     }
 
     .intro-video {
@@ -475,7 +499,7 @@
     .intro-dither-root {
       position: absolute;
       inset: 0;
-      z-index: 0;
+      z-index: 1;
       width: 100%;
       height: 100%;
       opacity: 1;
@@ -493,9 +517,8 @@
       position: absolute;
       left: clamp(22px, 6vw, 86px);
       top: clamp(74px, 13vh, 132px);
-      z-index: 3;
+      z-index: 4;
       width: min(660px, calc(100vw - 44px));
-      text-shadow: 0 0 24px rgba(0, 0, 0, 0.34);
       transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
     }
 
@@ -508,7 +531,7 @@
       text-transform: uppercase;
     }
 
-    .intro-copy h2 {
+    .intro-copy h1 {
       margin: 0 0 18px;
       font-size: clamp(42px, 8vw, 112px);
       line-height: 0.95;
@@ -557,7 +580,7 @@
       position: absolute;
       left: 50%;
       bottom: clamp(28px, 8vh, 72px);
-      z-index: 3;
+      z-index: 4;
       width: min(90vw, 520px);
       transform: translateX(-50%);
       color: rgba(235, 245, 255, 0.72);
@@ -574,7 +597,7 @@
       position: absolute;
       left: 50%;
       top: min(74vh, calc(100vh - 92px));
-      z-index: 4;
+      z-index: 5;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -720,6 +743,10 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
       .chrome-rail,
       .signal-line,
       .hero-mirror::before,
@@ -748,6 +775,21 @@
       .intro-hint,
       .intro-target {
         transition-duration: 1ms;
+      }
+
+      .pointer-scan,
+      .click-burst-layer,
+      .motion-field {
+        display: none;
+      }
+
+      .word-reveal .reveal-word,
+      [data-reveal],
+      [data-reveal="visible"] {
+        opacity: 1;
+        filter: none;
+        transform: none;
+        transition: none;
       }
     }
 
@@ -793,20 +835,6 @@
       font-size: 12px;
       letter-spacing: 0;
       text-transform: uppercase;
-    }
-
-    body.intro-active .masthead {
-      z-index: 80;
-      pointer-events: none;
-    }
-
-    body.intro-active .masthead nav,
-    body.intro-active #feedback-chip {
-      display: none;
-    }
-
-    body.intro-active .masthead > a {
-      pointer-events: auto;
     }
 
     .masthead nav {
@@ -2263,11 +2291,48 @@
 
     @media (max-width: 860px) {
       .masthead {
+        grid-template-areas:
+          "brand feedback"
+          "nav nav";
         grid-template-columns: 1fr auto;
+        gap: 8px 12px;
+        padding: 12px 14px;
+        background: rgba(7, 9, 28, 0.56);
+        backdrop-filter: blur(14px);
+      }
+
+      .masthead > a {
+        grid-area: brand;
       }
 
       .masthead nav {
+        grid-area: nav;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        width: 100%;
+        overflow-x: auto;
+        padding: 2px 0 4px;
+        scrollbar-width: none;
+      }
+
+      .masthead nav::-webkit-scrollbar {
         display: none;
+      }
+
+      .masthead nav a {
+        display: inline-flex;
+        min-height: 40px;
+        align-items: center;
+      }
+
+      .masthead .nav-chip {
+        grid-area: feedback;
+      }
+
+      .section {
+        scroll-margin-top: 96px;
+        padding-top: clamp(118px, 15vh, 150px);
       }
 
       .hero,
@@ -2348,13 +2413,13 @@
   <div id="pointer-scan" class="pointer-scan" aria-hidden="true"></div>
   <div id="click-burst-layer" class="click-burst-layer" aria-hidden="true"></div>
 
-  <section id="intro-overlay" class="intro-overlay" aria-label="Interactive intro">
+  <section id="intro-overlay" class="intro-overlay" role="dialog" aria-modal="true" aria-labelledby="intro-name" aria-describedby="intro-body">
     <div id="intro-dither-root" class="intro-dither-root" aria-hidden="true"></div>
     <div class="intro-copy">
       <p class="intro-kicker">a small corner for my work</p>
-      <h2 class="chrome">Jieyi Zeng</h2>
+      <h1 id="intro-name" class="chrome">Jieyi Zeng</h1>
       <p class="intro-role">Data analyst, automation builder, and AI-curious problem solver</p>
-      <p class="intro-body">I like building tools and workflows that make scattered information easier to understand and actually use.</p>
+      <p id="intro-body" class="intro-body">I like building tools and workflows that make scattered information easier to understand and actually use.</p>
     </div>
     <button id="intro-panel" class="intro-panel" type="button" aria-label="Enter the portfolio">
       <span class="intro-panel-text">Enter site</span>
@@ -2716,7 +2781,7 @@
     <span id="music-label">Music off</span>
   </button>
 
-  <script type="module" src="./assets/dither/dither-landing.js"></script>
+  <script type="module" src="./assets/dither/dither-landing.js?v=animated13"></script>
   <script>
     const VIDEO_URL = 'hero.mp4';
     const video = document.getElementById('hero-video');
@@ -2726,10 +2791,31 @@
     const softPanelPercent = document.getElementById('soft-panel-percent');
     const heroMirror = document.getElementById('hero-mirror');
     const mirrorTiles = Array.from(document.querySelectorAll('.mirror-tile'));
+    const pageInteractionRoots = Array.from(document.body.children).filter((element) => (
+      element instanceof HTMLElement
+      && !['intro-overlay', 'contact-modal'].includes(element.id)
+      && element.tagName !== 'SCRIPT'
+    ));
+    const setPageInert = (value) => {
+      pageInteractionRoots.forEach((element) => {
+        element.inert = value;
+      });
+    };
+    const focusSectionHeading = (section) => {
+      if (!section) return;
+      const heading = section.matches('h1, h2') ? section : section.querySelector('h1, h2');
+      if (!heading) return;
+      heading.setAttribute('tabindex', '-1');
+      heading.focus({ preventScroll: true });
+    };
     let isLoaded = false;
     let hasPrimedVideo = false;
     let lastPointerX = window.innerWidth * 0.5;
     let lastPointerY = window.innerHeight * 0.5;
+
+    if (document.body.classList.contains('intro-active')) {
+      setPageInert(true);
+    }
 
     const updateHeroMirror = (x = 0.5, y = 0.5) => {
       if (!heroMirror) return;
@@ -3169,15 +3255,21 @@
     const contactYes = document.getElementById('contact-yes');
     const contactNo = document.getElementById('contact-no');
     const contactModal = document.getElementById('contact-modal');
+    const contactCard = contactModal?.querySelector('.contact-card');
     const contactClose = document.getElementById('contact-close');
     const contactSend = document.getElementById('contact-send');
     const contactEmail = document.getElementById('contact-email');
     const contactMessage = document.getElementById('contact-message');
     const feedbackChip = document.getElementById('feedback-chip');
     let contactPromptDismissedAtBottom = false;
+    let contactModalOpener = null;
 
     const showContactPromptIfReady = () => {
-      if (!contactPrompt || document.body.classList.contains('intro-active')) return;
+      if (
+        !contactPrompt
+        || document.body.classList.contains('intro-active')
+        || contactModal?.classList.contains('is-open')
+      ) return;
       const distanceFromBottom = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
       const nearBottom = distanceFromBottom < window.innerHeight * 0.38;
       if (!nearBottom) {
@@ -3190,19 +3282,43 @@
       }
     };
 
-    const openContactModal = () => {
+    const openContactModal = (event) => {
       if (!contactModal) return;
+      const trigger = event?.currentTarget;
+      contactModalOpener = trigger instanceof HTMLElement
+        ? trigger
+        : (document.activeElement instanceof HTMLElement ? document.activeElement : null);
       contactPromptDismissedAtBottom = true;
       contactPrompt?.classList.remove('is-visible');
+      setPageInert(true);
+      contactModal.inert = false;
+      document.body.classList.add('feedback-open');
       contactModal.classList.add('is-open');
       contactModal.setAttribute('aria-hidden', 'false');
-      window.setTimeout(() => contactMessage?.focus(), 120);
+      window.setTimeout(() => {
+        if (contactModal.classList.contains('is-open')) {
+          contactMessage?.focus({ preventScroll: true });
+        }
+      }, 340);
     };
 
     const closeContactModal = () => {
       if (!contactModal) return;
+      const wasOpen = contactModal.classList.contains('is-open');
+      const opener = contactModalOpener;
       contactModal.classList.remove('is-open');
+      document.body.classList.remove('feedback-open');
+      setPageInert(document.body.classList.contains('intro-active'));
+      const openerIsVisible = opener?.isConnected
+        && opener.getClientRects().length > 0
+        && window.getComputedStyle(opener).visibility !== 'hidden';
+      const focusTarget = openerIsVisible ? opener : feedbackChip;
+      if (wasOpen && focusTarget?.isConnected) {
+        focusTarget.focus({ preventScroll: true });
+      }
       contactModal.setAttribute('aria-hidden', 'true');
+      contactModal.inert = true;
+      contactModalOpener = null;
     };
 
     contactYes?.addEventListener('click', openContactModal);
@@ -3215,8 +3331,29 @@
     contactModal?.addEventListener('click', (event) => {
       if (event.target === contactModal) closeContactModal();
     });
-    window.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeContactModal();
+    document.addEventListener('keydown', (event) => {
+      if (!contactModal?.classList.contains('is-open')) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeContactModal();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+      const focusable = Array.from(contactModal.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )).filter((element) => element.getClientRects().length > 0);
+      if (!focusable.length) {
+        event.preventDefault();
+        contactCard?.focus();
+        return;
+      }
+      event.preventDefault();
+      const currentIndex = focusable.indexOf(document.activeElement);
+      const direction = event.shiftKey ? -1 : 1;
+      const nextIndex = currentIndex < 0
+        ? 0
+        : (currentIndex + direction + focusable.length) % focusable.length;
+      focusable[nextIndex].focus();
     });
     contactSend?.addEventListener('click', () => {
       const from = contactEmail?.value.trim();
@@ -3446,8 +3583,14 @@
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const initialHash = window.location.hash;
     let introComplete = false;
+    const resetIntroScroll = () => {
+      if (!introOverlay) return;
+      introOverlay.scrollTop = 0;
+      introOverlay.scrollLeft = 0;
+    };
 
     const stopIntroBackground = () => {
+      document.documentElement.dataset.introComplete = 'true';
       window.dispatchEvent(new CustomEvent('portfolio:intro-complete'));
     };
 
@@ -3493,8 +3636,10 @@
       window.setTimeout(() => {
         introOverlay.classList.add('is-hidden');
         document.body.classList.remove('intro-active');
+        setPageInert(false);
         resetToStart();
         replayLandingIntro();
+        focusSectionHeading(document.getElementById('top'));
         window.setTimeout(() => {
           stopIntroBackground();
           introOverlay.remove();
@@ -3503,17 +3648,27 @@
     };
 
     const scrollToInitialHash = () => {
-      if (!initialHash) return;
+      if (!initialHash) return null;
       const target = document.getElementById(initialHash.slice(1));
       if (target) {
+        const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior = 'auto';
         target.scrollIntoView({ block: 'start', behavior: 'auto' });
+        document.documentElement.style.scrollBehavior = previousScrollBehavior;
       }
+      return target;
     };
 
     if (introPanel && introOverlay) {
       introPanel.addEventListener('click', finishIntro);
 
-      introPanel.addEventListener('keydown', (event) => {
+      introOverlay.addEventListener('keydown', (event) => {
+        if (event.key === 'Tab') {
+          event.preventDefault();
+          resetIntroScroll();
+          introPanel.focus({ preventScroll: true });
+          return;
+        }
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
           finishIntro();
@@ -3529,10 +3684,21 @@
       stopIntroBackground();
       document.body.classList.remove('intro-active');
       if (introOverlay) introOverlay.remove();
+      setPageInert(false);
       window.requestAnimationFrame(() => {
         scrollToInitialHash();
-        window.setTimeout(scrollToInitialHash, 80);
+        window.setTimeout(() => {
+          const target = scrollToInitialHash();
+          focusSectionHeading(target);
+        }, 80);
       });
+    } else if (introPanel) {
+      resetIntroScroll();
+      window.requestAnimationFrame(() => {
+        resetIntroScroll();
+        introPanel.focus({ preventScroll: true });
+      });
+      window.setTimeout(resetIntroScroll, 80);
     }
   </script>
 </body>
