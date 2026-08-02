@@ -177,8 +177,9 @@ function DitheredWaves({
   mouseRadius
 }) {
   const mesh = useRef(null);
+  const materialRef = useRef(null);
   const mouseRef = useRef(new THREE.Vector2());
-  const { viewport, size, gl, invalidate } = useThree();
+  const { viewport, size, gl } = useThree();
 
   const waveUniformsRef = useRef({
     time: new THREE.Uniform(0),
@@ -202,24 +203,13 @@ function DitheredWaves({
     }
   }, [size, gl]);
 
-  useEffect(() => {
-    if (disableAnimation) return undefined;
-
-    const startedAt = window.performance.now();
-    let frameId = 0;
-    const tick = () => {
-      waveUniformsRef.current.time.value = (window.performance.now() - startedAt) / 1000;
-      invalidate();
-      frameId = window.requestAnimationFrame(tick);
-    };
-
-    frameId = window.requestAnimationFrame(tick);
-    return () => window.cancelAnimationFrame(frameId);
-  }, [disableAnimation, invalidate]);
-
   const prevColor = useRef([...waveColor]);
-  useFrame(() => {
-    const u = waveUniformsRef.current;
+  useFrame(({ clock }) => {
+    const u = materialRef.current?.uniforms ?? waveUniformsRef.current;
+
+    if (!disableAnimation) {
+      u.time.value = clock.getElapsedTime();
+    }
 
     if (u.waveSpeed.value !== waveSpeed) u.waveSpeed.value = waveSpeed;
     if (u.waveFrequency.value !== waveFrequency) u.waveFrequency.value = waveFrequency;
@@ -236,6 +226,10 @@ function DitheredWaves({
     if (enableMouseInteraction) {
       u.mousePos.value.copy(mouseRef.current);
     }
+
+    if (materialRef.current) {
+      materialRef.current.uniformsNeedUpdate = true;
+    }
   });
 
   const handlePointerMove = e => {
@@ -250,6 +244,7 @@ function DitheredWaves({
       <mesh ref={mesh} scale={[viewport.width, viewport.height, 1]}>
         <planeGeometry args={[1, 1]} />
         <shaderMaterial
+          ref={materialRef}
           vertexShader={waveVertexShader}
           fragmentShader={waveFragmentShader}
           uniforms={waveUniformsRef.current}
@@ -288,9 +283,9 @@ export default function Dither({
     <Canvas
       className="dither-container"
       camera={{ position: [0, 0, 6] }}
-      frameloop="always"
       dpr={1}
-      gl={{ antialias: true, preserveDrawingBuffer: true }}
+      frameloop="always"
+      gl={{ antialias: true, preserveDrawingBuffer: false }}
     >
       <DitheredWaves
         waveSpeed={waveSpeed}

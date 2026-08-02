@@ -3,9 +3,10 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const ditherScriptTag = '<script type="module" src="./assets/dither/dither-landing.js"></script>';
+const ditherScriptTag = '<script type="module" src="./assets/dither/dither-landing.js?v=animated13"></script>';
 const grainientScriptTag = '<script type="module" src="./assets/grainient/grainient-projects.js"></script>';
-const minBundleBytes = 2_000;
+const minDitherBundleBytes = 500_000;
+const minGrainientBundleBytes = 2_000;
 const projectPages = [
   'regression-lab.html',
   'auto-claims.html',
@@ -63,9 +64,13 @@ if (distHtml.includes('id="site-dither-root"')) {
   fail('dist/index.html should not mount Dither into the global site background.');
 }
 
+if (!distHtml.includes("document.documentElement.dataset.introComplete = 'true'")) {
+  fail('dist/index.html is missing the sticky intro-completion flag.');
+}
+
 const ditherBundlePath = join(root, 'dist/assets/dither/dither-landing.js');
 const ditherBundleStats = await stat(ditherBundlePath);
-if (ditherBundleStats.size < minBundleBytes) {
+if (ditherBundleStats.size < minDitherBundleBytes) {
   fail(`dist/assets/dither/dither-landing.js is too small (${ditherBundleStats.size} bytes).`);
 }
 
@@ -77,6 +82,19 @@ if (!ditherBundle.includes('requestAnimationFrame')) {
 
 if (!ditherBundle.includes('performance.now')) {
   fail('Dither bundle does not include a continuously updated time source.');
+}
+
+if (
+  !ditherBundle.includes('frameloop:"always"')
+  && !ditherBundle.includes('frameloop: "always"')
+) {
+  fail('Dither bundle does not include frameloop="always".');
+}
+
+for (const token of ['RetroEffect', 'bayerMatrix8x8', 'createRoot', 'introComplete', 'prefers-reduced-motion']) {
+  if (!ditherBundle.includes(token)) {
+    fail(`Dither bundle is missing ${token}.`);
+  }
 }
 
 if (!ditherBundle.includes('intro-dither-root')) {
@@ -91,7 +109,7 @@ console.log(`Verified Dither bundle: ${ditherBundleStats.size} bytes.`);
 
 const grainientBundlePath = join(root, 'dist/assets/grainient/grainient-projects.js');
 const grainientBundleStats = await stat(grainientBundlePath);
-if (grainientBundleStats.size < minBundleBytes) {
+if (grainientBundleStats.size < minGrainientBundleBytes) {
   fail(`dist/assets/grainient/grainient-projects.js is too small (${grainientBundleStats.size} bytes).`);
 }
 
