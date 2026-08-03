@@ -891,6 +891,11 @@
       padding: clamp(88px, 12vh, 142px) clamp(18px, 5vw, 72px);
     }
 
+    .section h1[tabindex="-1"]:focus,
+    .section h2[tabindex="-1"]:focus {
+      outline: none;
+    }
+
     .hero {
       grid-template-columns: minmax(0, 1.18fr) minmax(260px, 0.55fr);
       gap: clamp(30px, 7vw, 104px);
@@ -2377,7 +2382,7 @@
         <div class="projects-intro">
           <div>
             <p class="eyebrow" data-reveal>coursework / personal projects</p>
-            <h2 class="chrome" data-word-reveal data-reveal style="--reveal-delay: 0.08">Things I've made.</h2>
+            <h2 class="chrome" data-word-reveal data-reveal style="--reveal-delay: 0.08">Projects</h2>
           </div>
         </div>
         <div class="work-grid pointer-on">
