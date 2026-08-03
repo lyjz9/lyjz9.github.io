@@ -3,9 +3,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
-const ditherScriptTag = '<script type="module" src="./assets/dither/dither-landing.js?v=animated13"></script>';
 const grainientScriptTag = '<script type="module" src="./assets/grainient/grainient-projects.js"></script>';
-const minDitherBundleBytes = 500_000;
 const minGrainientBundleBytes = 2_000;
 const projectPages = [
   'regression-lab.html',
@@ -16,8 +14,6 @@ const projectPages = [
 const requiredFiles = [
   'dist/index.html',
   'dist/hero-disc-poster.jpg',
-  'dist/assets/dither/dither-landing.js',
-  'dist/assets/dither/dither-landing.css',
   'dist/assets/grainient/grainient-projects.js',
   ...projectPages.map((page) => `dist/${page}`),
 ];
@@ -52,60 +48,17 @@ if (distHtml.includes('poster="./cinematic-base.jpg"')) {
   fail('dist/index.html still uses the gray geometric image as a video poster.');
 }
 
-if (!distHtml.includes(ditherScriptTag)) {
-  fail('dist/index.html does not load ./assets/dither/dither-landing.js.');
-}
-
-if (!distHtml.includes('id="intro-dither-root"')) {
-  fail('dist/index.html is missing the intro #intro-dither-root mount.');
-}
-
-if (distHtml.includes('id="site-dither-root"')) {
-  fail('dist/index.html should not mount Dither into the global site background.');
-}
-
-if (!distHtml.includes("document.documentElement.dataset.introComplete = 'true'")) {
-  fail('dist/index.html is missing the sticky intro-completion flag.');
-}
-
-const ditherBundlePath = join(root, 'dist/assets/dither/dither-landing.js');
-const ditherBundleStats = await stat(ditherBundlePath);
-if (ditherBundleStats.size < minDitherBundleBytes) {
-  fail(`dist/assets/dither/dither-landing.js is too small (${ditherBundleStats.size} bytes).`);
-}
-
-const ditherBundle = await readFile(ditherBundlePath, 'utf8');
-
-if (!ditherBundle.includes('requestAnimationFrame')) {
-  fail('Dither bundle does not include an animation frame loop.');
-}
-
-if (!ditherBundle.includes('performance.now')) {
-  fail('Dither bundle does not include a continuously updated time source.');
-}
-
-if (
-  !ditherBundle.includes('frameloop:"always"')
-  && !ditherBundle.includes('frameloop: "always"')
-) {
-  fail('Dither bundle does not include frameloop="always".');
-}
-
-for (const token of ['RetroEffect', 'bayerMatrix8x8', 'createRoot', 'introComplete', 'prefers-reduced-motion']) {
-  if (!ditherBundle.includes(token)) {
-    fail(`Dither bundle is missing ${token}.`);
+for (const removedIntroToken of [
+  'id="intro-overlay"',
+  'id="intro-dither-root"',
+  'assets/dither/',
+  'class="portfolio-page intro-active"',
+  'portfolio:intro-complete',
+]) {
+  if (distHtml.includes(removedIntroToken)) {
+    fail(`dist/index.html still contains removed intro code: ${removedIntroToken}`);
   }
 }
-
-if (!ditherBundle.includes('intro-dither-root')) {
-  fail('Dither bundle does not mount into #intro-dither-root.');
-}
-
-if (ditherBundle.includes('site-dither-root')) {
-  fail('Dither bundle should only mount into the intro overlay.');
-}
-
-console.log(`Verified Dither bundle: ${ditherBundleStats.size} bytes.`);
 
 const grainientBundlePath = join(root, 'dist/assets/grainient/grainient-projects.js');
 const grainientBundleStats = await stat(grainientBundlePath);

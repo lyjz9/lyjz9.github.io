@@ -16,7 +16,6 @@ const excluded = new Set([
   'package.json',
   'package-lock.json',
   'pnpm-lock.yaml',
-  'vite.dither.config.mjs',
   'vite.grainient.config.mjs',
 ]);
 

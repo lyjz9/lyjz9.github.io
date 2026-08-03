@@ -9,9 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" href="./hero-disc-poster.jpg" as="image" type="image/jpeg" fetchpriority="high" />
   <link rel="preload" href="./hero.mp4" as="video" type="video/mp4" />
-  <link rel="modulepreload" href="./assets/dither/dither-landing.js?v=animated13" />
   <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./assets/dither/dither-landing.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -55,11 +53,6 @@
       color: var(--ink);
       font-family: Audiowide, ui-sans-serif, system-ui, sans-serif;
       letter-spacing: 0;
-    }
-
-    body.intro-active {
-      overflow: hidden;
-      overflow: clip;
     }
 
     a {
@@ -275,7 +268,7 @@
       transition: transform 220ms ease-out, opacity 520ms ease, visibility 520ms ease;
     }
 
-    body[data-loaded="true"]:not(.intro-active) .motion-field {
+    body[data-loaded="true"] .motion-field {
       opacity: 1;
       visibility: visible;
       transition-delay: 260ms;
@@ -440,304 +433,6 @@
       }
     }
 
-    .intro-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 70;
-      overflow: hidden;
-      overflow: clip;
-      isolation: isolate;
-      color: rgba(255, 255, 255, 0.92);
-      background:
-        radial-gradient(circle at 72% 24%, rgba(255, 128, 224, 0.2), transparent 34%),
-        radial-gradient(circle at 25% 72%, rgba(128, 224, 255, 0.26), transparent 38%),
-        linear-gradient(135deg, rgba(3, 4, 18, 0.96), rgba(24, 20, 62, 0.92) 48%, rgba(48, 16, 66, 0.94));
-      transition: opacity 0.9s ease, visibility 0.9s ease;
-    }
-
-    .intro-overlay::before {
-      content: "";
-      position: absolute;
-      inset: -12%;
-      z-index: 0;
-      background: transparent;
-      opacity: 0;
-      filter: none;
-      transform: scale(1.04);
-    }
-
-    .intro-overlay::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-      background:
-        linear-gradient(180deg, rgba(7, 9, 28, 0.06), rgba(7, 9, 28, 0.02) 44%, rgba(7, 9, 28, 0.08)),
-        radial-gradient(circle at 50% 50%, transparent 0 42%, rgba(0, 0, 0, 0.24) 94%);
-      mix-blend-mode: normal;
-    }
-
-    .intro-video {
-      display: none;
-      position: absolute;
-      inset: -6%;
-      z-index: 0;
-      width: 112%;
-      height: 112%;
-      object-fit: cover;
-      opacity: 0.12;
-      filter: saturate(1.15) contrast(1.04) blur(2px);
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    .intro-dither-root {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      opacity: 1;
-      mix-blend-mode: normal;
-      pointer-events: auto;
-    }
-
-    .intro-overlay.is-hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .intro-copy {
-      position: absolute;
-      left: clamp(22px, 6vw, 86px);
-      top: clamp(74px, 13vh, 132px);
-      z-index: 4;
-      width: min(660px, calc(100vw - 44px));
-      transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
-    }
-
-    .intro-kicker {
-      margin: 0 0 18px;
-      font-family: "Space Mono", ui-monospace, monospace;
-      font-size: clamp(11px, 1vw, 13px);
-      line-height: 1.5;
-      color: rgba(128, 255, 224, 0.82);
-      text-transform: uppercase;
-    }
-
-    .intro-copy h1 {
-      margin: 0 0 18px;
-      font-size: clamp(42px, 8vw, 112px);
-      line-height: 0.95;
-      font-weight: 400;
-      letter-spacing: 0;
-      text-transform: uppercase;
-    }
-
-    .intro-role,
-    .intro-body {
-      max-width: 620px;
-      font-family: "Space Mono", ui-monospace, monospace;
-      line-height: 1.7;
-    }
-
-    .intro-role {
-      margin: 0 0 18px;
-      color: rgba(255, 205, 250, 0.9);
-      font-size: clamp(13px, 1.35vw, 17px);
-    }
-
-    .intro-body {
-      margin: 0;
-      color: rgba(235, 245, 255, 0.76);
-      font-size: clamp(13px, 1.25vw, 16px);
-    }
-
-    .intro-target {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      z-index: 2;
-      width: min(44vw, 480px);
-      aspect-ratio: 1.55;
-      border: 1px solid rgba(128, 224, 255, 0.32);
-      border-radius: 28px;
-      transform: translate(-50%, -50%);
-      box-shadow:
-        0 0 50px rgba(128, 224, 255, 0.16),
-        inset 0 0 40px rgba(255, 128, 224, 0.09);
-      opacity: 0.7;
-      animation: targetPulse 2.4s ease-in-out infinite;
-    }
-
-    .intro-hint {
-      position: absolute;
-      left: 50%;
-      bottom: clamp(28px, 8vh, 72px);
-      z-index: 4;
-      width: min(90vw, 520px);
-      transform: translateX(-50%);
-      color: rgba(235, 245, 255, 0.72);
-      font-family: "Space Mono", ui-monospace, monospace;
-      font-size: clamp(12px, 1.1vw, 14px);
-      line-height: 1.6;
-      text-align: center;
-      text-transform: uppercase;
-      animation: hintPulse 2.2s ease-in-out infinite;
-      transition: opacity 0.8s ease, filter 0.8s ease;
-    }
-
-    .intro-panel {
-      position: absolute;
-      left: 50%;
-      top: min(74vh, calc(100vh - 92px));
-      z-index: 5;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      width: auto;
-      min-width: 190px;
-      min-height: 54px;
-      padding: 16px 24px;
-      border: 1px solid rgba(220, 245, 255, 0.44);
-      border-radius: 999px;
-      cursor: pointer;
-      touch-action: manipulation;
-      background:
-        linear-gradient(110deg, rgba(255, 255, 255, 0.14), rgba(128, 224, 255, 0.08), rgba(255, 128, 224, 0.12)),
-        rgba(8, 10, 24, 0.54);
-      box-shadow:
-        0 16px 54px rgba(8, 12, 35, 0.42),
-        0 0 34px rgba(128, 224, 255, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.42);
-      color: rgba(255, 255, 255, 0.94);
-      font: 700 12px/1 "Space Mono", ui-monospace, monospace;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transform: translate(-50%, -50%);
-      transform-origin: center;
-      transition: opacity 0.55s ease, transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
-      animation: enterButtonPulse 2.4s ease-in-out infinite;
-    }
-
-    .intro-panel::before {
-      content: "";
-      position: absolute;
-      inset: 3px;
-      border-radius: inherit;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      pointer-events: none;
-    }
-
-    .intro-panel::after {
-      content: ">";
-      color: rgba(128, 255, 224, 0.9);
-      font-size: 13px;
-    }
-
-    .intro-panel:hover,
-    .intro-panel:focus-visible {
-      border-color: rgba(128, 255, 224, 0.72);
-      box-shadow:
-        0 18px 58px rgba(8, 12, 35, 0.48),
-        0 0 46px rgba(128, 224, 255, 0.28),
-        0 0 42px rgba(255, 128, 224, 0.18),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
-      outline: none;
-      transform: translate(-50%, -50%) scale(1.035);
-    }
-
-    .intro-panel.is-snapped {
-      cursor: default;
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.92);
-      animation: none;
-      pointer-events: none;
-    }
-
-    .intro-overlay.is-entering .intro-panel {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(0.9);
-    }
-
-    .intro-overlay.is-entering .intro-copy,
-    .intro-overlay.is-entering .intro-hint,
-    .intro-overlay.is-entering .intro-target {
-      opacity: 0;
-      filter: blur(10px);
-      pointer-events: none;
-    }
-
-    .intro-panel-text {
-      position: relative;
-      z-index: 1;
-    }
-
-    @keyframes introDrift {
-      0% {
-        transform: translate3d(-1.5%, -1%, 0) scale(1.04);
-      }
-
-      100% {
-        transform: translate3d(1.5%, 1%, 0) scale(1.08);
-      }
-    }
-
-    @keyframes panelFloat {
-      0% {
-        translate: 0 -8px;
-      }
-
-      100% {
-        translate: 0 10px;
-      }
-    }
-
-    @keyframes enterButtonPulse {
-      0%,
-      100% {
-        box-shadow:
-          0 16px 54px rgba(8, 12, 35, 0.42),
-          0 0 28px rgba(128, 224, 255, 0.16),
-          inset 0 1px 0 rgba(255, 255, 255, 0.42);
-      }
-
-      50% {
-        box-shadow:
-          0 18px 58px rgba(8, 12, 35, 0.48),
-          0 0 42px rgba(128, 224, 255, 0.26),
-          0 0 34px rgba(255, 128, 224, 0.14),
-          inset 0 1px 0 rgba(255, 255, 255, 0.48);
-      }
-    }
-
-    @keyframes targetPulse {
-      0%,
-      100% {
-        opacity: 0.38;
-        transform: translate(-50%, -50%) scale(0.98);
-      }
-
-      50% {
-        opacity: 0.72;
-        transform: translate(-50%, -50%) scale(1.02);
-      }
-    }
-
-    @keyframes hintPulse {
-      0%,
-      100% {
-        opacity: 0.56;
-      }
-
-      50% {
-        opacity: 0.95;
-      }
-    }
-
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-behavior: auto;
@@ -747,11 +442,7 @@
       .signal-line,
       .hero-mirror::before,
       .mirror-tile,
-      .soft-panel-meter i,
-      .intro-overlay::before,
-      .intro-panel,
-      .intro-target,
-      .intro-hint {
+      .soft-panel-meter i {
         animation: none;
       }
 
@@ -763,14 +454,6 @@
       .soft-panel-video,
       .soft-panel::before {
         transition: none;
-      }
-
-      .intro-panel,
-      .intro-overlay,
-      .intro-copy,
-      .intro-hint,
-      .intro-target {
-        transition-duration: 1ms;
       }
 
       .pointer-scan,
@@ -791,28 +474,6 @@
 
     .pointer-on {
       pointer-events: auto;
-    }
-
-    #loading {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      display: grid;
-      place-items: center;
-      background: #1a1f4e;
-      transition: opacity 0.4s ease, visibility 0.4s ease;
-    }
-
-    body[data-loaded="true"] #loading {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    body.intro-active #loading {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
     }
 
     .masthead {
@@ -1891,7 +1552,7 @@
       transition: opacity 360ms ease, transform 360ms ease, border-color 180ms ease, background 180ms ease;
     }
 
-    body:not(.intro-active) .music-toggle {
+    .music-toggle {
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
@@ -1957,10 +1618,6 @@
       transition: opacity 320ms ease;
     }
 
-    body.intro-active .page-progress {
-      opacity: 0;
-    }
-
     .pointer-scan {
       position: fixed;
       inset: 0;
@@ -1984,7 +1641,7 @@
       transition: opacity 260ms ease;
     }
 
-    body:not(.intro-active) .pointer-scan {
+    .pointer-scan {
       opacity: 0.26;
     }
 
@@ -2199,20 +1856,6 @@
         display: grid;
       }
 
-      .intro-copy {
-        top: 54px;
-      }
-
-      .intro-panel {
-        left: 50%;
-        top: min(78vh, calc(100vh - 82px));
-        width: auto;
-        height: auto;
-        min-width: 168px;
-        min-height: 52px;
-        padding: 15px 22px;
-      }
-
       .soft-panel {
         right: -28vw;
         top: 18vh;
@@ -2225,34 +1868,13 @@
         display: none;
       }
 
-      .intro-target {
-        width: 72vw;
-      }
     }
   </style>
 </head>
-<body class="portfolio-page intro-active">
+<body class="portfolio-page">
   <div id="page-progress" class="page-progress" aria-hidden="true"></div>
   <div id="pointer-scan" class="pointer-scan" aria-hidden="true"></div>
   <div id="click-burst-layer" class="click-burst-layer" aria-hidden="true"></div>
-
-  <section id="intro-overlay" class="intro-overlay" role="dialog" aria-modal="true" aria-labelledby="intro-name" aria-describedby="intro-body">
-    <div id="intro-dither-root" class="intro-dither-root" aria-hidden="true"></div>
-    <div class="intro-copy">
-      <p class="intro-kicker">a small corner for my work</p>
-      <h1 id="intro-name" class="chrome">Jieyi Zeng</h1>
-      <p class="intro-role">My background is in applied math, statistics, and psychology, and I keep coming back to data.</p>
-      <p id="intro-body" class="intro-body">I use Python, SQL, Excel, and Tableau to explore questions, spot patterns, and create tools that save time.</p>
-    </div>
-    <button id="intro-panel" class="intro-panel" type="button" aria-label="Enter the portfolio">
-      <span class="intro-panel-text">Enter site</span>
-    </button>
-    <p class="intro-hint">Click enter when you're ready</p>
-  </section>
-
-  <div id="loading">
-    <div class="font-mono text-xs uppercase text-white/70">getting things ready</div>
-  </div>
 
   <div id="video-bg" class="fixed inset-0 z-0 bg-black">
     <video id="hero-video" muted playsinline preload="auto" poster="./hero-disc-poster.jpg">
@@ -2282,7 +1904,7 @@
     </video>
     <div class="soft-panel-readout">
       <span>live signal</span>
-      <strong><span id="soft-panel-section">landing</span> / <span id="soft-panel-percent">00%</span></strong>
+      <strong><span id="soft-panel-section">home</span> / <span id="soft-panel-percent">00%</span></strong>
     </div>
     <div class="soft-panel-meter">
       <i style="--h: 14px; --delay: -0.1s"></i>
@@ -2297,7 +1919,7 @@
     <nav>
       <a class="pointer-on" href="#signal">About</a>
       <a class="pointer-on" href="#projects">Projects</a>
-      <a class="pointer-on" href="#archive">Archive</a>
+      <a class="pointer-on" href="#archive">Experience</a>
       <a class="pointer-on" href="#contact">Contact</a>
     </nav>
   </header>
@@ -2502,7 +2124,7 @@
       <div class="archive-layout">
         <div class="archive-intro" data-reveal>
           <p class="eyebrow">experience / beyond the projects</p>
-          <h2 class="chrome" data-word-reveal>What each role taught me.</h2>
+          <h2 class="chrome" data-word-reveal>Experience</h2>
           <p>
             I've worked in classrooms, campus recreation, and medical records. Each role taught me to pay attention, explain things patiently, and follow through.
           </p>
@@ -2573,9 +2195,7 @@
     <span id="music-label">Music off</span>
   </button>
 
-  <script type="module" src="./assets/dither/dither-landing.js?v=animated13"></script>
   <script>
-    const VIDEO_URL = 'hero.mp4';
     const video = document.getElementById('hero-video');
     const softPanel = document.querySelector('.soft-panel');
     const softPanelVideo = document.querySelector('.soft-panel-video');
@@ -2583,31 +2203,10 @@
     const softPanelPercent = document.getElementById('soft-panel-percent');
     const heroMirror = document.getElementById('hero-mirror');
     const mirrorTiles = Array.from(document.querySelectorAll('.mirror-tile'));
-    const pageInteractionRoots = Array.from(document.body.children).filter((element) => (
-      element instanceof HTMLElement
-      && element.id !== 'intro-overlay'
-      && element.tagName !== 'SCRIPT'
-    ));
-    const setPageInert = (value) => {
-      pageInteractionRoots.forEach((element) => {
-        element.inert = value;
-      });
-    };
-    const focusSectionHeading = (section) => {
-      if (!section) return;
-      const heading = section.matches('h1, h2') ? section : section.querySelector('h1, h2');
-      if (!heading) return;
-      heading.setAttribute('tabindex', '-1');
-      heading.focus({ preventScroll: true });
-    };
     let isLoaded = false;
     let hasPrimedVideo = false;
     let lastPointerX = window.innerWidth * 0.5;
     let lastPointerY = window.innerHeight * 0.5;
-
-    if (document.body.classList.contains('intro-active')) {
-      setPageInert(true);
-    }
 
     const updateHeroMirror = (x = 0.5, y = 0.5) => {
       if (!heroMirror) return;
@@ -2835,11 +2434,9 @@
       });
     }
 
-    const isPageIntroActive = () => document.body.classList.contains('intro-active');
-
     const scrollRevealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && !isPageIntroActive()) {
+        if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
           scrollRevealObserver.unobserve(entry.target);
         }
@@ -2849,7 +2446,7 @@
 
     const wordRevealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && !isPageIntroActive()) {
+        if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
           wordRevealObserver.unobserve(entry.target);
         }
@@ -2888,7 +2485,7 @@
 
     const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && !isPageIntroActive()) {
+        if (entry.isIntersecting) {
           entry.target.dataset.reveal = 'visible';
           revealObserver.unobserve(entry.target);
         }
@@ -2946,10 +2543,10 @@
       .map((link) => document.querySelector(link.getAttribute('href')))
       .filter(Boolean);
     const panelSectionLabels = {
-      top: 'landing',
+      top: 'home',
       signal: 'about',
       projects: 'projects',
-      archive: 'archive',
+      archive: 'experience',
       contact: 'contact',
     };
     let pageInteractionFrame = 0;
@@ -3034,7 +2631,7 @@
     });
 
     window.addEventListener('click', (event) => {
-      if (!clickBurstLayer || document.body.classList.contains('intro-active')) return;
+      if (!clickBurstLayer) return;
       const burst = document.createElement('span');
       burst.className = 'click-burst';
       burst.style.setProperty('--burst-x', `${event.clientX}px`);
@@ -3251,128 +2848,6 @@
       updateSoftPanelMotion();
     }, { passive: true });
 
-    const introOverlay = document.getElementById('intro-overlay');
-    const introPanel = document.getElementById('intro-panel');
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const initialHash = window.location.hash;
-    let introComplete = false;
-    const resetIntroScroll = () => {
-      if (!introOverlay) return;
-      introOverlay.scrollTop = 0;
-      introOverlay.scrollLeft = 0;
-    };
-
-    const stopIntroBackground = () => {
-      document.documentElement.dataset.introComplete = 'true';
-      window.dispatchEvent(new CustomEvent('portfolio:intro-complete'));
-    };
-
-    const replayLandingIntro = () => {
-      const landing = document.getElementById('top');
-      if (!landing) return;
-      const revealEls = Array.from(landing.querySelectorAll('[data-reveal]'));
-      const wordEls = Array.from(landing.querySelectorAll('.word-reveal'));
-      revealEls.forEach((el) => {
-        el.dataset.reveal = '';
-      });
-      wordEls.forEach((el) => {
-        el.classList.remove('is-visible');
-      });
-      void landing.offsetWidth;
-      window.setTimeout(() => {
-        revealEls.forEach((el) => {
-          el.dataset.reveal = 'visible';
-          revealObserver.unobserve(el);
-        });
-        wordEls.forEach((el) => {
-          el.classList.add('is-visible');
-          wordRevealObserver.unobserve(el);
-        });
-      }, reducedMotion ? 30 : 180);
-    };
-
-    const finishIntro = () => {
-      if (!introOverlay || !introPanel || introComplete) return;
-      introComplete = true;
-      handleLoaded();
-      wakeVideo();
-      wakeSoftPanelVideo();
-      const resetToStart = () => {
-        window.history.replaceState(null, '', window.location.href.split('#')[0]);
-        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-      };
-      resetToStart();
-      introPanel.classList.add('is-snapped');
-      introOverlay.classList.add('is-entering');
-
-      const hideDelay = reducedMotion ? 80 : 760;
-      window.setTimeout(() => {
-        introOverlay.classList.add('is-hidden');
-        document.body.classList.remove('intro-active');
-        setPageInert(false);
-        resetToStart();
-        replayLandingIntro();
-        focusSectionHeading(document.getElementById('top'));
-        window.setTimeout(() => {
-          stopIntroBackground();
-          introOverlay.remove();
-        }, 950);
-      }, hideDelay);
-    };
-
-    const scrollToInitialHash = () => {
-      if (!initialHash) return null;
-      const target = document.getElementById(initialHash.slice(1));
-      if (target) {
-        const previousScrollBehavior = document.documentElement.style.scrollBehavior;
-        document.documentElement.style.scrollBehavior = 'auto';
-        target.scrollIntoView({ block: 'start', behavior: 'auto' });
-        document.documentElement.style.scrollBehavior = previousScrollBehavior;
-      }
-      return target;
-    };
-
-    if (introPanel && introOverlay) {
-      introPanel.addEventListener('click', finishIntro);
-
-      introOverlay.addEventListener('keydown', (event) => {
-        if (event.key === 'Tab') {
-          event.preventDefault();
-          resetIntroScroll();
-          introPanel.focus({ preventScroll: true });
-          return;
-        }
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          finishIntro();
-        }
-      });
-    }
-
-    if (initialHash) {
-      introComplete = true;
-      handleLoaded();
-      wakeVideo();
-      wakeSoftPanelVideo();
-      stopIntroBackground();
-      document.body.classList.remove('intro-active');
-      if (introOverlay) introOverlay.remove();
-      setPageInert(false);
-      window.requestAnimationFrame(() => {
-        scrollToInitialHash();
-        window.setTimeout(() => {
-          const target = scrollToInitialHash();
-          focusSectionHeading(target);
-        }, 80);
-      });
-    } else if (introPanel) {
-      resetIntroScroll();
-      window.requestAnimationFrame(() => {
-        resetIntroScroll();
-        introPanel.focus({ preventScroll: true });
-      });
-      window.setTimeout(resetIntroScroll, 80);
-    }
   </script>
 </body>
 </html>
