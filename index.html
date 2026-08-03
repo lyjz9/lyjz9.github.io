@@ -62,10 +62,6 @@
       overflow: clip;
     }
 
-    body.feedback-open {
-      overflow: hidden;
-    }
-
     a {
       color: inherit;
       text-decoration: none;
@@ -844,16 +840,13 @@
       white-space: nowrap;
     }
 
-    .masthead a,
-    .masthead button {
+    .masthead a {
       position: relative;
       transition: color 180ms ease, transform 180ms ease;
     }
 
     .masthead a:hover,
-    .masthead a.is-current,
-    .masthead button:hover,
-    .masthead button:focus-visible {
+    .masthead a.is-current {
       color: #fff;
       transform: translateY(-1px);
     }
@@ -885,16 +878,6 @@
       transform: scaleX(1);
     }
 
-    .nav-chip {
-      justify-self: end;
-      color: inherit;
-      font: inherit;
-      text-transform: uppercase;
-      cursor: pointer;
-      padding: 8px 14px;
-      border-radius: 999px;
-    }
-
     main {
       position: relative;
       z-index: 10;
@@ -923,7 +906,7 @@
       text-transform: uppercase;
     }
 
-    h1 {
+    .hero-title {
       max-width: 1060px;
       margin: 0;
       font-size: clamp(48px, 9.2vw, 136px);
@@ -1157,7 +1140,7 @@
 
     .projects-intro {
       display: grid;
-      grid-template-columns: minmax(0, 0.9fr) minmax(260px, 0.45fr);
+      grid-template-columns: 1fr;
       gap: clamp(20px, 4vw, 70px);
       align-items: end;
     }
@@ -1170,14 +1153,6 @@
       font-weight: 400;
       letter-spacing: 0;
       text-transform: uppercase;
-    }
-
-    .projects-intro p {
-      margin: 0 0 8px;
-      color: rgba(235, 245, 255, 0.7);
-      font-family: "Space Mono", ui-monospace, monospace;
-      font-size: clamp(13px, 1vw, 15px);
-      line-height: 1.7;
     }
 
     .work-cell {
@@ -1886,149 +1861,6 @@
       font-size: 11px;
     }
 
-    .contact-prompt {
-      position: fixed;
-      right: clamp(16px, 3vw, 42px);
-      bottom: clamp(16px, 3vw, 36px);
-      z-index: 45;
-      width: min(390px, calc(100vw - 32px));
-      padding: 18px;
-      border-radius: 24px;
-      color: rgba(255, 255, 255, 0.9);
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(22px) scale(0.98);
-      transition:
-        opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
-        transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
-        visibility 420ms ease;
-    }
-
-    .contact-prompt.is-visible {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0) scale(1);
-    }
-
-    .contact-prompt p {
-      margin: 0 0 14px;
-      font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 13px;
-      line-height: 1.55;
-      color: rgba(235, 245, 255, 0.76);
-    }
-
-    .contact-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .contact-button {
-      border: 1px solid rgba(255, 255, 255, 0.28);
-      border-radius: 999px;
-      padding: 9px 14px;
-      color: rgba(255, 255, 255, 0.9);
-      background: rgba(255, 255, 255, 0.08);
-      font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 12px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
-    }
-
-    .contact-button:hover,
-    .contact-button:focus-visible {
-      border-color: rgba(128, 224, 255, 0.72);
-      background: rgba(128, 224, 255, 0.14);
-      transform: translateY(-1px);
-      outline: none;
-    }
-
-    .contact-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 75;
-      display: grid;
-      place-items: center;
-      padding: 18px;
-      background: rgba(5, 6, 18, 0.62);
-      backdrop-filter: blur(18px);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 320ms ease, visibility 320ms ease;
-    }
-
-    .contact-modal.is-open {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .contact-card {
-      width: min(560px, 100%);
-      display: grid;
-      gap: 16px;
-      padding: clamp(22px, 4vw, 34px);
-      border-radius: 28px;
-      transform: translateY(18px) scale(0.98);
-      transition: transform 360ms cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .contact-modal.is-open .contact-card {
-      transform: translateY(0) scale(1);
-    }
-
-    .contact-card h2 {
-      margin: 0;
-      font-size: clamp(28px, 5vw, 52px);
-      line-height: 1.04;
-      font-weight: 400;
-      letter-spacing: 0;
-      text-transform: uppercase;
-    }
-
-    .contact-card label {
-      display: grid;
-      gap: 8px;
-      color: rgba(235, 245, 255, 0.72);
-      font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 12px;
-      line-height: 1.45;
-      text-transform: uppercase;
-    }
-
-    .contact-card input,
-    .contact-card textarea {
-      width: 100%;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      border-radius: 18px;
-      padding: 13px 14px;
-      color: rgba(255, 255, 255, 0.92);
-      background: rgba(2, 4, 16, 0.35);
-      font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 13px;
-      outline: none;
-    }
-
-    .contact-card textarea {
-      min-height: 150px;
-      resize: vertical;
-    }
-
-    .contact-card input:focus,
-    .contact-card textarea:focus {
-      border-color: rgba(128, 224, 255, 0.72);
-      box-shadow: 0 0 0 3px rgba(128, 224, 255, 0.12);
-    }
-
-    .contact-note {
-      margin: 0;
-      color: rgba(235, 245, 255, 0.58);
-      font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 12px;
-      line-height: 1.55;
-    }
-
     .music-toggle {
       position: fixed;
       left: clamp(16px, 3vw, 42px);
@@ -2292,9 +2124,9 @@
     @media (max-width: 860px) {
       .masthead {
         grid-template-areas:
-          "brand feedback"
-          "nav nav";
-        grid-template-columns: 1fr auto;
+          "brand"
+          "nav";
+        grid-template-columns: 1fr;
         gap: 8px 12px;
         padding: 12px 14px;
         background: rgba(7, 9, 28, 0.56);
@@ -2324,10 +2156,6 @@
         display: inline-flex;
         min-height: 40px;
         align-items: center;
-      }
-
-      .masthead .nav-chip {
-        grid-area: feedback;
       }
 
       .section {
@@ -2364,16 +2192,6 @@
 
       .copyright {
         display: grid;
-      }
-
-      .contact-prompt {
-        left: 16px;
-        right: 16px;
-        width: auto;
-      }
-
-      .music-toggle {
-        bottom: 84px;
       }
 
       .intro-copy {
@@ -2418,8 +2236,8 @@
     <div class="intro-copy">
       <p class="intro-kicker">a small corner for my work</p>
       <h1 id="intro-name" class="chrome">Jieyi Zeng</h1>
-      <p class="intro-role">Data analyst, automation builder, and AI-curious problem solver</p>
-      <p id="intro-body" class="intro-body">I like building tools and workflows that make scattered information easier to understand and actually use.</p>
+      <p class="intro-role">My background is in applied math, statistics, and psychology, and I keep coming back to data.</p>
+      <p id="intro-body" class="intro-body">I use Python, SQL, Excel, and Tableau to explore questions, spot patterns, and create tools that save time.</p>
     </div>
     <button id="intro-panel" class="intro-panel" type="button" aria-label="Enter the portfolio">
       <span class="intro-panel-text">Enter site</span>
@@ -2477,14 +2295,13 @@
       <a class="pointer-on" href="#archive">Archive</a>
       <a class="pointer-on" href="#contact">Contact</a>
     </nav>
-    <button id="feedback-chip" class="nav-chip glass pointer-on" type="button">Feedback</button>
   </header>
 
   <main>
     <section id="top" class="section hero">
       <div class="stack">
         <p class="eyebrow" data-reveal>data / math / people</p>
-        <h1 class="chrome" data-word-reveal data-reveal style="--reveal-delay: 0.1">Clean Data.<br />Clear Decisions.</h1>
+        <h1 class="hero-title chrome" data-word-reveal data-reveal style="--reveal-delay: 0.1">Clean Data.<br />Clear Decisions.</h1>
       </div>
       <div id="hero-mirror" class="hero-mirror pointer-on" data-reveal style="--reveal-delay: 0.2" aria-label="Interactive chrome mirror tile visual">
         <div class="mirror-grid" aria-hidden="true">
@@ -2523,7 +2340,7 @@
           <p class="eyebrow" data-reveal>about me / who I am</p>
           <h2 class="about-title chrome" data-word-reveal data-reveal style="--reveal-delay: 0.08">Learning by building.</h2>
           <p class="about-note" data-reveal style="--reveal-delay: 0.18">
-            I like datasets, patterns, and tools that make repetitive work easier. I am interested in using AI and automation to save time, reduce manual work, and let people focus on things that need human judgment.
+            Math taught me to look for structure; psychology taught me to pay attention to people. I enjoy using data to connect the two, and I like making small automations that make everyday tasks less tedious.
           </p>
           <div class="about-tags" data-reveal style="--reveal-delay: 0.26">
             <span>New York</span>
@@ -2538,18 +2355,18 @@
         <div class="about-focus-grid pointer-on">
           <article class="about-focus glass" data-reveal data-tilt-card style="--reveal-delay: 0.1">
             <small>analyze</small>
-            <h3>Datasets</h3>
-            <p>Clean, compare, explain.</p>
+            <h3>Data &amp; patterns</h3>
+            <p>Ask questions, test ideas, and see what the numbers actually support.</p>
           </article>
           <article class="about-focus glass" data-reveal data-tilt-card style="--reveal-delay: 0.2">
             <small>build</small>
             <h3>Automation</h3>
-            <p>Let tools handle repeat work.</p>
+            <p>Use Python and Excel to handle the routine steps.</p>
           </article>
           <article class="about-focus glass" data-reveal data-tilt-card style="--reveal-delay: 0.3">
-            <small>explore</small>
-            <h3>AI agents</h3>
-            <p>Learning how workflows can get smarter.</p>
+            <small>understand</small>
+            <h3>People</h3>
+            <p>Use psychology to keep the human side of data in view.</p>
           </article>
         </div>
       </div>
@@ -2559,12 +2376,9 @@
       <div class="projects-wrap">
         <div class="projects-intro">
           <div>
-            <p class="eyebrow" data-reveal>selected work / raw to useful</p>
-            <h2 class="chrome" data-word-reveal data-reveal style="--reveal-delay: 0.08">Projects with a point.</h2>
+            <p class="eyebrow" data-reveal>coursework / personal projects</p>
+            <h2 class="chrome" data-word-reveal data-reveal style="--reveal-delay: 0.08">Things I've made.</h2>
           </div>
-          <p class="glass" data-reveal data-tilt-card style="--reveal-delay: 0.18">
-            A few examples of how I think through data: clean the source, test the pattern, and explain what changed in plain language.
-          </p>
         </div>
         <div class="work-grid pointer-on">
           <article class="work-cell featured-work glass" data-reveal data-scroll-card data-tilt-card style="--accent: #80e0ff; --accent-2: #ff80e0">
@@ -2573,7 +2387,7 @@
             </div>
             <div class="project-card-body">
               <h3>AMS Regression Lab</h3>
-              <p>Regression experiments, model checks, and synthetic data practice.</p>
+              <p>Regression practice with model checks, imputation, and synthetic data.</p>
               <div class="work-tags" aria-label="Project tools">
                 <span>R</span>
                 <span>Regression</span>
@@ -2612,7 +2426,7 @@
             </div>
             <div class="project-card-body">
               <h3>JobLink Tracker</h3>
-              <p>A small tool that turns job links into cleaner tracker rows.</p>
+              <p>A Python tool that turns saved job links into organized Excel rows.</p>
               <div class="work-tags" aria-label="Project tools">
                 <span>Python</span>
                 <span>Excel</span>
@@ -2649,7 +2463,7 @@
             </div>
             <div class="project-card-body">
               <h3>Auto Claims Frequency</h3>
-              <p>Claim count modeling with insurance data and model comparison.</p>
+              <p>An insurance analysis comparing Poisson and negative binomial models for claim counts.</p>
               <div class="work-tags" aria-label="Project tools">
                 <span>Python</span>
                 <span>Poisson</span>
@@ -2682,10 +2496,10 @@
     <section id="archive" class="section">
       <div class="archive-layout">
         <div class="archive-intro" data-reveal>
-          <p class="eyebrow">experience / what shaped the work</p>
-          <h2 class="chrome" data-word-reveal>The work behind the work.</h2>
+          <p class="eyebrow">experience / beyond the projects</p>
+          <h2 class="chrome" data-word-reveal>What each role taught me.</h2>
           <p>
-            My experience has moved between classrooms, front desks, and records systems. Different settings, same habit: listen closely, check the details, and make the next step easier.
+            I've worked in classrooms, campus recreation, and medical records. Each role taught me to pay attention, explain things patiently, and follow through.
           </p>
         </div>
         <div class="experience-list pointer-on">
@@ -2721,60 +2535,33 @@
       <div class="footer-inner">
         <div class="footer-contact">
           <div>
-            <p class="eyebrow" data-reveal>contact / next step</p>
-            <h2 class="footer-title chrome" data-word-reveal data-reveal>Thanks for spending time here.</h2>
+            <p class="eyebrow" data-reveal>contact / say hello</p>
+            <h2 class="footer-title chrome" data-word-reveal data-reveal>Thanks for visiting.</h2>
             <p class="footer-copy" data-reveal style="--reveal-delay: 0.14">
-              I am interested in data analyst work, automation tools, and projects where careful details turn into clearer decisions.
+              I'm looking for an entry-level data role where I can keep learning, contribute to real projects, and create tools people will actually use.
             </p>
           </div>
           <div class="footer-card glass pointer-on" data-reveal data-tilt-card style="--reveal-delay: 0.22">
             <small>reach me</small>
-            <h3>Open to thoughtful data work.</h3>
-            <p>Send a note if you want to talk about a role, a project, or feedback on the site.</p>
+            <h3>I'd be happy to hear from you.</h3>
+            <p>If you're hiring, have a project in mind, or just want to say hello, send me a note.</p>
             <div class="footer-actions">
               <a class="footer-action" href="mailto:jzeng922@gmail.com">Email</a>
               <a class="footer-action" href="https://www.linkedin.com/in/jieyi-zeng-457lr/" target="_blank" rel="noopener">LinkedIn</a>
             </div>
             <div class="footer-details">
               <p><span>base</span>New York</p>
-              <p><span>focus</span>Data, automation, analysis</p>
+              <p><span>focus</span>Data, automation, people</p>
             </div>
           </div>
         </div>
         <div class="copyright">
           <span>Jieyi Zeng - Portfolio</span>
-          <span>Built as an interactive personal site.</span>
+          <span>Designed and coded by Jieyi.</span>
         </div>
       </div>
     </footer>
   </main>
-
-  <aside id="contact-prompt" class="contact-prompt glass" aria-live="polite">
-    <p>Have any feedback on the site?</p>
-    <div class="contact-actions">
-      <button id="contact-yes" class="contact-button" type="button">Leave feedback</button>
-      <button id="contact-no" class="contact-button" type="button">Not now</button>
-    </div>
-  </aside>
-
-  <section id="contact-modal" class="contact-modal" aria-hidden="true" aria-label="Feedback message box">
-    <div class="contact-card glass" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title">
-      <h2 id="contact-modal-title" class="chrome">Site feedback</h2>
-      <label>
-        Your email
-        <input id="contact-email" type="email" placeholder="you@example.com" autocomplete="email" />
-      </label>
-      <label>
-        Feedback
-        <textarea id="contact-message" placeholder="I liked..., I was confused by..., or I would change..."></textarea>
-      </label>
-      <p class="contact-note">This opens an email draft with your feedback. Short notes are perfect.</p>
-      <div class="contact-actions">
-        <button id="contact-send" class="contact-button" type="button">Send feedback</button>
-        <button id="contact-close" class="contact-button" type="button">Close</button>
-      </div>
-    </div>
-  </section>
 
   <button id="music-toggle" class="music-toggle" type="button" aria-pressed="false">
     <span class="music-dot" aria-hidden="true"></span>
@@ -2793,7 +2580,7 @@
     const mirrorTiles = Array.from(document.querySelectorAll('.mirror-tile'));
     const pageInteractionRoots = Array.from(document.body.children).filter((element) => (
       element instanceof HTMLElement
-      && !['intro-overlay', 'contact-modal'].includes(element.id)
+      && element.id !== 'intro-overlay'
       && element.tagName !== 'SCRIPT'
     ));
     const setPageInert = (value) => {
@@ -3250,125 +3037,6 @@
       clickBurstLayer.appendChild(burst);
       window.setTimeout(() => burst.remove(), 780);
     });
-
-    const contactPrompt = document.getElementById('contact-prompt');
-    const contactYes = document.getElementById('contact-yes');
-    const contactNo = document.getElementById('contact-no');
-    const contactModal = document.getElementById('contact-modal');
-    const contactCard = contactModal?.querySelector('.contact-card');
-    const contactClose = document.getElementById('contact-close');
-    const contactSend = document.getElementById('contact-send');
-    const contactEmail = document.getElementById('contact-email');
-    const contactMessage = document.getElementById('contact-message');
-    const feedbackChip = document.getElementById('feedback-chip');
-    let contactPromptDismissedAtBottom = false;
-    let contactModalOpener = null;
-
-    const showContactPromptIfReady = () => {
-      if (
-        !contactPrompt
-        || document.body.classList.contains('intro-active')
-        || contactModal?.classList.contains('is-open')
-      ) return;
-      const distanceFromBottom = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
-      const nearBottom = distanceFromBottom < window.innerHeight * 0.38;
-      if (!nearBottom) {
-        contactPromptDismissedAtBottom = false;
-        contactPrompt.classList.remove('is-visible');
-        return;
-      }
-      if (!contactPromptDismissedAtBottom) {
-        contactPrompt.classList.add('is-visible');
-      }
-    };
-
-    const openContactModal = (event) => {
-      if (!contactModal) return;
-      const trigger = event?.currentTarget;
-      contactModalOpener = trigger instanceof HTMLElement
-        ? trigger
-        : (document.activeElement instanceof HTMLElement ? document.activeElement : null);
-      contactPromptDismissedAtBottom = true;
-      contactPrompt?.classList.remove('is-visible');
-      setPageInert(true);
-      contactModal.inert = false;
-      document.body.classList.add('feedback-open');
-      contactModal.classList.add('is-open');
-      contactModal.setAttribute('aria-hidden', 'false');
-      window.setTimeout(() => {
-        if (contactModal.classList.contains('is-open')) {
-          contactMessage?.focus({ preventScroll: true });
-        }
-      }, 340);
-    };
-
-    const closeContactModal = () => {
-      if (!contactModal) return;
-      const wasOpen = contactModal.classList.contains('is-open');
-      const opener = contactModalOpener;
-      contactModal.classList.remove('is-open');
-      document.body.classList.remove('feedback-open');
-      setPageInert(document.body.classList.contains('intro-active'));
-      const openerIsVisible = opener?.isConnected
-        && opener.getClientRects().length > 0
-        && window.getComputedStyle(opener).visibility !== 'hidden';
-      const focusTarget = openerIsVisible ? opener : feedbackChip;
-      if (wasOpen && focusTarget?.isConnected) {
-        focusTarget.focus({ preventScroll: true });
-      }
-      contactModal.setAttribute('aria-hidden', 'true');
-      contactModal.inert = true;
-      contactModalOpener = null;
-    };
-
-    contactYes?.addEventListener('click', openContactModal);
-    feedbackChip?.addEventListener('click', openContactModal);
-    contactNo?.addEventListener('click', () => {
-      contactPromptDismissedAtBottom = true;
-      contactPrompt?.classList.remove('is-visible');
-    });
-    contactClose?.addEventListener('click', closeContactModal);
-    contactModal?.addEventListener('click', (event) => {
-      if (event.target === contactModal) closeContactModal();
-    });
-    document.addEventListener('keydown', (event) => {
-      if (!contactModal?.classList.contains('is-open')) return;
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        closeContactModal();
-        return;
-      }
-      if (event.key !== 'Tab') return;
-      const focusable = Array.from(contactModal.querySelectorAll(
-        'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
-      )).filter((element) => element.getClientRects().length > 0);
-      if (!focusable.length) {
-        event.preventDefault();
-        contactCard?.focus();
-        return;
-      }
-      event.preventDefault();
-      const currentIndex = focusable.indexOf(document.activeElement);
-      const direction = event.shiftKey ? -1 : 1;
-      const nextIndex = currentIndex < 0
-        ? 0
-        : (currentIndex + direction + focusable.length) % focusable.length;
-      focusable[nextIndex].focus();
-    });
-    contactSend?.addEventListener('click', () => {
-      const from = contactEmail?.value.trim();
-      const message = contactMessage?.value.trim();
-      const body = [
-        message || 'Hi Jieyi, I wanted to share feedback about the site.',
-        '',
-        from ? `From: ${from}` : '',
-      ].filter(Boolean).join('\n');
-      const href = `mailto:jzeng922@gmail.com?subject=${encodeURIComponent('Portfolio site feedback')}&body=${encodeURIComponent(body)}`;
-      window.location.href = href;
-    });
-    window.addEventListener('scroll', showContactPromptIfReady, { passive: true });
-    window.addEventListener('resize', showContactPromptIfReady);
-    showContactPromptIfReady();
 
     const musicToggle = document.getElementById('music-toggle');
     const musicLabel = document.getElementById('music-label');
