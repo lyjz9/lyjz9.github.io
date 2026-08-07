@@ -173,6 +173,10 @@ const mountGrainient = () => {
   const root = document.querySelector('#grainient-bg, .grainient-bg');
   if (!root) return;
 
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lowPowerViewport = window.matchMedia('(max-width: 768px), (pointer: coarse)').matches;
+  const frameInterval = 1000 / (lowPowerViewport ? 30 : 60);
+
   root.innerHTML = '';
   root.classList.add('is-loading');
 
@@ -190,7 +194,7 @@ const mountGrainient = () => {
     renderer = new Renderer({
       alpha: false,
       antialias: false,
-      dpr: Math.min(window.devicePixelRatio || 1, 1.5),
+      dpr: Math.min(window.devicePixelRatio || 1, lowPowerViewport ? 1 : 1.25),
     });
   } catch (error) {
     console.warn('Grainient WebGL background fell back to CSS animation.', error);
@@ -244,15 +248,39 @@ const mountGrainient = () => {
     uniforms.uResolution.value.set(gl.canvas.width, gl.canvas.height);
   };
 
-  const animate = (time = 0) => {
+  let lastRenderTime = -frameInterval;
+
+  const renderFrame = (time = 0) => {
     uniforms.uTime.value = time * 0.001;
     renderer.render({ scene: mesh });
+  };
+
+  const animate = (time = 0) => {
+    frameId = 0;
+    if (time - lastRenderTime >= frameInterval - 1) {
+      lastRenderTime = time;
+      renderFrame(time);
+    }
     frameId = window.requestAnimationFrame(animate);
+  };
+
+  const handleVisibilityChange = () => {
+    if (reducedMotion) return;
+    if (document.hidden) {
+      window.cancelAnimationFrame(frameId);
+      frameId = 0;
+      return;
+    }
+    if (!frameId) {
+      lastRenderTime = performance.now() - frameInterval;
+      frameId = window.requestAnimationFrame(animate);
+    }
   };
 
   const cleanup = () => {
     window.cancelAnimationFrame(frameId);
     window.removeEventListener('resize', resize);
+    document.removeEventListener('visibilitychange', handleVisibilityChange);
     try {
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     } catch {
@@ -262,9 +290,14 @@ const mountGrainient = () => {
   };
 
   window.addEventListener('resize', resize);
+  document.addEventListener('visibilitychange', handleVisibilityChange);
   installExitCleanup(cleanup);
   resize();
-  animate(performance.now());
+  if (reducedMotion) {
+    renderFrame(0);
+  } else {
+    frameId = window.requestAnimationFrame(animate);
+  }
 };
 
 if (document.readyState === 'loading') {

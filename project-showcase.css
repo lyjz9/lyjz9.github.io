@@ -1,14 +1,14 @@
 :root {
   color-scheme: dark;
   --ink: rgba(255, 255, 255, 0.94);
-  --muted: rgba(235, 245, 255, 0.7);
-  --soft: rgba(235, 245, 255, 0.52);
+  --muted: rgba(242, 248, 255, 0.84);
+  --soft: rgba(235, 245, 255, 0.72);
   --line: rgba(255, 255, 255, 0.18);
   --pink: #ff80e0;
   --aqua: #80e0ff;
   --mint: #80ffe0;
   --violet: #a98bff;
-  --panel: rgba(255, 255, 255, 0.11);
+  --panel: rgba(255, 255, 255, 0.16);
 }
 
 * {
@@ -30,6 +30,8 @@ body.project-page {
   font-family: Audiowide, ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0;
   isolation: isolate;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 .grainient-bg {
@@ -68,6 +70,7 @@ body.project-page {
 
 .grainient-bg.has-webgl-grainient::before {
   opacity: 0;
+  animation: none;
 }
 
 .grainient-bg canvas {
@@ -123,6 +126,7 @@ p,
 li {
   color: var(--muted);
   font-family: "Space Mono", ui-monospace, monospace;
+  font-size: 15px;
   line-height: 1.72;
 }
 
@@ -148,11 +152,12 @@ li {
   padding: 10px 12px 10px 18px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(175, 205, 255, 0.08));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.23), rgba(175, 205, 255, 0.13));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 24px 80px rgba(8, 12, 35, 0.28);
-  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   font-family: "Space Mono", ui-monospace, monospace;
-  font-size: 12px;
+  font-size: 13px;
   text-transform: uppercase;
 }
 
@@ -175,12 +180,13 @@ li {
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 34px;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.16), rgba(128, 224, 255, 0.05) 48%, rgba(255, 128, 224, 0.08)),
-    rgba(255, 255, 255, 0.06);
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(128, 224, 255, 0.08) 48%, rgba(255, 128, 224, 0.11)),
+    rgba(255, 255, 255, 0.1);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.26),
     0 32px 110px rgba(6, 9, 30, 0.45);
-  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
   overflow: hidden;
 }
 
@@ -225,7 +231,7 @@ li {
   margin: 0 0 18px;
   color: rgba(128, 255, 224, 0.84);
   font-family: "Space Mono", ui-monospace, monospace;
-  font-size: 12px;
+  font-size: 13px;
   text-transform: uppercase;
 }
 
@@ -274,8 +280,8 @@ li {
 .hero-copy {
   max-width: 720px;
   margin: 0;
-  color: rgba(255, 255, 255, 0.82);
-  font-size: clamp(15px, 1.25vw, 19px);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(16px, 1.25vw, 19px);
 }
 
 .hero-actions {
@@ -295,7 +301,7 @@ li {
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 999px;
   font-family: "Space Mono", ui-monospace, monospace;
-  font-size: 12px;
+  font-size: 13px;
   text-transform: uppercase;
 }
 
@@ -324,7 +330,8 @@ li {
     inset 0 1px 0 rgba(255, 255, 255, 0.32),
     0 24px 70px rgba(5, 8, 28, 0.26),
     0 0 46px rgba(128, 224, 255, 0.18);
-  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   transform: rotate(-1.5deg);
   overflow: hidden;
 }
@@ -599,7 +606,8 @@ li {
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.28),
     0 22px 70px rgba(7, 10, 30, 0.34);
-  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
   transform: rotate(-2deg);
   overflow: hidden;
 }
@@ -704,7 +712,8 @@ li {
   border: 1px solid rgba(255, 255, 255, 0.18);
   background: var(--panel);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 16px 50px rgba(6, 10, 32, 0.22);
-  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .story-card {
@@ -797,7 +806,7 @@ li {
   position: relative;
   z-index: 1;
   margin: 0;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .project-info-stack {
@@ -959,7 +968,7 @@ li {
   color: rgba(235, 245, 255, 0.78);
   background: rgba(255, 255, 255, 0.06);
   font-family: "Space Mono", ui-monospace, monospace;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.45;
 }
 
@@ -1003,15 +1012,15 @@ li {
 .graph-control-label {
   color: rgba(128, 255, 224, 0.78);
   font-family: "Space Mono", ui-monospace, monospace;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
 }
 
 .graph-active-readout {
   margin-top: 5px;
-  color: rgba(235, 245, 255, 0.62);
+  color: rgba(235, 245, 255, 0.78);
   font-family: "Space Mono", ui-monospace, monospace;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.35;
 }
 
@@ -1020,11 +1029,11 @@ li {
   padding: 6px 8px;
   border: 1px solid rgba(128, 224, 255, 0.24);
   border-radius: 999px;
-  color: rgba(255, 255, 255, 0.76);
+  color: rgba(255, 255, 255, 0.86);
   background: rgba(128, 224, 255, 0.08);
   box-shadow: 0 0 16px rgba(128, 224, 255, 0.12);
   font-family: "Space Mono", ui-monospace, monospace;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -1111,7 +1120,7 @@ li {
   grid-column: 1;
   margin-bottom: 5px;
   color: rgba(128, 255, 224, 0.82);
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
 }
 
@@ -1119,7 +1128,7 @@ li {
   display: block;
   grid-column: 1;
   color: rgba(255, 255, 255, 0.9);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.35;
 }
 
@@ -1127,8 +1136,8 @@ li {
   display: block;
   grid-column: 1;
   margin-top: 6px;
-  color: rgba(235, 245, 255, 0.58);
-  font-size: 11px;
+  color: rgba(235, 245, 255, 0.76);
+  font-size: 12px;
   line-height: 1.35;
 }
 
@@ -1181,12 +1190,12 @@ li {
   padding: 12px;
   border: 1px solid rgba(128, 224, 255, 0.14);
   border-radius: 16px;
-  color: rgba(235, 245, 255, 0.58);
+  color: rgba(235, 245, 255, 0.76);
   background:
     linear-gradient(90deg, rgba(128, 224, 255, 0.06), rgba(255, 128, 224, 0.05)),
     rgba(255, 255, 255, 0.04);
   font-family: "Space Mono", ui-monospace, monospace;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.35;
   text-transform: uppercase;
 }
@@ -1324,14 +1333,14 @@ li {
 .visual-stat span {
   color: rgba(128, 255, 224, 0.82);
   font-family: "Space Mono", ui-monospace, monospace;
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
 }
 
 .visual-stat strong {
   color: rgba(255, 255, 255, 0.88);
   font-family: "Space Mono", ui-monospace, monospace;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.35;
 }
 
@@ -1349,8 +1358,8 @@ li {
   display: flex;
   gap: 10px;
   margin: 0;
-  color: rgba(235, 245, 255, 0.72);
-  font-size: 13px;
+  color: rgba(242, 248, 255, 0.84);
+  font-size: 15px;
   padding: 8px 10px;
   border-radius: 14px;
   transition: transform 180ms ease, background 180ms ease, color 180ms ease;
@@ -1379,10 +1388,31 @@ li {
   justify-content: space-between;
   gap: 18px;
   margin-bottom: 28px;
-  color: rgba(235, 245, 255, 0.52);
+  color: rgba(235, 245, 255, 0.72);
   font-family: "Space Mono", ui-monospace, monospace;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 4px;
+}
+
+.console-topbar,
+.console-metric span,
+.console-footnote,
+.flow-chip,
+.graph-control-label,
+.graph-active-readout,
+.graph-option-note {
+  font-size: 12px;
+}
+
+.console-metric strong,
+.graph-caption {
+  font-size: 13px;
 }
 
 @keyframes badgePulse {
@@ -1480,7 +1510,7 @@ li {
   .story-cards,
   .visual-grid,
   .graph-viewer {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .hero-visual {
@@ -1510,6 +1540,8 @@ li {
     width: min(100% - 24px, 1296px);
     padding: 22px;
     border-radius: 26px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
   }
 
   .hero-visual {
@@ -1535,9 +1567,26 @@ li {
   .showcase-footer {
     display: grid;
   }
+
+  .chrome-title {
+    width: 100%;
+    max-width: 100%;
+    font-size: clamp(32px, 11vw, 44px);
+    overflow-wrap: anywhere;
+  }
+
+  .showcase-hero,
+  .showcase-hero > div:first-child {
+    min-width: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .grainient-bg::before,
   .badge,
   .graph-stage,
   .graph-controls::before,
@@ -1554,5 +1603,18 @@ li {
   .checklist li,
   .graph-stage img {
     transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .chrome-title {
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+    text-shadow: none;
+  }
+
+  .chrome-title::before,
+  .chrome-title::after {
+    content: none;
   }
 }

@@ -8,23 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" href="./hero-disc-poster.jpg" as="image" type="image/jpeg" fetchpriority="high" />
-  <link rel="preload" href="./hero.mp4" as="video" type="video/mp4" />
   <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Audiowide', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-            mono: ['Space Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-          },
-        },
-      },
-    };
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
   <style>
     :root {
       color-scheme: dark;
@@ -41,8 +25,20 @@
       box-sizing: border-box;
     }
 
+    button {
+      font: inherit;
+    }
+
+    video {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      vertical-align: middle;
+    }
+
     html {
       background: #080713 url("./hero-disc-poster.jpg") center / cover fixed no-repeat;
+      line-height: 1.5;
       scroll-behavior: smooth;
     }
 
@@ -53,6 +49,8 @@
       color: var(--ink);
       font-family: Audiowide, ui-sans-serif, system-ui, sans-serif;
       letter-spacing: 0;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
 
     a {
@@ -61,6 +59,9 @@
     }
 
     #video-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
       overflow: hidden;
       background: #080713 url("./hero-disc-poster.jpg") center / cover no-repeat;
     }
@@ -102,9 +103,10 @@
     }
 
     .glass {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(175, 205, 255, 0.09));
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.23), rgba(175, 205, 255, 0.14));
       border: 1px solid rgba(255, 255, 255, 0.28);
-      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
     }
 
@@ -487,11 +489,12 @@
       align-items: center;
       gap: 24px;
       padding: 20px clamp(18px, 4vw, 54px);
-      color: rgba(255, 255, 255, 0.82);
+      color: rgba(255, 255, 255, 0.9);
       font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: 0;
       text-transform: uppercase;
+      text-shadow: 0 1px 14px rgba(3, 5, 20, 0.94);
     }
 
     .masthead nav {
@@ -566,8 +569,8 @@
     .eyebrow {
       margin: 0 0 24px;
       font-family: "Space Mono", ui-monospace, monospace;
-      color: rgba(255, 255, 255, 0.78);
-      font-size: clamp(11px, 1vw, 13px);
+      color: rgba(255, 255, 255, 0.86);
+      font-size: clamp(12px, 1vw, 14px);
       letter-spacing: 0;
       text-transform: uppercase;
     }
@@ -731,9 +734,9 @@
     .about-note {
       max-width: 760px;
       margin: 0;
-      color: rgba(235, 245, 255, 0.72);
+      color: rgba(242, 248, 255, 0.86);
       font-family: "Space Mono", ui-monospace, monospace;
-      font-size: clamp(13px, 1.05vw, 16px);
+      font-size: clamp(15px, 1.12vw, 17px);
       line-height: 1.75;
     }
 
@@ -742,7 +745,7 @@
       flex-wrap: wrap;
       gap: 10px;
       font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 11px;
+      font-size: 12px;
       text-transform: uppercase;
     }
 
@@ -750,8 +753,8 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 999px;
       padding: 8px 10px;
-      color: rgba(235, 245, 255, 0.7);
-      background: rgba(255, 255, 255, 0.06);
+      color: rgba(242, 248, 255, 0.86);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .about-focus-grid {
@@ -769,8 +772,8 @@
     }
 
     .about-focus small {
-      color: rgba(255, 255, 255, 0.46);
-      font-size: 11px;
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 12px;
       text-transform: uppercase;
     }
 
@@ -786,9 +789,9 @@
 
     .about-focus p {
       margin: 0;
-      color: rgba(235, 245, 255, 0.66);
-      font-size: 13px;
-      line-height: 1.6;
+      color: rgba(242, 248, 255, 0.84);
+      font-size: 15px;
+      line-height: 1.65;
     }
 
     .work-grid {
@@ -835,7 +838,7 @@
       border: 1px solid color-mix(in srgb, var(--accent, #80e0ff) 32%, rgba(255, 255, 255, 0.18));
       background:
         radial-gradient(circle at 86% 10%, color-mix(in srgb, var(--accent, #80e0ff) 26%, transparent), transparent 32%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(175, 205, 255, 0.07));
+        linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(175, 205, 255, 0.11));
       box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.25),
         0 20px 60px rgba(7, 10, 30, 0.22),
@@ -904,16 +907,16 @@
     .work-cell p {
       max-width: 100%;
       margin: 0;
-      color: rgba(235, 245, 255, 0.68);
+      color: rgba(242, 248, 255, 0.84);
       font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 13px;
-      line-height: 1.55;
+      font-size: 15px;
+      line-height: 1.65;
     }
 
     .work-cell small {
-      color: rgba(255, 255, 255, 0.58);
+      color: rgba(255, 255, 255, 0.74);
       font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 11px;
+      font-size: 12px;
       letter-spacing: 0;
       text-transform: uppercase;
     }
@@ -945,7 +948,7 @@
       border-radius: 999px;
       color: rgba(235, 245, 255, 0.78);
       background: rgba(128, 224, 255, 0.08);
-      font-size: 10px;
+      font-size: 11px;
       line-height: 1;
       text-transform: uppercase;
       white-space: nowrap;
@@ -964,7 +967,7 @@
       border: 1px solid rgba(255, 255, 255, 0.26);
       color: rgba(255, 255, 255, 0.9);
       background: rgba(255, 255, 255, 0.1);
-      font-size: 11px;
+      font-size: 12px;
       text-transform: uppercase;
       overflow: hidden;
       position: relative;
@@ -1015,7 +1018,7 @@
       background:
         linear-gradient(90deg, color-mix(in srgb, var(--accent, #80e0ff) 18%, rgba(8, 10, 28, 0.42)), rgba(255, 255, 255, 0.055));
       box-shadow: 0 0 18px color-mix(in srgb, var(--accent, #80e0ff) 18%, transparent);
-      font-size: 10px;
+      font-size: 11px;
     }
 
     .project-file-label::before {
@@ -1232,9 +1235,9 @@
 
     .work-note {
       margin-top: 14px;
-      color: rgba(235, 245, 255, 0.54);
+      color: rgba(235, 245, 255, 0.74);
       font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 11px;
+      font-size: 12px;
       line-height: 1.55;
     }
 
@@ -1263,9 +1266,9 @@
     .archive-intro p {
       max-width: 420px;
       margin: 0;
-      color: rgba(235, 245, 255, 0.7);
+      color: rgba(242, 248, 255, 0.84);
       font-family: "Space Mono", ui-monospace, monospace;
-      font-size: clamp(13px, 1.15vw, 16px);
+      font-size: clamp(15px, 1.15vw, 17px);
       line-height: 1.75;
     }
 
@@ -1368,9 +1371,9 @@
     }
 
     .experience-date {
-      color: rgba(128, 255, 224, 0.72);
+      color: rgba(170, 255, 235, 0.88);
       font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 11px;
+      font-size: 12px;
       line-height: 1.55;
       text-transform: uppercase;
     }
@@ -1386,9 +1389,9 @@
 
     .experience-item h4 {
       margin: 0 0 14px;
-      color: rgba(255, 205, 250, 0.78);
+      color: rgba(255, 220, 252, 0.9);
       font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 400;
       line-height: 1.45;
       text-transform: uppercase;
@@ -1396,9 +1399,9 @@
 
     .experience-item p {
       margin: 0;
-      color: rgba(235, 245, 255, 0.68);
+      color: rgba(242, 248, 255, 0.84);
       font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 13px;
+      font-size: 15px;
       line-height: 1.65;
     }
 
@@ -1434,15 +1437,6 @@
       text-transform: uppercase;
     }
 
-    .footer-copy {
-      max-width: 650px;
-      margin: 24px 0 0;
-      font-family: "Space Mono", ui-monospace, monospace;
-      font-size: clamp(13px, 1.1vw, 16px);
-      line-height: 1.75;
-      color: rgba(235, 245, 255, 0.68);
-    }
-
     .footer-card {
       display: grid;
       gap: 18px;
@@ -1452,8 +1446,8 @@
     }
 
     .footer-card small {
-      color: rgba(235, 245, 255, 0.5);
-      font-size: 11px;
+      color: rgba(235, 245, 255, 0.74);
+      font-size: 12px;
       text-transform: uppercase;
     }
 
@@ -1469,8 +1463,8 @@
 
     .footer-card p {
       margin: 0;
-      color: rgba(235, 245, 255, 0.66);
-      font-size: 13px;
+      color: rgba(242, 248, 255, 0.84);
+      font-size: 15px;
       line-height: 1.65;
     }
 
@@ -1496,7 +1490,6 @@
       border-color: rgba(128, 224, 255, 0.72);
       background: rgba(128, 224, 255, 0.14);
       transform: translateY(-1px);
-      outline: none;
     }
 
     .footer-details {
@@ -1514,7 +1507,7 @@
     }
 
     .footer-details span {
-      color: rgba(255, 255, 255, 0.48);
+      color: rgba(255, 255, 255, 0.72);
       text-transform: uppercase;
     }
 
@@ -1522,9 +1515,9 @@
       display: flex;
       justify-content: space-between;
       gap: 16px;
-      color: rgba(235, 245, 255, 0.54);
+      color: rgba(235, 245, 255, 0.74);
       font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 11px;
+      font-size: 12px;
     }
 
     .music-toggle {
@@ -1540,10 +1533,11 @@
       padding: 10px 14px;
       color: rgba(255, 255, 255, 0.86);
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(128, 224, 255, 0.08));
-      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.36);
       font-family: "Space Mono", ui-monospace, monospace;
-      font-size: 12px;
+      font-size: 13px;
       text-transform: uppercase;
       cursor: pointer;
       opacity: 0;
@@ -1563,7 +1557,6 @@
     .music-toggle.is-playing {
       border-color: rgba(255, 128, 224, 0.62);
       background: linear-gradient(180deg, rgba(255, 128, 224, 0.2), rgba(128, 224, 255, 0.12));
-      outline: none;
     }
 
     .music-dot {
@@ -1791,8 +1784,9 @@
         grid-template-columns: 1fr;
         gap: 8px 12px;
         padding: 12px 14px;
-        background: rgba(7, 9, 28, 0.56);
-        backdrop-filter: blur(14px);
+        background: rgba(7, 9, 28, 0.78);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
       }
 
       .masthead > a {
@@ -1869,6 +1863,68 @@
       }
 
     }
+
+    /* Readability and rendering safeguards; these do not alter component structure. */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--mint);
+      outline-offset: 4px;
+    }
+
+    .section:not(.is-in-view) .mirror-tile,
+    .section:not(.is-in-view) .work-cell::after,
+    .section:not(.is-in-view) .work-cell:hover .work-tags span,
+    .section:not(.is-in-view) .project-card-art::before,
+    .section:not(.is-in-view) .project-mini-svg .point,
+    .section:not(.is-in-view) .project-mini-svg .bar,
+    .section:not(.is-in-view) .project-mini-svg .pulse-path {
+      animation-play-state: paused;
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: clamp(36px, 12vw, 48px);
+      }
+
+      .about-title,
+      .projects-intro h2,
+      .archive-intro h2,
+      .footer-title {
+        font-size: clamp(32px, 11vw, 42px);
+      }
+
+      .glass {
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0s !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0s !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media (forced-colors: active) {
+      .chrome,
+      .laser,
+      .chrome.word-reveal .reveal-word,
+      .laser.word-reveal .reveal-word,
+      .work-cell h3 {
+        color: CanvasText;
+        -webkit-text-fill-color: CanvasText;
+        background: none;
+        filter: none;
+        text-shadow: none;
+      }
+    }
   </style>
 </head>
 <body class="portfolio-page">
@@ -1876,8 +1932,8 @@
   <div id="pointer-scan" class="pointer-scan" aria-hidden="true"></div>
   <div id="click-burst-layer" class="click-burst-layer" aria-hidden="true"></div>
 
-  <div id="video-bg" class="fixed inset-0 z-0 bg-black">
-    <video id="hero-video" muted playsinline preload="auto" poster="./hero-disc-poster.jpg">
+  <div id="video-bg">
+    <video id="hero-video" muted playsinline preload="metadata" poster="./hero-disc-poster.jpg">
       <source src="hero.mp4" type="video/mp4" />
     </video>
   </div>
@@ -1899,8 +1955,7 @@
     <span class="signal-line"></span>
   </div>
   <div class="soft-panel" aria-hidden="true">
-    <video class="soft-panel-video" muted playsinline preload="auto" poster="./hero-disc-poster.jpg">
-      <source src="./hero.mp4" type="video/mp4" />
+    <video class="soft-panel-video" muted playsinline preload="none" poster="./hero-disc-poster.jpg">
     </video>
     <div class="soft-panel-readout">
       <span>live signal</span>
@@ -1928,7 +1983,7 @@
     <section id="top" class="section hero">
       <div class="stack">
         <p class="eyebrow" data-reveal>data / math / people</p>
-        <h1 class="hero-title chrome" data-word-reveal data-reveal style="--reveal-delay: 0.1">Clean Data.<br />Clear Decisions.</h1>
+        <h1 class="hero-title chrome" tabindex="-1" data-word-reveal data-reveal style="--reveal-delay: 0.1">Clean Data.<br />Clear Decisions.</h1>
       </div>
       <div id="hero-mirror" class="hero-mirror pointer-on" data-reveal style="--reveal-delay: 0.2" aria-label="Interactive chrome mirror tile visual">
         <div class="mirror-grid" aria-hidden="true">
@@ -1965,7 +2020,7 @@
       <div class="about-grid">
         <div class="about-main">
           <p class="eyebrow" data-reveal>about me / who I am</p>
-          <h2 class="about-title chrome" data-word-reveal data-reveal style="--reveal-delay: 0.08">Learning by building.</h2>
+          <h2 class="about-title chrome" tabindex="-1" data-word-reveal data-reveal style="--reveal-delay: 0.08">Learning by building.</h2>
           <p class="about-note" data-reveal style="--reveal-delay: 0.18">
             Math taught me to look for structure; psychology taught me to pay attention to people. I enjoy using data to connect the two, and I like making small automations that make everyday tasks less tedious.
           </p>
@@ -2004,7 +2059,7 @@
         <div class="projects-intro">
           <div>
             <p class="eyebrow" data-reveal>coursework / personal projects</p>
-            <h2 class="chrome" data-word-reveal data-reveal style="--reveal-delay: 0.08">Projects</h2>
+            <h2 class="chrome" tabindex="-1" data-word-reveal data-reveal style="--reveal-delay: 0.08">Projects</h2>
           </div>
         </div>
         <div class="work-grid pointer-on">
@@ -2124,7 +2179,7 @@
       <div class="archive-layout">
         <div class="archive-intro" data-reveal>
           <p class="eyebrow">experience / beyond the projects</p>
-          <h2 class="chrome" data-word-reveal>Experience</h2>
+          <h2 class="chrome" tabindex="-1" data-word-reveal>Experience</h2>
           <p>
             I've worked in classrooms, campus recreation, and medical records. Each role taught me to pay attention, explain things patiently, and follow through.
           </p>
@@ -2163,10 +2218,7 @@
         <div class="footer-contact">
           <div>
             <p class="eyebrow" data-reveal>contact / keep in touch</p>
-            <h2 class="footer-title chrome" data-word-reveal data-reveal>Thanks for visiting.</h2>
-            <p class="footer-copy" data-reveal style="--reveal-delay: 0.14">
-              I'm always curious about how people use data in their everyday work.
-            </p>
+            <h2 class="footer-title chrome" tabindex="-1" data-word-reveal data-reveal>Thanks for visiting.</h2>
           </div>
           <div class="footer-card glass pointer-on" data-reveal data-tilt-card style="--reveal-delay: 0.22">
             <small>reach me</small>
@@ -2198,13 +2250,27 @@
   <script>
     const video = document.getElementById('hero-video');
     const softPanel = document.querySelector('.soft-panel');
-    const softPanelVideo = document.querySelector('.soft-panel-video');
     const softPanelSection = document.getElementById('soft-panel-section');
     const softPanelPercent = document.getElementById('soft-panel-percent');
     const heroMirror = document.getElementById('hero-mirror');
     const mirrorTiles = Array.from(document.querySelectorAll('.mirror-tile'));
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const finePointerQuery = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const coarsePointerQuery = window.matchMedia('(pointer: coarse)');
+    const scrollSeekInterval = coarsePointerQuery.matches ? 90 : 60;
+    const scrollSeekThreshold = 0.05;
+    const scrollSettleDelay = 110;
     let isLoaded = false;
-    let hasPrimedVideo = false;
+    let hasRequestedVideo = false;
+    let videoMetadataReady = Boolean(video && video.readyState >= 1);
+    let scrollTargetTime = 0;
+    let scrollEasedTime = 0;
+    let scrollSeekInFlight = false;
+    let forceExactScrollSeek = false;
+    let lastScrollSeekAt = -Infinity;
+    let lastScrollTickAt = 0;
+    let scrollScrubFrame = 0;
+    let scrollSettleTimer = 0;
     let lastPointerX = window.innerWidth * 0.5;
     let lastPointerY = window.innerHeight * 0.5;
 
@@ -2235,19 +2301,8 @@
 
     updateHeroMirror();
 
-    const wakeSoftPanelVideo = () => {
-      if (!softPanelVideo) return;
-      softPanelVideo.muted = true;
-      softPanelVideo.playsInline = true;
-      softPanelVideo.loop = false;
-      if (softPanelVideo.readyState < 1) softPanelVideo.load();
-      softPanelVideo.pause();
-      window.setTimeout(() => syncSoftPanelFrame(), 80);
-      window.setTimeout(() => syncSoftPanelFrame(), 420);
-    };
-
     const updateSoftPanelMotion = (clientX = lastPointerX, clientY = lastPointerY) => {
-      if (!softPanel || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      if (!softPanel || reducedMotionQuery.matches) return;
       lastPointerX = clientX;
       lastPointerY = clientY;
       const px = clientX / Math.max(1, window.innerWidth) - 0.5;
@@ -2263,66 +2318,112 @@
       softPanel.style.setProperty('--scan-shift', `${(px * 34).toFixed(2)}px`);
     };
 
-    const getScrollVideoTime = () => {
-      if (!video || !video.duration) return 0;
-      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const scrollFraction = Math.max(0, Math.min(1, window.scrollY / maxScroll));
-      const targetTime = scrollFraction * video.duration;
-      return Math.min(Math.max(targetTime, 0.06), Math.max(0.06, video.duration - 0.05));
-    };
-
-    const syncSoftPanelFrame = (targetTime = null) => {
-      if (!softPanelVideo || softPanelVideo.seeking) return;
-      const duration = softPanelVideo.duration || video?.duration || 0;
-      if (!duration) return;
-      const sourceTime = typeof targetTime === 'number' ? targetTime : getScrollVideoTime();
-      const clampedTime = Math.min(Math.max(sourceTime, 0.06), Math.max(0.06, duration - 0.05));
-      if (Math.abs((softPanelVideo.currentTime || 0) - clampedTime) < 0.035) return;
-      try {
-        softPanelVideo.currentTime = clampedTime;
-      } catch (error) {
-        // The panel reflection may need metadata before it can seek.
-      }
-    };
-
-    const syncVideoToScroll = () => {
-      if (!isLoaded || !video || !video.duration || video.seeking) return;
-      const targetTime = getScrollVideoTime();
-      video.currentTime = targetTime;
-      syncSoftPanelFrame(targetTime);
-    };
-
-    const primeVideoFrame = () => {
-      if (!video || !video.duration || video.seeking) return;
-      try {
-        const targetTime = getScrollVideoTime();
-        video.currentTime = targetTime;
-        syncSoftPanelFrame(targetTime);
-        hasPrimedVideo = true;
-      } catch (error) {
-        // Some browsers need one more media event before seeking is allowed.
-      }
-    };
-
     const wakeVideo = () => {
-      if (!video) return;
+      if (!video || reducedMotionQuery.matches) return;
+      if (hasRequestedVideo) return;
+      hasRequestedVideo = true;
       video.preload = 'auto';
       video.muted = true;
       video.playsInline = true;
+      video.pause();
       if (video.readyState < 1) video.load();
-      const playAttempt = video.play();
-      if (playAttempt && typeof playAttempt.then === 'function') {
-        playAttempt
-          .then(() => {
-            video.pause();
-            primeVideoFrame();
-          })
-          .catch(() => primeVideoFrame());
-      } else {
-        primeVideoFrame();
+    };
+
+    const wakeBackgroundMedia = () => {
+      wakeVideo();
+    };
+
+    const getScrollVideoTime = () => {
+      if (!video || !video.duration) return 0;
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const scrollProgress = Math.max(0, Math.min(1, window.scrollY / maxScroll));
+      return Math.min(
+        Math.max(scrollProgress * video.duration, 0.06),
+        Math.max(0.06, video.duration - 0.05),
+      );
+    };
+
+    const issueScrollSeek = (now, exact = false) => {
+      if (!video || !videoMetadataReady || scrollSeekInFlight) return false;
+      const destination = exact ? scrollTargetTime : scrollEasedTime;
+      const threshold = exact ? 0.012 : scrollSeekThreshold;
+      if (Math.abs((video.currentTime || 0) - destination) < threshold) return false;
+      if (!exact && now - lastScrollSeekAt < scrollSeekInterval) return false;
+      try {
+        scrollSeekInFlight = true;
+        lastScrollSeekAt = now;
+        video.currentTime = destination;
+        return true;
+      } catch (error) {
+        scrollSeekInFlight = false;
+        return false;
       }
-      window.setTimeout(primeVideoFrame, 120);
-      window.setTimeout(primeVideoFrame, 520);
+    };
+
+    const queueScrollScrubTick = () => {
+      if (
+        scrollScrubFrame ||
+        scrollSeekInFlight ||
+        reducedMotionQuery.matches ||
+        document.visibilityState === 'hidden'
+      ) return;
+      scrollScrubFrame = window.requestAnimationFrame(tickScrollVideo);
+    };
+
+    const tickScrollVideo = (now) => {
+      scrollScrubFrame = 0;
+      if (!videoMetadataReady || scrollSeekInFlight || reducedMotionQuery.matches) return;
+
+      if (forceExactScrollSeek) {
+        scrollEasedTime = scrollTargetTime;
+        forceExactScrollSeek = false;
+        issueScrollSeek(now, true);
+        return;
+      }
+
+      const elapsed = Math.min(64, now - (lastScrollTickAt || now));
+      lastScrollTickAt = now;
+      const easing = 1 - Math.exp(-elapsed / 80);
+      scrollEasedTime += (scrollTargetTime - scrollEasedTime) * easing;
+
+      if (issueScrollSeek(now)) return;
+      if (Math.abs(scrollTargetTime - scrollEasedTime) >= 0.015) {
+        queueScrollScrubTick();
+      }
+    };
+
+    const requestScrollScrub = () => {
+      if (!video || reducedMotionQuery.matches) return;
+      wakeVideo();
+      video.pause();
+      scrollTargetTime = getScrollVideoTime();
+      forceExactScrollSeek = false;
+      queueScrollScrubTick();
+
+      window.clearTimeout(scrollSettleTimer);
+      scrollSettleTimer = window.setTimeout(() => {
+        scrollTargetTime = getScrollVideoTime();
+        forceExactScrollSeek = true;
+        queueScrollScrubTick();
+      }, scrollSettleDelay);
+    };
+
+    const cancelScrollScrub = () => {
+      window.clearTimeout(scrollSettleTimer);
+      scrollSettleTimer = 0;
+      if (scrollScrubFrame) {
+        window.cancelAnimationFrame(scrollScrubFrame);
+        scrollScrubFrame = 0;
+      }
+      if (video) video.pause();
+    };
+
+    const scheduleBackgroundMedia = () => {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(wakeVideo, { timeout: 1400 });
+      } else {
+        window.setTimeout(wakeVideo, 900);
+      }
     };
 
     const restorePortfolioBackground = () => {
@@ -2346,19 +2447,16 @@
         video.style.removeProperty('display');
         video.style.removeProperty('opacity');
         video.style.removeProperty('visibility');
-        if (video.readyState < 1) {
-          video.addEventListener('loadedmetadata', primeVideoFrame, { once: true });
-        } else {
-          primeVideoFrame();
-        }
+        video.pause();
       }
 
       handleLoaded();
-      wakeSoftPanelVideo();
+      scrollTargetTime = getScrollVideoTime();
+      scrollEasedTime = scrollTargetTime;
+      forceExactScrollSeek = true;
       window.requestAnimationFrame(() => {
-        syncVideoToScroll();
+        queueScrollScrubTick();
         updateSoftPanelMotion();
-        window.ScrollTrigger?.refresh?.();
       });
     };
 
@@ -2367,17 +2465,20 @@
         isLoaded = true;
         document.body.dataset.loaded = 'true';
       }
-      primeVideoFrame();
     };
     const handleMetadata = () => {
+      videoMetadataReady = true;
       handleLoaded();
-      wakeVideo();
+      scrollTargetTime = getScrollVideoTime();
+      scrollEasedTime = scrollTargetTime;
+      forceExactScrollSeek = true;
+      queueScrollScrubTick();
     };
     const handleFrameReady = () => {
       handleLoaded();
-      if (!hasPrimedVideo) primeVideoFrame();
     };
     const handleMediaError = () => {
+      scrollSeekInFlight = false;
       isLoaded = true;
       document.body.dataset.loaded = 'true';
     };
@@ -2387,62 +2488,51 @@
       video.addEventListener('canplay', handleFrameReady);
       video.addEventListener('canplaythrough', handleFrameReady);
       video.addEventListener('error', handleMediaError);
-      video.preload = 'auto';
-      video.load();
-      wakeVideo();
+      video.addEventListener('seeked', () => {
+        scrollSeekInFlight = false;
+        queueScrollScrubTick();
+      });
+      video.preload = 'metadata';
     }
-    if (softPanelVideo) {
-      softPanelVideo.addEventListener('loadedmetadata', () => syncSoftPanelFrame());
-      softPanelVideo.addEventListener('loadeddata', () => syncSoftPanelFrame());
-      softPanelVideo.preload = 'auto';
-      softPanelVideo.load();
-    }
-    wakeSoftPanelVideo();
     updateSoftPanelMotion();
     setTimeout(handleLoaded, 3000);
 
-    window.addEventListener('pageshow', restorePortfolioBackground);
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') restorePortfolioBackground();
-    });
-
-    window.addEventListener('scroll', syncVideoToScroll, { passive: true });
-
-    if (window.gsap && window.ScrollTrigger) {
-      gsap.registerPlugin(ScrollTrigger);
-      document.querySelectorAll('[data-scroll-reveal]').forEach((el) => {
-        const text = el.textContent || '';
-        el.textContent = '';
-        el.classList.add('scroll-reveal');
-        const p = document.createElement('p');
-        p.className = 'scroll-reveal-text ' + (el.dataset.textClass || '');
-        let wordIndex = 0;
-        text.split(/(\s+)/).forEach((part) => {
-          if (!part) return;
-          const span = document.createElement('span');
-          span.className = 'word';
-          if (!/^\s+$/.test(part)) {
-            span.style.setProperty('--word-index', wordIndex);
-            wordIndex += 1;
-          }
-          span.textContent = part;
-          p.appendChild(span);
-        });
-        el.appendChild(p);
-        gsap.fromTo(el, { rotate: 3, transformOrigin: '0% 50%' },
-          { rotate: 0, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom bottom', scrub: true } });
-      });
+    if (window.scrollY > 0 || window.location.hash) {
+      wakeBackgroundMedia();
+    } else if (document.readyState === 'complete') {
+      scheduleBackgroundMedia();
+    } else {
+      window.addEventListener('load', scheduleBackgroundMedia, { once: true });
     }
 
-    const scrollRevealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          scrollRevealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.22, rootMargin: '0px 0px -14% 0px' });
-    document.querySelectorAll('.scroll-reveal').forEach((el) => scrollRevealObserver.observe(el));
+    ['pointerdown', 'keydown', 'touchstart', 'wheel'].forEach((eventName) => {
+      window.addEventListener(eventName, wakeBackgroundMedia, { once: true, passive: eventName !== 'keydown' });
+    });
+
+    window.addEventListener('pageshow', restorePortfolioBackground);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        cancelScrollScrub();
+        return;
+      }
+      restorePortfolioBackground();
+    });
+    const handleMotionPreferenceChange = () => {
+      if (!video) return;
+      if (reducedMotionQuery.matches) {
+        cancelScrollScrub();
+      } else {
+        restorePortfolioBackground();
+      }
+    };
+    if (typeof reducedMotionQuery.addEventListener === 'function') {
+      reducedMotionQuery.addEventListener('change', handleMotionPreferenceChange);
+    } else if (typeof reducedMotionQuery.addListener === 'function') {
+      reducedMotionQuery.addListener(handleMotionPreferenceChange);
+    }
+
+    window.addEventListener('scroll', requestScrollScrub, { passive: true });
+    window.addEventListener('resize', requestScrollScrub, { passive: true });
 
     const wordRevealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -2493,6 +2583,13 @@
     }, { rootMargin: '-50px' });
     document.querySelectorAll('[data-reveal]').forEach((el) => revealObserver.observe(el));
 
+    const sectionMotionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        entry.target.classList.toggle('is-in-view', entry.isIntersecting);
+      });
+    }, { rootMargin: '12% 0px' });
+    document.querySelectorAll('.section').forEach((section) => sectionMotionObserver.observe(section));
+
     const scrollCards = Array.from(document.querySelectorAll('[data-scroll-card]'));
     const archiveLayout = document.querySelector('#archive .archive-layout');
     let scrollInteractionFrame = 0;
@@ -2542,6 +2639,13 @@
     const navSections = navLinks
       .map((link) => document.querySelector(link.getAttribute('href')))
       .filter(Boolean);
+    navLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        const destination = document.querySelector(link.getAttribute('href'));
+        const heading = destination?.querySelector('h1[tabindex="-1"], h2[tabindex="-1"]');
+        window.setTimeout(() => heading?.focus({ preventScroll: true }), 0);
+      });
+    });
     const panelSectionLabels = {
       top: 'home',
       signal: 'about',
@@ -2570,7 +2674,13 @@
         }
       });
       navLinks.forEach((link) => {
-        link.classList.toggle('is-current', activeSection && link.getAttribute('href') === `#${activeSection.id}`);
+        const isCurrent = activeSection && link.getAttribute('href') === `#${activeSection.id}`;
+        link.classList.toggle('is-current', isCurrent);
+        if (isCurrent) {
+          link.setAttribute('aria-current', 'location');
+        } else {
+          link.removeAttribute('aria-current');
+        }
       });
       if (softPanelSection && activeSection) {
         softPanelSection.textContent = panelSectionLabels[activeSection.id] || activeSection.id;
@@ -2589,39 +2699,56 @@
     window.addEventListener('scroll', requestPageInteractionUpdate, { passive: true });
     window.addEventListener('resize', requestPageInteractionUpdate);
 
-    if (pointerScan) {
-      window.addEventListener('pointermove', (event) => {
-        pointerScan.style.setProperty('--pointer-x', `${event.clientX}px`);
-        pointerScan.style.setProperty('--pointer-y', `${event.clientY}px`);
-      }, { passive: true });
-    }
-
-    if (heroMirror) {
+    if (heroMirror && finePointerQuery.matches && !reducedMotionQuery.matches) {
+      let mirrorFrame = 0;
+      let mirrorPointerX = 0.5;
+      let mirrorPointerY = 0.5;
       heroMirror.addEventListener('pointermove', (event) => {
+        if (reducedMotionQuery.matches) return;
         const rect = heroMirror.getBoundingClientRect();
-        const x = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
-        const y = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
-        updateHeroMirror(x, y);
+        mirrorPointerX = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+        mirrorPointerY = Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height));
+        if (mirrorFrame) return;
+        mirrorFrame = window.requestAnimationFrame(() => {
+          mirrorFrame = 0;
+          updateHeroMirror(mirrorPointerX, mirrorPointerY);
+        });
       }, { passive: true });
       heroMirror.addEventListener('pointerleave', () => {
+        if (mirrorFrame) window.cancelAnimationFrame(mirrorFrame);
+        mirrorFrame = 0;
         updateHeroMirror();
       });
     }
 
-    document.querySelectorAll('[data-tilt-card]').forEach((card) => {
+    if (finePointerQuery.matches && !reducedMotionQuery.matches) document.querySelectorAll('[data-tilt-card]').forEach((card) => {
+      let tiltFrame = 0;
+      let tiltX = 0;
+      let tiltY = 0;
+      let tiltGlowX = 50;
+      let tiltGlowY = 50;
       card.addEventListener('pointermove', (event) => {
+        if (reducedMotionQuery.matches) return;
         const rect = card.getBoundingClientRect();
         const x = (event.clientX - rect.left) / rect.width;
         const y = (event.clientY - rect.top) / rect.height;
-        const tiltY = (x - 0.5) * 8;
-        const tiltX = (0.5 - y) * 7;
-        card.style.setProperty('--tilt-x', `${tiltX.toFixed(2)}deg`);
-        card.style.setProperty('--tilt-y', `${tiltY.toFixed(2)}deg`);
-        card.style.setProperty('--tilt-glow-x', `${(x * 100).toFixed(1)}%`);
-        card.style.setProperty('--tilt-glow-y', `${(y * 100).toFixed(1)}%`);
-        card.classList.add('is-tilting');
+        tiltY = (x - 0.5) * 8;
+        tiltX = (0.5 - y) * 7;
+        tiltGlowX = x * 100;
+        tiltGlowY = y * 100;
+        if (tiltFrame) return;
+        tiltFrame = window.requestAnimationFrame(() => {
+          tiltFrame = 0;
+          card.style.setProperty('--tilt-x', `${tiltX.toFixed(2)}deg`);
+          card.style.setProperty('--tilt-y', `${tiltY.toFixed(2)}deg`);
+          card.style.setProperty('--tilt-glow-x', `${tiltGlowX.toFixed(1)}%`);
+          card.style.setProperty('--tilt-glow-y', `${tiltGlowY.toFixed(1)}%`);
+          card.classList.add('is-tilting');
+        });
       }, { passive: true });
       card.addEventListener('pointerleave', () => {
+        if (tiltFrame) window.cancelAnimationFrame(tiltFrame);
+        tiltFrame = 0;
         card.style.setProperty('--tilt-x', '0deg');
         card.style.setProperty('--tilt-y', '0deg');
         card.style.setProperty('--tilt-glow-x', '50%');
@@ -2631,7 +2758,7 @@
     });
 
     window.addEventListener('click', (event) => {
-      if (!clickBurstLayer) return;
+      if (!clickBurstLayer || reducedMotionQuery.matches) return;
       const burst = document.createElement('span');
       burst.className = 'click-burst';
       burst.style.setProperty('--burst-x', `${event.clientX}px`);
@@ -2837,15 +2964,36 @@
       }
       updateSoftPanelMotion(clientX, clientY);
     };
-    window.addEventListener('pointermove', (event) => {
-      setMotion(event.clientX, event.clientY);
-    }, { passive: true });
+    let globalPointerFrame = 0;
+    let globalPointerX = lastPointerX;
+    let globalPointerY = lastPointerY;
+    let motionScrollFrame = 0;
+
+    if (finePointerQuery.matches && !reducedMotionQuery.matches) {
+      window.addEventListener('pointermove', (event) => {
+        if (reducedMotionQuery.matches) return;
+        globalPointerX = event.clientX;
+        globalPointerY = event.clientY;
+        if (globalPointerFrame) return;
+        globalPointerFrame = window.requestAnimationFrame(() => {
+          globalPointerFrame = 0;
+          pointerScan?.style.setProperty('--pointer-x', `${globalPointerX}px`);
+          pointerScan?.style.setProperty('--pointer-y', `${globalPointerY}px`);
+          setMotion(globalPointerX, globalPointerY);
+        });
+      }, { passive: true });
+    }
+
     window.addEventListener('scroll', () => {
-      if (motionField) {
-        const y = Math.sin(window.scrollY / 220) * 10;
-        motionField.style.setProperty('--my', y.toFixed(2));
-      }
-      updateSoftPanelMotion();
+      if (motionScrollFrame || reducedMotionQuery.matches) return;
+      motionScrollFrame = window.requestAnimationFrame(() => {
+        motionScrollFrame = 0;
+        if (motionField) {
+          const y = Math.sin(window.scrollY / 220) * 10;
+          motionField.style.setProperty('--my', y.toFixed(2));
+        }
+        updateSoftPanelMotion();
+      });
     }, { passive: true });
 
   </script>

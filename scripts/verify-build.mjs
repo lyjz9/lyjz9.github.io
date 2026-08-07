@@ -18,6 +18,18 @@ const requiredFiles = [
   ...projectPages.map((page) => `dist/${page}`),
 ];
 
+const excludedDeployFiles = [
+  'dist/cinematic-base.jpg',
+  'dist/cinematic-poster.jpg',
+  'dist/hero-frame.png',
+  'dist/intro-dither.png',
+  'dist/intro-dither.webm',
+  'dist/y2k-poster.jpg',
+  'dist/assets/project-visuals/auto-claims-age-distribution.png',
+  'dist/assets/project-visuals/auto-claims-average.png',
+  'dist/assets/project-visuals/auto-claims-rate.png',
+];
+
 const fail = (message) => {
   console.error(`Build verification failed: ${message}`);
   process.exit(1);
@@ -28,6 +40,15 @@ for (const file of requiredFiles) {
     await stat(join(root, file));
   } catch {
     fail(`${file} is missing.`);
+  }
+}
+
+for (const file of excludedDeployFiles) {
+  try {
+    await stat(join(root, file));
+    fail(`${file} is an unreferenced asset and should not be deployed.`);
+  } catch (error) {
+    if (error?.code !== 'ENOENT') throw error;
   }
 }
 
@@ -42,6 +63,56 @@ if (!distHtml.includes('restorePortfolioBackground')) {
 
 if (!distHtml.includes('hero-disc-poster.jpg')) {
   fail('dist/index.html is missing the disc background fallback image.');
+}
+
+if (distHtml.includes('cdn.tailwindcss.com') || distHtml.includes('cdnjs.cloudflare.com/ajax/libs/gsap')) {
+  fail('dist/index.html still loads an unused render-blocking library.');
+}
+
+if (distHtml.includes('<link rel="preload" href="./hero.mp4"')) {
+  fail('dist/index.html still eagerly preloads the background video.');
+}
+
+if (!distHtml.includes('id="hero-video" muted playsinline preload="metadata"')) {
+  fail('dist/index.html does not use metadata-only preload for the main background video.');
+}
+
+if (!distHtml.includes('class="soft-panel-video" muted playsinline preload="none"')) {
+  fail('dist/index.html does not defer the decorative panel video.');
+}
+
+for (const removedVideoScrubToken of [
+  'requestVideoSync',
+  'syncVideoToScroll',
+  'syncSoftPanelFrame',
+]) {
+  if (distHtml.includes(removedVideoScrubToken)) {
+    fail(`dist/index.html still contains expensive scroll-video seeking: ${removedVideoScrubToken}`);
+  }
+}
+
+if (!distHtml.includes('const scrollSeekInterval = coarsePointerQuery.matches ? 90 : 60')) {
+  fail('dist/index.html is missing the rate-limited scroll-video seek interval.');
+}
+
+if (!distHtml.includes("window.addEventListener('scroll', requestScrollScrub")) {
+  fail('dist/index.html is missing scroll-controlled background-video motion.');
+}
+
+if (distHtml.includes('video.play()')) {
+  fail('dist/index.html continuously plays the background video instead of tying it to scroll.');
+}
+
+if (distHtml.includes("softPanelVideo.load()")) {
+  fail('dist/index.html still starts a second video decoder for the decorative panel.');
+}
+
+if (/<video class="soft-panel-video"[\s\S]*?<source[\s\S]*?<\/video>/.test(distHtml)) {
+  fail('dist/index.html still gives the decorative panel a second video source.');
+}
+
+if (distHtml.includes("I'm always curious about how people use data in their everyday work.")) {
+  fail('dist/index.html still includes the removed contact footer sentence.');
 }
 
 if (distHtml.includes('poster="./cinematic-base.jpg"')) {
